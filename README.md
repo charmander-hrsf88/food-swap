@@ -1,6 +1,6 @@
-# Project Name
+# Food Swap
 
-> Pithy project description
+> Swap food with friends
 
 ## Team
 
