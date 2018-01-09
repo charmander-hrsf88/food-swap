@@ -1,25 +1,26 @@
 {
-  "name": "Food Swap",
+  "name": "food-swap",
   "version": "0.1.0",
   "description": "Swap food with friends",
   "author": "Hayden Marx, Calvin Wong, Alex Choi",
-  "license": "I can drive",
+  "license": "",
   "engines": {
     "node": ">=6.4.0"
   },
   "scripts": {
+    "scss": "sass --watch react-client/src/scss:react-client/dist/",
+    "webpack": "webpack -d --watch",
+    "server": "nodemon server/index.js"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.7.5",
-    "babel-preset-es2015": "^6.6.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "babel-register": "^6.7.2",
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor"
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "webpack": "^3.10.0"
   }
 }
