@@ -11,8 +11,8 @@ CREATE TABLE users (
   picture VARCHAR(255) NULL DEFAULT NULL,
   email VARCHAR(255) NOT NULL,
   bio VARCHAR(255) NULL DEFAULT NULL,
-  latitude Float,
-  longitude Float,
+  latitude Float NULL DEFAULT NULL,
+  longitude Float NULL DEFAULT NULL,
   PRIMARY KEY (id)
 );
 
@@ -26,7 +26,8 @@ CREATE TABLE users_auth (
 
 CREATE TABLE food (
   id SERIAL,
-  name VARCHAR(25) NULL DEFAULT NULL,
+  users_id INTEGER NOT NULL REFERENCES users(id),
+  dish_name VARCHAR(25) NULL DEFAULT NULL,
   description VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (id)
 );
@@ -47,6 +48,3 @@ CREATE TABLE trade (
   status BOOLEAN DEFAULT NULL,
   PRIMARY KEY (id)
 );
-
-
-
