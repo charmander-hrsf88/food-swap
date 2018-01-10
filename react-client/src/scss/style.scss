@@ -1,3 +1,25 @@
-p {
-  color: blue;
+@import 'listContainers';
+@import 'listIndividual';
+@import 'navBar';
+@import 'popUp';
+
+/*
+@fa-font-path:   "/font";
+
+add import files by componenet
+remove bundle.js
+remove compiled css
+*/
+
+body {
+  margin: 0px;
 }
+
+
+
+
+
+
+
+
+
