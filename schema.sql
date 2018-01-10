@@ -18,7 +18,7 @@ CREATE TABLE users (
 
 CREATE TABLE users_auth (
   id SERIAL,
-  userId INTEGER NOT NULL REFERENCES users(id),
+  user_Id INTEGER NOT NULL REFERENCES users(id),
   password VARCHAR(256) NOT NULL,
   salt VARCHAR(256) NOT NULL,
   PRIMARY KEY (id)
@@ -26,25 +26,25 @@ CREATE TABLE users_auth (
 
 CREATE TABLE food (
   id SERIAL,
-  users_id INTEGER NOT NULL REFERENCES users(id),
-  dish_name VARCHAR(25) NULL DEFAULT NULL,
+  user_Id INTEGER NOT NULL REFERENCES users(id),
+  dishName VARCHAR(25) NULL DEFAULT NULL,
   description VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE friends (
   id SERIAL,
-  userFriend1 INTEGER NOT NULL REFERENCES users(id),
-  userFriend2 INTEGER NOT NULL REFERENCES users(id),
+  user_Id1 INTEGER NOT NULL REFERENCES users(id),
+  user_Id2 INTEGER NOT NULL REFERENCES users(id),
   PRIMARY KEY (id)
 );
 
 CREATE TABLE trade (
   id SERIAL,
-  userId1 INTEGER NOT NULL REFERENCES users(id),
-  foodId1 INTEGER NOT NULL REFERENCES food(id),
-  userId2 INTEGER NOT NULL REFERENCES users(id),
-  foodId2 INTEGER NOT NULL REFERENCES food(id),
+  user_Id1 INTEGER NOT NULL REFERENCES users(id),
+  food_Id1 INTEGER NOT NULL REFERENCES food(id),
+  user_Id2 INTEGER NOT NULL REFERENCES users(id),
+  food_Id2 INTEGER NOT NULL REFERENCES food(id),
   status BOOLEAN DEFAULT NULL,
   PRIMARY KEY (id)
 );
