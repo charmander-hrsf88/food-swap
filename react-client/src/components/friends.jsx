@@ -49,7 +49,7 @@ class Friends extends React.Component {
               <h2> {this.state.friend.user_name} </h2>
               <p> {this.state.friend.user_bio} </p>
             </div>
-            <i className="fa fa-times-circle-o" aria-hidden="true" onClick={this.toggleExpand}>X</i>
+            <i className="fa fa-times-circle-o fa-2x" aria-hidden="true" onClick={this.toggleExpand} />
           </div>
         :
           <span />
