@@ -1,0 +1,19 @@
+.friendFood {
+  background: grey;
+  height: 300px;
+  width: 300px;
+  display: inline-block;
+  margin: 10px;
+  overflow-y: hidden;
+  cursor: pointer;
+  & > img {
+    max-height: 200px;
+    max-width: 200px;
+  }
+  & > p {
+    padding: 0px 20px;
+    text-align: left;
+  }
+}
+
+$red : red;

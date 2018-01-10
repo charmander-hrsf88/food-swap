@@ -1,3 +1,8 @@
-p {
-  color: blue;
+body {
+  margin: 0px;
 }
+
+@import 'listContainers';
+@import 'listIndividual';
+@import 'navBar';
+@import 'popUp';

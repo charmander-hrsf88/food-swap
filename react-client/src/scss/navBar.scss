@@ -1,0 +1,19 @@
+#navBar {
+  border-bottom: 2px solid black;
+  background: grey;
+  height: 30px;
+  & > button {
+    height: 100%;
+    border: none;
+    cursor: pointer;
+    margin: 0px 10px;
+    background: rgb(207, 194, 194);
+    &:hover {
+      background: rgb(34, 31, 31);
+      color: rgb(207, 194, 194);
+    }
+    &:nth-of-type(1) {
+      float: right;
+    }
+  }
+}
