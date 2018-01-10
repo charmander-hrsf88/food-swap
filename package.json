@@ -8,7 +8,7 @@
     "node": ">=6.4.0"
   },
   "scripts": {
-    "scss": "sass --watch react-client/src/scss:react-client/dist/style",
+    "scss": "sass --watch react-client/src/scss:react-client/dist/style/",
     "webpack": "webpack -d --watch",
     "server": "nodemon server/index.js"
   },
