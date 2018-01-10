@@ -2,39 +2,39 @@ const db = require('./config');
 const usersAuth = require('./UsersAuth');
 
 class Food {
-  create({ name, description, userId }) {
+  create({ dishname, description, user_id }) {
     this.queryString = 'INSERT INTO food (name, description, userId) VALUES ($1, $2, $3)';
     return db.any(this.queryString, [name, description, userId]);
   }
 
-  findByNameandDish({ name, dish }) {
+  findByNameandDishName({ name, dishname }) {
     let results;
-    if (dish === undefined) {
-      this.queryString = 'SELECT * FROM food WHERE userId = (SELECT id FROM users WHERE name = name)';
+    if (dishname === undefined) {
+      this.queryString = 'SELECT * FROM food WHERE userId = (SELECT id FROM users WHERE name = $1)';
       results = db.any(this.queryString, [name]);
     } else {
-      this.queryString = 'SELECT * FROM food WHERE userId = (SELECT id FROM users WHERE name = name) AND dish = $2';
-      results = db.any(this.queryString, [name, dish]);
+      this.queryString = 'SELECT * FROM food WHERE userId = (SELECT id FROM users WHERE name = $1) AND dishname = $2';
+      results = db.any(this.queryString, [name, dishname]);
     }
     return results;
   }
 
-  findByUserNameandDish({ username, dish }) {
+  findByUserNameandDishName({ userName, dishname }) {
     let results;
-    if (name === undefined) {
-      this.queryString = 'SELECT * FROM food WHERE userId = (SELECT id for users WHERE name = name)';
-      results = db.any(this.queryString, [username]);
+    if (dishname === undefined) {
+      this.queryString = 'SELECT * FROM food WHERE userId = (SELECT id FROM users WHERE userName = $1)';
+      results = db.any(this.queryString, [userName]);
     } else {
-      this.queryString = 'SELECT * FROM food WHERE userId = (SELECT id for users WHERE name = name) AND dish = $2';
-      results = db.any(this.queryString, [username, dish]);
+      this.queryString = 'SELECT * FROM food WHERE userId = (SELECT id FROM users WHERE userName = $1) AND dishname = $2';
+      results = db.any(this.queryString, [userName, dishname]);
     }
     return results;
   }
 
-  findByDishName({ dish }) {
-    this.queryString = 'SELECT * FROM food WHERE dish = $2';
-    return db.any(this.queryString, [dish]);
+  findByDishName({ dishname }) {
+    this.queryString = 'SELECT * FROM food WHERE dishname = $2';
+    return db.any(this.queryString, [userName, dishname]);
   }
 
 let food = new Food();
-food.create({ name: 'Grilled cheese', username: 'wanchoi211', email: 'wanchoi211@gmail.com' }).then(() => user.findById(1)).then(user => console.log(user));
+food.create({ dishname: 'Grilled cheese', description: 'Two pieces of bread and melted cheese in between.', user_id: '0' }).then(() => food.findByNameandDishName('Grilled cheese')).then(food => console.log(food));
