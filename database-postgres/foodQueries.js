@@ -7,14 +7,26 @@ class Food {
     return db.any(this.queryString, [name, description, userId]);
   }
 
-  findByIdandDish({ userId, name }) {
+  findByNameandDish({ name, dish }) {
+    let results;
+    if (dish === undefined) {
+      this.queryString = 'SELECT * FROM food WHERE userId = (SELECT id FROM users WHERE name = name)';
+      results = db.any(this.queryString, [name]);
+    } else {
+      this.queryString = 'SELECT * FROM food WHERE userId = (SELECT id FROM users WHERE name = name) AND dish = $2';
+      results = db.any(this.queryString, [name, dish]);
+    }
+    return results;
+  }
+
+  findByUserNameandDish({ username, dish }) {
     let results;
     if (name === undefined) {
-      this.queryString = 'SELECT * FROM food WHERE userId = $1';
-      results = db.any(this.queryString, [userId]);
+      this.queryString = 'SELECT * FROM food WHERE userId = (SELECT id for users WHERE name = name)';
+      results = db.any(this.queryString, [username]);
     } else {
-      this.queryString = 'SELECT * FROM food WHERE userId = $1 AND name = $2';
-      results = db.any(this.queryString, [userId, name]);
+      this.queryString = 'SELECT * FROM food WHERE userId = (SELECT id for users WHERE name = name) AND dish = $2';
+      results = db.any(this.queryString, [username, dish]);
     }
     return results;
   }
