@@ -7,12 +7,12 @@ class Trade {
   }
 
   static success({ id }) {
-    const querySting = 'UPDATE trade SET status = 1 WHERE id = $1';
+    const querySting = 'UPDATE trade SET status = TRUE WHERE id = $1';
     return db.any(queryString, [id]);
   }
 
   static failure({ id }) {
-    const queryString = 'UDATE trade SET status = 0 Where id = $1';
+    const queryString = 'UDATE trade SET status = FALSE WHERE id = $1';
     return db.any(queryString, [id]);
   }
 }
