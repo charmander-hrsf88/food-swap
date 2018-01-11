@@ -1,0 +1,28 @@
+#logInForm {
+  width: 250px;
+  margin: 15% auto;
+  border: 1px solid grey;
+  text-align: center;
+  & > button {
+    width: 50%;
+    border-top: none;
+  }
+  & label {
+    padding-right: 36%;
+    &:nth-of-type(2) {
+      padding-right: 95px;
+    }
+    &:nth-of-type(3) {
+      padding-right: 40px;
+    }
+    &:nth-of-type(4) {
+      padding-right: 120px;
+    }
+    &:nth-of-type(5) {
+      padding-right: 120px;
+    }
+  }
+  & > form button, h2 {
+    margin: 10px auto;
+  }
+}

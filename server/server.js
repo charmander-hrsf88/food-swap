@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const expressSession = require('express-session');
 const flash = require('connect-flash');
 const path = require('path');
+//const apiRouter = require('./routes');
 
 passport.use(new LocalStrategy((username, password, done) => {
   models.users.findByUsername(username)
@@ -57,5 +58,7 @@ app.use('/', express.static(path.join(__dirname, '../react-client/dist')));
 app.use('/login', express.static(path.join(__dirname, '../react-client/dist/logIn')));
 app.use('/signup', express.static(path.join(__dirname, '../react-client/dist/signUp')));
 app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }));
+
+// app.use('/api', apiRouter);
 
 module.exports = app;
