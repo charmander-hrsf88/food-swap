@@ -1,3 +1,3 @@
 const users = require('./Users');
-module.exports = { users };
-
+const usersAuth = require('./UsersAuth');
+module.exports = { users, usersAuth };
