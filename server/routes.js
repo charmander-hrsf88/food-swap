@@ -1,11 +1,22 @@
 const controller = require('./controllers');
 const router = require('express').Router();
 
+router.get('/users', controller.users.getAll);
+router.get('/users/:id', controller.users.getById);
+router.get('/users', controller.users.post);
 
-router.get('/login', controller.login.get);
-router.post('/login', controller.login.post);
+router.get('/trade', controller.trade.getAll);
+router.get('/trade/:id', controller.trade.getById);
+router.post('/trade', controller.trade.post);
 
-router.get('/signup', controller.signup.get);
-router.post('/signup', controller.signup.post);
+
+router.get('/food', controller.food.getAll);
+router.get('/food/:id', controller.food.getById);
+router.post('/food', controller.food.post);
+
+router.get('/friends', controller.friends.getAll);
+router.get('/friends/:id', controller.friends.getById);
+router.post('/friends', controller.friends.post);
+
 
 exports = router;
