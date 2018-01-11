@@ -1,0 +1,16 @@
+#logInForm {
+  width: 250px;
+  margin: 20% auto;
+  border: 1px solid grey;
+  text-align: center;
+  & > button {
+    width: 50%;
+    border-top: none;
+  }
+  & label {
+    padding-right: 90px;
+  }
+  & > form button, h2 {
+    margin: 10px auto;
+  }
+}
