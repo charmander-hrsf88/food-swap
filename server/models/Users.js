@@ -11,8 +11,8 @@ class Users {
       .catch(() => false);
   }
 
-  static findById({ userId }) {
-    return db.users.findByUserId({ userId });
+  static findById({ id }) {
+    return db.users.findByUserId({ id });
   }
 
   static findByUsername({ username }) {
@@ -26,6 +26,4 @@ class Users {
   }
 }
 
-
-console.log(Users.create({name: 'hayden', username:'hmarx', password:'abcddddd', email:'hmarx@gmail.com'}));
 module.exports = Users;
