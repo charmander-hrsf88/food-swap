@@ -3,7 +3,9 @@ const db = require('./config');
 class Food {
   static create({ dishname, description, userId }) {
     const queryString = 'INSERT INTO food (dishname, description, user_id) VALUES ($1, $2, $3)';
-    return db.any(queryString, [dishname, description, userId]);
+    return db.any(queryString, [dishname, description, userId])
+      .then(() => true)
+      .catch(() => false);
   }
 
   static findByNameandDishName({ name, dishname }) {
