@@ -1,0 +1,5 @@
+class Friend {
+
+}
+
+exports = Friend;

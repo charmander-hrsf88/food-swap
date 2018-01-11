@@ -1,0 +1,5 @@
+class Trade {
+
+}
+
+exports = Trade;
