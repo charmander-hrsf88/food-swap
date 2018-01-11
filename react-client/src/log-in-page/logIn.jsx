@@ -29,7 +29,7 @@ class LogIn extends React.Component {
             <input />
             <br />
             <label>Password:</label>
-            <br />
+            <br type="password" />
             <input />
             <br />
             <button>Submit</button>
@@ -42,11 +42,23 @@ class LogIn extends React.Component {
             <h2>Sign In</h2>
             <label>User name:</label>
             <br />
-            <input />
+            <input type="text" />
             <br />
             <label>Password:</label>
             <br />
+            <input type="password" />
+            <br />
+            <label>Confirm Password:</label>
+            <br />
+            <input type="password" />
+            <br />
+            <label>Name:</label>
+            <br />
             <input />
+            <br />
+            <label>Email:</label>
+            <br />
+            <input type="email"  />
             <br />
             <button>Submit</button>
           </form>
