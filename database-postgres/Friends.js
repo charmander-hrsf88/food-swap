@@ -7,4 +7,4 @@ class Friends {
   }
 }
 
-exports = Friends;
+module.exports = Friends;

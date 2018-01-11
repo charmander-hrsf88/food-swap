@@ -17,4 +17,4 @@ class Trade {
   }
 }
 
-exports = Trade;
+module.exports = Trade;

@@ -9,7 +9,7 @@ class Food {
   }
 
   static findByNameandDishName({ name, dishname }) {
-    const queryString;
+    let queryString;
 
     if (dishname === undefined) {
       queryString = 'SELECT * FROM food WHERE user_id = (SELECT id FROM users WHERE name = $1)';
@@ -21,7 +21,7 @@ class Food {
   }
 
   static findByUserNameandDishName({ username, dishname }) {
-    const queryString;
+    let queryString;
 
     if (dishname === undefined) {
       queryString = 'SELECT * FROM food WHERE user_id = (SELECT id FROM users WHERE userName = $1)';
@@ -38,4 +38,4 @@ class Food {
   }
 }
 
-exports = Food;
+module.exports = Food;
