@@ -2,8 +2,8 @@ const db = require('./config');
 
 class UsersAuth {
   static createUser({ password, salt }) {
-    const queryString = 'INSERT INTO users_auth (password, salt) VALUES ($1, $2)';
-    return db.any(queryString, [password, salt]);
+    const queryString = 'INSERT INTO users_auth (password, salt) VALUES ($1, $2) RETURNING id';
+    return db.one(queryString, [password, salt]);
   }
 
   static updatePassword({ userAuthId, password, salt }) {
