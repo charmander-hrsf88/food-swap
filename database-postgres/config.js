@@ -5,6 +5,7 @@ const config = {
   port: 5432,
   database: 'food_swap',
   user: 'charmander',
+  password: 'charmander',
 };
 
 const db = pgp(config);
