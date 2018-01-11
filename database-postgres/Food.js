@@ -1,35 +1,39 @@
 const db = require('./config');
 
 class Food {
-  create({ dishname, description, userId }) {
-    this.queryString = 'INSERT INTO food (dishname, description, user_id) VALUES ($1, $2, $3)';
-    return db.any(this.queryString, [dishname, description, userId]);
+  static create({ dishname, description, userId }) {
+    const queryString = 'INSERT INTO food (dishname, description, user_id) VALUES ($1, $2, $3)';
+    return db.any(queryString, [dishname, description, userId]);
   }
 
-  findByNameandDishName({ name, dishname }) {
+  static findByNameandDishName({ name, dishname }) {
+    const queryString;
+
     if (dishname === undefined) {
-      this.queryString = 'SELECT * FROM food WHERE user_id = (SELECT id FROM users WHERE name = $1)';
-      return db.any(this.queryString, [name]);
+      queryString = 'SELECT * FROM food WHERE user_id = (SELECT id FROM users WHERE name = $1)';
+      return db.any(queryString, [name]);
     }
 
-    this.queryString = 'SELECT * FROM food WHERE user_id = (SELECT id FROM users WHERE name = $1) AND dishname = $2';
-    return db.any(this.queryString, [name, dishname]);
+    queryString = 'SELECT * FROM food WHERE user_id = (SELECT id FROM users WHERE name = $1) AND dishname = $2';
+    return db.any(queryString, [name, dishname]);
   }
 
-  findByUserNameandDishName({ username, dishname }) {
+  static findByUserNameandDishName({ username, dishname }) {
+    const queryString;
+
     if (dishname === undefined) {
-      this.queryString = 'SELECT * FROM food WHERE user_id = (SELECT id FROM users WHERE userName = $1)';
-      return db.any(this.queryString, [username]);
+      queryString = 'SELECT * FROM food WHERE user_id = (SELECT id FROM users WHERE userName = $1)';
+      return db.any(queryString, [username]);
     }
 
-    this.queryString = 'SELECT * FROM food WHERE user_id = (SELECT id FROM users WHERE userName = $1) AND dishname = $2';
-    return db.any(this.queryString, [username, dishname]);
+    queryString = 'SELECT * FROM food WHERE user_id = (SELECT id FROM users WHERE userName = $1) AND dishname = $2';
+    return db.any(queryString, [username, dishname]);
   }
 
-  findByDishName({ dishname }) {
-    this.queryString = 'SELECT * FROM food WHERE dishname = $1';
-    return db.any(this.queryString, [dishname]);
+  static findByDishName({ dishname }) {
+    const queryString = 'SELECT * FROM food WHERE dishname = $1';
+    return db.any(queryString, [dishname]);
   }
 }
 
-exports = new Food();
+exports = Food;

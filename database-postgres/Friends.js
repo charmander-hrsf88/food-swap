@@ -1,10 +1,10 @@
 const db = require('./config');
 
 class Friends {
-  findFriendByUserId({ userId }) {
-    this.queryString = 'SELECT * FROM friends WHERE user_id2 = $1';
-    return db.any(this.queryString, [userId]);
+  static findFriendByUserId({ userId }) {
+    const queryString = 'SELECT * FROM friends WHERE user_id2 = $1';
+    return db.any(queryString, [userId]);
   }
 }
 
-exports = new Friends();
+exports = Friends;
