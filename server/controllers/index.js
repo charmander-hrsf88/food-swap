@@ -3,7 +3,7 @@ const trade = require('./Trade');
 const food = require('./Food');
 const friends = require('./Friends');
 
-exports = {
+module.exports = {
   users,
   trade,
   food,

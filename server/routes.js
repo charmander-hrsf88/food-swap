@@ -1,4 +1,4 @@
-const controller = require('./controllers');
+const controller = require('./controllers/index');
 const router = require('express').Router();
 
 router.get('/users', controller.users.getAll);
@@ -19,4 +19,4 @@ router.get('/friends/:id', controller.friends.getById);
 router.post('/friends', controller.friends.post);
 
 
-exports = router;
+module.exports = router;
