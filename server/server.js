@@ -10,16 +10,16 @@ const path = require('path');
 
 passport.use(new LocalStrategy((username, password, done) => {
   models.users.findByUsername(username)
-    .then(user => {
+    .then((user) => {
       if (!user) {
         return done(null, false, { message: 'Incorrect username' });
       }
 
       if (user.password !== password) {
-          return done(null, false, { message: 'Incorrect password' });
+        return done(null, false, { message: 'Incorrect password' });
       }
 
-      done(null, user);
+      return done(null, user);
     })
     .catch(err => done(err));
 }));
@@ -30,25 +30,25 @@ passport.serializeUser((user, callback) => {
 
 passport.deserializeUser((userId, callback) => {
   models.users.findById(userId)
-    .then(user => {
+    .then((user) => {
       callback(null, user);
     })
-    .catch(e => {
+    .catch((e) => {
       callback(e);
     });
 });
 
-let app = express();
+const app = express();
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(expressSession({
   secret: 'some secret',
   resave: false,
   saveUnintialized: false,
-  cookie: { secure: true }
+  cookie: { secure: true },
 }));
-
+app.use(morgan('dev'));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
