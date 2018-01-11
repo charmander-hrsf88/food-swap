@@ -1,6 +1,7 @@
-const controller = require('./controllers');
+const controller = require('./controllers/index');
 const router = require('express').Router();
 
+console.log(controller.users);
 router.get('/users', controller.users.getAll);
 router.get('/users/:id', controller.users.getById);
 router.get('/users', controller.users.post);
