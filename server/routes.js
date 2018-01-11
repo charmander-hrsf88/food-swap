@@ -1,7 +1,6 @@
 const controller = require('./controllers/index');
 const router = require('express').Router();
 
-console.log(controller.users);
 router.get('/users', controller.users.getAll);
 router.get('/users/:id', controller.users.getById);
 router.get('/users', controller.users.post);
@@ -18,4 +17,4 @@ router.get('/friends', controller.friends.getAll);
 router.get('/friends/:id', controller.friends.getById);
 router.post('/friends', controller.friends.post);
 
-exports = router;
+module.exports = router;
