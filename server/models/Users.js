@@ -19,10 +19,10 @@ class Users {
     return db.users.findByUsername({ username });
   }
 
-  static updatePassword({ userId, password }) {
+  static updatePassword({ userAuthId, password }) {
     const salt = utils.createRandom32String();
     const hash = utils.createHash(password, salt);
-    return db.usersAuth.updatePassword({ userId, password: hash, salt });
+    return db.usersAuth.updatePassword({ userAuthId, password: hash, salt });
   }
 }
 
