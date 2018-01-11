@@ -2,29 +2,30 @@ const utils = require('../../lib/hashUtils');
 const db = require('../../database-postgres');
 
 class Users {
-  create({ name, username, password, email }) {
-    let salt = utils.createRandom32String();
-    password = utils.createHash(password, salt);
-    return db.users.create({ name, username, email }))
-      .then(() => db.users)
-      .catch(() => false)
+  static create({ name, username, password, email }) {
+    const salt = utils.createRandom32String();
+    const hash = utils.createHash(password, salt);
+    return db.usersAuth.createUser({ password: hash, salt })
+      .then(({ id }) => db.users.create({ userAuthId: id, name, username, email }))
+      .then(() => true)
+      .catch(() => false);
   }
 
-  findById({ userId }) {
+  static findById({ userId }) {
     return db.users.findByUserId({ userId });
   }
 
-  findByUsername({ username }) {
+  static findByUsername({ username }) {
     return db.users.findByUsername({ username });
   }
 
-  updatePassword({ userId, password }) {
-    let salt = utils.createRandom32String();
-    password = utils.createHash(password, salt);
-    return db.usersAuth.updatePassword({ userId, password, salt });
+  static updatePassword({ userId, password }) {
+    const salt = utils.createRandom32String();
+    const hash = utils.createHash(password, salt);
+    return db.usersAuth.updatePassword({ userId, password: hash, salt });
   }
 }
 
-const user = new Users();
-user.create({name: 'hayden', username:'hmarx', password:'abc', email:'hmarx@gmail.com'}).then(result => console.log(result));
-module.exports = new Users();
+
+console.log(Users.create({name: 'hayden', username:'hmarx', password:'abcddddd', email:'hmarx@gmail.com'}));
+module.exports = Users;
