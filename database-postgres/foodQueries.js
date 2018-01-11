@@ -31,7 +31,7 @@ class Food {
   }
 
   findByDishName({ dishname }) {
-    this.queryString = 'SELECT * FROM food WHERE dishname = $2';
+    this.queryString = 'SELECT * FROM food WHERE dishname = $1';
     return db.any(this.queryString, [dishname]);
   }
 }
