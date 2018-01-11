@@ -8,6 +8,7 @@ class Food {
 
   static findByNameandDishName({ name, dishname }) {
     const queryString;
+
     if (dishname === undefined) {
       queryString = 'SELECT * FROM food WHERE user_id = (SELECT id FROM users WHERE name = $1)';
       return db.any(queryString, [name]);
