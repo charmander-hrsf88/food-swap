@@ -1,6 +1,6 @@
 #logInForm {
   width: 250px;
-  margin: 20% auto;
+  margin: 15% auto;
   border: 1px solid grey;
   text-align: center;
   & > button {
@@ -8,7 +8,7 @@
     border-top: none;
   }
   & label {
-    padding-right: 90px;
+    padding-right: 36%;
     &:nth-of-type(2) {
       padding-right: 95px;
     }
