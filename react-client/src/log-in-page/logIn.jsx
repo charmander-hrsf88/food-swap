@@ -21,7 +21,7 @@ class LogIn extends React.Component {
     return (
       this.state.NewUser === true ?
         <div id="logInForm">
-          <button disabled>Log In</button><button onClick={this.switchType}>Sign In</button>
+          <button disabled>Log In</button><button onClick={this.switchType}>Sign Up</button>
           <form>
             <h2>Log In</h2>
             <label>User name:</label>
@@ -39,7 +39,7 @@ class LogIn extends React.Component {
         <div id="logInForm">
           <button onClick={this.switchType}>Log In</button><button disabled>Sign In</button>
           <form>
-            <h2>Sign In</h2>
+            <h2>Sign Up</h2>
             <label>User name:</label>
             <br />
             <input type="text" />
