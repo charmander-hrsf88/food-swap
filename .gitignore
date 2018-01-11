@@ -5,6 +5,7 @@ logs
 *.log
 .sass-cache
 *.css.map
+*.swp
 
 # Runtime data
 pids
