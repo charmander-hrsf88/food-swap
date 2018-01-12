@@ -10,7 +10,12 @@ module.exports = {
   extends: 'airbnb',
   "globals": {
     "document": true,
+    "console" : true,
     // "foo": true,
     // "window": true,
+    "required": {
+      "some": [ "nesting", "id" ]
+  }
   },
+  
 };
