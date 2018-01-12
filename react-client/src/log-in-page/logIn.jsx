@@ -49,7 +49,7 @@ class LogIn extends React.Component {
   }
 
   signUp() {
-    axios.post('/signup', {
+    axios.post('/api/users', {
       name: this.state.signUpName,
       username: this.state.signUpUserName,
       password: this.state.signUpPassword,
@@ -83,7 +83,7 @@ class LogIn extends React.Component {
         </div>
         :
         <div id="logInForm">
-          <button onClick={this.switchType}>Log In</button><button disabled>Sign In</button>
+          <button onClick={this.switchType}>Log In</button><button disabled>Sign Up</button>
           <form onSubmit={this.handleSubmit}>
             <h2>Sign Up</h2>
             <label htmlFor="signUpUserName" >Username:</label>
