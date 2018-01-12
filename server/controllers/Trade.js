@@ -12,9 +12,20 @@ class Trade {
       });
   }
 
-  static getRequests(req, res) {
+  static getAllTradeByUserId(req, res) {
     const { userId } = req.params;
-    models.trade.getRequests({ userId })
+    models.trade.getAllTradeByUserId({ userId })
+      .then((trades) => {
+        res.json(trades);
+      })
+      .catch((e) => {
+        res.status(404).send({ error: e });
+      });
+  }
+
+  static getRequestsPending(req, res) {
+    const { userId } = req.params;
+    models.trade.getRequestsPending({ userId })
       .then((requests) => {
         res.json(requests);
       })
@@ -25,7 +36,7 @@ class Trade {
 
   static initiate(req, res) {
     const { userId1, userId2, foodId1, foodId2 } = req.body;
-    models.trade.initiate({ userId1, userId2 })
+    models.trade.initiate({ userId1, userId2, foodId1, foodId2 })
       .then(() => {
         res.end('OK');
       })

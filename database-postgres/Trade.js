@@ -1,13 +1,18 @@
 const db = require('./config');
 
 class Trade {
+  static getAllTradeByUserId({ userId }) {
+    const queryString = 'SELECT * FROM trade WHERE user_id1 = $1 OR user_id2 = $1';
+    return db.any(queryString, [userId]);
+  }
+
   static findById({userId1, userId2 }) {
     const queryString = 'SELECT * from trade WHERE user_id1 = $1 AND user_id2 = $2';
     return db.any(queryString, [userId1, userId2]);
   }
 
-  static getRequests({ userId }) {
-    const queryString = 'SELECT * FROM trade WHERE user_id2 = $1 AND status = NULL';
+  static getRequestsPending({ userId }) {
+    const queryString = 'SELECT * FROM trade WHERE user_id2 = $1 AND status IS NULL';
     return db.any(queryString, [userId]);
   }
 

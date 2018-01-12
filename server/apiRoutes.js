@@ -5,6 +5,7 @@ router.get('/users', controller.users.getAll);
 router.get('/users/:id', controller.users.getById);
 router.post('/users', controller.users.post);
 
+router.get('/trade/:userId', controller.trade.getAllTradeByUserId);
 router.get('/trade/user1/:userId1/user2/:userId2', controller.trade.getById);
 router.post('/trade/initiate', controller.trade.initiate);
 router.post('/trade/accept', controller.trade.accept);
