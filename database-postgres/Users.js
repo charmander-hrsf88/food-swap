@@ -41,6 +41,18 @@ class Users {
         return users[0];
       });
   }
+
+  static getAllUsers() {
+    const queryString = 'SELECT * FROM users';
+    return db.any(queryString)
+      .then((users) => {
+        if (users.length === 0) {
+          return null;
+        }
+
+        return users[0];
+      });
+  }
 }
 
 module.exports = Users;

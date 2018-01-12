@@ -24,6 +24,10 @@ class Users {
     const hash = utils.createHash(password, salt);
     return db.usersAuth.updatePassword({ userAuthId, password: hash, salt });
   }
+
+  static getAllUsers() {
+    return db.users.getAllUsers();
+  }
 }
 
 module.exports = Users;
