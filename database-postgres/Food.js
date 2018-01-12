@@ -8,8 +8,25 @@ class Food {
       .catch(() => false);
   }
 
+  static getAll() {
+    const queryString = 'SELECT * FROM food';
+    return db.any(queryString);
+  }
+
+  static findById({ id }) {
+    const queryString = 'SELECT * FROM food WHERE id = $1 LIMIT 1';
+    return db.any(queryString, [id])
+      .then((foods) => {
+        if (foods.lengh === 0) {
+          return null;
+        }
+
+        return foods[0];
+      });
+  }
+
   static findByNameandDishName({ name, dishname }) {
-    const queryString;
+    let queryString;
 
     if (dishname === undefined) {
       queryString = 'SELECT * FROM food WHERE user_id = (SELECT id FROM users WHERE name = $1)';
@@ -21,7 +38,7 @@ class Food {
   }
 
   static findByUserNameandDishName({ username, dishname }) {
-    const queryString;
+    let queryString;
 
     if (dishname === undefined) {
       queryString = 'SELECT * FROM food WHERE user_id = (SELECT id FROM users WHERE userName = $1)';
@@ -38,4 +55,4 @@ class Food {
   }
 }
 
-exports = Food;
+module.exports = Food;

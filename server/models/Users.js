@@ -12,7 +12,7 @@ class Users {
   }
 
   static findById({ id }) {
-    return db.users.findByUserId({ id });
+    return db.users.findById({ id });
   }
 
   static findByUsername({ username }) {
@@ -23,6 +23,10 @@ class Users {
     const salt = utils.createRandom32String();
     const hash = utils.createHash(password, salt);
     return db.usersAuth.updatePassword({ userAuthId, password: hash, salt });
+  }
+
+  static getAllUsers() {
+    return db.users.getAllUsers();
   }
 }
 
