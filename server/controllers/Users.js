@@ -1,14 +1,36 @@
+const models = require('../models');
+
 class Users {
   static getAll(req, res) {
-    res.end('got all the users');
+    models.users.getAllUsers()
+      .then((users) => {
+        res.json(users);
+      })
+      .catch((e) => {
+        res.status(404).send({ error: e });
+      });
   }
 
   static getById(req, res) {
-    res.end('got one user with id');
+    const { id } = req.params;
+    models.users.findById({ id })
+      .then((user) => {
+        res.json(user);
+      })
+      .catch((e) => {
+        res.status(404).send({ error: e });
+      });
   }
 
   static post(req, res) {
-    res.end('create a new user');
+    const { name, username, password, email } = req.body;
+    models.users.create({ name, username, password, email })
+      .then(() => {
+        res.end('OK');
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e });
+      });
   }
 }
 
