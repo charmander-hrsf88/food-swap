@@ -5,6 +5,14 @@ class Food {
     return db.food.create({ dishname, description, userId });
   }
 
+  static getAll() {
+    return db.food.getAll();
+  }
+
+  static findById({ id }) {
+    return db.food.findById({ id });
+  }
+
   static findByNameandDishName({ name, dishname }) {
     return db.food.findByNameandDishName({ name, dishname });
   }
