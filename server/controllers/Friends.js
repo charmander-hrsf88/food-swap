@@ -12,4 +12,4 @@ class Friend {
   }
 }
 
-exports = Friend;
+module.exports = Friend;
