@@ -12,7 +12,7 @@ class Users {
   }
 
   static findById({ id }) {
-    return db.users.findByUserId({ id });
+    return db.users.findById({ id });
   }
 
   static findByUsername({ username }) {
