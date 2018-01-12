@@ -18,18 +18,6 @@ class Users {
       });
   }
 
-  static findByUserId({ id }) {
-    const queryString = 'SELECT * FROM users WHERE id = $1 LIMIT 1';
-    return db.one(queryString, [id])
-      .then((users) => {
-        if (users.length === 0) {
-          return null;
-        }
-
-        return users[0];
-      });
-  }
-
   static findByAuthId({ userAuthId }) {
     const queryString = 'SELECT * FROM users WHERE user_auth_id = $1 LIMIT 1';
     return db.any(queryString, [userAuthId])
@@ -62,7 +50,7 @@ class Users {
           return null;
         }
 
-        return users[0];
+        return users;
       });
   }
 }

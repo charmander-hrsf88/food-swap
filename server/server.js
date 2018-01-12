@@ -7,7 +7,7 @@ const morgan = require('morgan');
 const expressSession = require('express-session');
 const flash = require('connect-flash');
 const path = require('path');
-const apiRouter = require('./routes');
+const apiRouter = require('./apiRoutes');
 
 passport.use(new LocalStrategy((username, password, done) => {
   models.users.findByUsername(username)
@@ -46,7 +46,7 @@ app.use(bodyParser.json());
 app.use(expressSession({
   secret: 'some secret',
   resave: false,
-  saveUnintialized: false,
+  saveUninitialized: false,
   cookie: { secure: true },
 }));
 app.use(morgan('dev'));
