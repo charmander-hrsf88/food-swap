@@ -8,6 +8,23 @@ class Food {
       .catch(() => false);
   }
 
+  static getAll() {
+    const queryString = 'SELECT * FROM food';
+    return db.any(queryString);
+  }
+
+  static findById({ id }) {
+    const queryString = 'SELECT * FROM food WHERE id = $1 LIMIT 1';
+    return db.any(queryString, [id])
+      .then((foods) => {
+        if (foods.lengh === 0) {
+          return null;
+        }
+
+        return foods[0];
+      });
+  }
+
   static findByNameandDishName({ name, dishname }) {
     let queryString;
 
