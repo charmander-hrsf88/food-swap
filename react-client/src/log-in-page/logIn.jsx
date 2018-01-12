@@ -62,14 +62,14 @@ class LogIn extends React.Component {
         username: this.state.signUpUserName,
         password: this.state.signUpPassword,
         email: this.state.signUpEmail,
-      }
+      },
     })
       .then(function (response) {
       console.log(response);
-    })
-    .catch(function (error) {
+      })
+      .catch(function (error) {
       console.log(error);
-    });
+      });
   }
 
   render() {
