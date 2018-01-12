@@ -12,6 +12,7 @@ const apiRouter = require('./apiRoutes');
 passport.use(new LocalStrategy((username, password, done) => {
   models.users.findByUsername(username)
     .then((user) => {
+      console.log('user!', user);
       if (!user) {
         return done(null, false, { message: 'Incorrect username' });
       }
@@ -55,6 +56,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', express.static(path.join(__dirname, '../react-client/dist')));
+app.use('/trades', express.static(path.join(__dirname, '../react-client/dist')));
+app.use('/profile', express.static(path.join(__dirname, '../react-client/dist')));
 app.use('/login', express.static(path.join(__dirname, '../react-client/dist/logIn')));
 app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }));
 
