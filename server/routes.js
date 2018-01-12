@@ -3,8 +3,6 @@ const router = require('express').Router();
 
 router.get('/users', controller.users.getAll);
 router.get('/users/:id', controller.users.getById);
-
-// data = { name, username, password, email }
 router.post('/users', controller.users.post);
 
 router.get('/trade', controller.trade.getAll);
