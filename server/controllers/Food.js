@@ -24,7 +24,6 @@ class Food {
 
   static post(req, res) {
     const { dishname, description, userId } = req.body;
-    console.log(dishname, description, userId);
     models.food.create({ dishname, description, userId })
       .then(() => {
         res.end('OK');
