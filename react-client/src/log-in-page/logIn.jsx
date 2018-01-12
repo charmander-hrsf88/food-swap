@@ -11,11 +11,13 @@ class LogIn extends React.Component {
       signUpConfirmPassword: 'test',
       signUpName: 'Hayden Marx',
       signUpEmail: 'haydenmarx@gmail.com',
+      logInUserName: 'Tester',
+      logInPassword: 'test',
     };
     this.switchType = this.switchType.bind(this);
     this.updateForm = this.updateForm.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.signUp = this.signUp.bind(this);
+    this.logIn = this.LogIn.bind(this);
   }
 
   switchType() {
@@ -30,15 +32,11 @@ class LogIn extends React.Component {
     this.setState({ [e.target.id]: e.target.value });
   }
 
-  handleSubmit(e) {
+  LogIn(e) {
     e.preventDefault();
-    this.signUp();
-  }
-
-  LogIn() {
-    axios.get('/signup', {
-      firstName: 'Fred',
-      lastName: 'Flintstone'
+    axios.get('/login', {
+      username: this.state.logInUserName,
+      password: this.state.logInPassword,
     })
     .then(function (response) {
       console.log(response);
@@ -48,19 +46,25 @@ class LogIn extends React.Component {
     });
   }
 
-  signUp() {
+  signUp(e) {
+    e.preventDefault();
     // let name = this.state.signUpName;
     // let username = this.state.signUpUserName;
     // let password = this.state.signUpPassword;
     // let email = this.state.signUpEmail;
     // console.log(name, username, password, email);
-    axios.post('/login', {
-      name: this.state.signUpName,
-      username: this.state.signUpUserName,
-      password: this.state.signUpPassword,
-      email: this.state.signUpEmail,
+    axios({
+      url: '/api/users',
+      method: 'post',
+      contentType: 'application/json',
+      data: {
+        name: this.state.signUpName,
+        username: this.state.signUpUserName,
+        password: this.state.signUpPassword,
+        email: this.state.signUpEmail,
+      }
     })
-    .then(function (response) {
+      .then(function (response) {
       console.log(response);
     })
     .catch(function (error) {
@@ -73,15 +77,28 @@ class LogIn extends React.Component {
       this.state.NewUser === true ?
         <div id="logInForm">
           <button disabled>Log In</button><button onClick={this.switchType}>Sign Up</button>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.logIn}>
             <h2>Log In</h2>
             <label htmlFor="logInUserName" >Username:</label>
             <br />
-            <input id="logInUserName" required placeholder="Enter Username" />
+            <input
+              id="logInUserName"
+              required
+              placeholder="Enter Username"
+              value={this.state.logInUserName}
+              onChange={this.updateForm}
+            />
             <br />
             <label htmlFor="logInPassword" >Password:</label>
             <br />
-            <input id="logInPassword" type="password" required placeholder="Enter Password" />
+            <input
+              id="logInPassword"
+              type="password"
+              required
+              placeholder="Enter Password"
+              value={this.state.logInUserName}
+              onChange={this.updateForm}
+            />
             <br />
             <button>Submit</button>
           </form>
@@ -89,7 +106,7 @@ class LogIn extends React.Component {
         :
         <div id="logInForm">
           <button onClick={this.switchType}>Log In</button><button disabled>Sign Up</button>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.signUp}>
             <h2>Sign Up</h2>
             <label htmlFor="signUpUserName" >Username:</label>
             <br />
