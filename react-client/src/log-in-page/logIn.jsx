@@ -6,11 +6,11 @@ class LogIn extends React.Component {
     super(props);
     this.state = {
       NewUser: true,
-      signUpUserName: '',
-      signUpPassword: '',
-      signUpConfirmPassword: '',
-      signUpName: '',
-      signUpEmail: '',
+      signUpUserName: 'Tester',
+      signUpPassword: 'test',
+      signUpConfirmPassword: 'test',
+      signUpName: 'Hayden Marx',
+      signUpEmail: 'haydenmarx@gmail.com',
     };
     this.switchType = this.switchType.bind(this);
     this.updateForm = this.updateForm.bind(this);
@@ -49,7 +49,12 @@ class LogIn extends React.Component {
   }
 
   signUp() {
-    axios.post('/api/users', {
+    // let name = this.state.signUpName;
+    // let username = this.state.signUpUserName;
+    // let password = this.state.signUpPassword;
+    // let email = this.state.signUpEmail;
+    // console.log(name, username, password, email);
+    axios.post('/login', {
       name: this.state.signUpName,
       username: this.state.signUpUserName,
       password: this.state.signUpPassword,

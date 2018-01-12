@@ -56,7 +56,6 @@ app.use(passport.session());
 
 app.use('/', express.static(path.join(__dirname, '../react-client/dist')));
 app.use('/login', express.static(path.join(__dirname, '../react-client/dist/logIn')));
-app.use('/signup', express.static(path.join(__dirname, '../react-client/dist/signUp')));
 app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }));
 
 app.use('/api', apiRouter);
