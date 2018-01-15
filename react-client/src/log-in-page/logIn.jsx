@@ -77,16 +77,16 @@ class LogIn extends React.Component {
       this.state.NewUser === true ?
         <div id="logInForm">
           <button disabled>Log In</button><button onClick={this.switchType}>Sign Up</button>
-          <form onSubmit={this.logIn}>
+          <form action="/login" method="POST" onSubmit={(e)=>{console.log(e.target)}}>
             <h2>Log In</h2>
             <label htmlFor="logInUserName" >Username:</label>
             <br />
             <input
               id="logInUserName"
+              name="username"
               required
               placeholder="Enter Username"
-              value={this.state.logInUserName}
-              onChange={this.updateForm}
+
             />
             <br />
             <label htmlFor="logInPassword" >Password:</label>
@@ -94,10 +94,9 @@ class LogIn extends React.Component {
             <input
               id="logInPassword"
               type="password"
+              name="password"
               required
               placeholder="Enter Password"
-              value={this.state.logInUserName}
-              onChange={this.updateForm}
             />
             <br />
             <button>Submit</button>
