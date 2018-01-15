@@ -1,20 +1,73 @@
 #trades {
   & > h2 {
     text-align: center;
+    margin-bottom: 5px;
   }
   & > ol {
     list-style: none;
     margin: 0px auto;
+    padding-left: 0px;
     width: 500px;
     & li {
-      padding-bottom: 5px;
-      &:after {
-        clear: both;
-      }
-      & button {
-        display: block;
+      padding-bottom: 10px;
+      & > div {
         margin: 0px auto;
       }
+      & > hr {
+        margin: 0px;
+      }
+      & > p {
+        margin: 0px;
+        padding: 10px 10px 5px 10px;
+      }
+      & > div {
+        margin: 0px auto;
+        & button {
+          text-align: center;
+          background: rgba(255, 0, 0, 0.521);
+          border-color: rgba(255, 0, 0, 0.521);
+          cursor: pointer;
+          &:first-child {
+            margin-right: 10px;
+            background: rgba(0, 128, 0, 0.514);
+            border-color: rgba(0, 128, 0, 0.514);
+          }
+        }
+      }
     }
+  }
+}
+
+.pendingTrade {
+  background: rgba(255, 255, 0, 0.342);
+  & > div {
+    width: 220px;
+  }
+  & > .oneButton {
+    width: 108px;
+  }
+}
+
+.acceptedTrade {
+  background: rgba(0, 128, 0, 0.411);
+}
+
+.rejectedTrade {
+  color: rgba(0, 0, 0, 0.61);
+  background: rgba(107, 103, 103, 0.575)
+}
+
+.succssfulTrade {
+  background: rgba(7, 71, 7, 0.863);
+  & > div {
+    width: 260px;
+  }
+}
+
+li {
+  & .ratingPanel {
+    background: white;
+    border: 1px dotted rgba(0, 0, 0, 0.589);
+    width: 200px;
   }
 }
