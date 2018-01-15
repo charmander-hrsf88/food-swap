@@ -4,11 +4,7 @@ const axios = require('axios');
 describe('API test', () => {
   const baseURL = 'http://localhost:8000/api';
 
-<<<<<<< HEAD
   xdescribe('/api/users', () => {
-=======
-  describe('/api/users', () => {
->>>>>>> 6bcf6208e75c13fe6723e392f3c680f30bbe2707
     it('should get all the data when GET /api/users is received', (done) => {
       axios({
         method: 'get',
@@ -57,7 +53,6 @@ describe('API test', () => {
     });
   });
 
-<<<<<<< HEAD
   xdescribe('/api/trade', () => {
     it('should get all the trade for a user when GET /api/trade/:userId is received', (done) => {
       axios({
@@ -144,7 +139,7 @@ describe('API test', () => {
   });
 
   describe('api/food', () => {
-    it('should receive all the foods when GET /api/food', (done) => {
+    it('should receive all the foods when GET /api/food is received', (done) => {
       axios({
         method: 'get',
         url: `${baseURL}/food`,
@@ -157,7 +152,7 @@ describe('API test', () => {
         });
     });
 
-    it('should receive a food when GET /api/food/:id', (done) => {
+    it('should receive a food when GET /api/food/:id is received', (done) => {
       axios({
         method: 'get',
         url: `${baseURL}/food/1`,
@@ -169,82 +164,15 @@ describe('API test', () => {
           throw err;
         });
     });
-  });
-=======
-  it('should get all the trade for a user when GET /api/trade/:userId is received', (done) => {
-    axios({
-      method: 'get',
-      url: `${baseURL}/trade/1`,
-    })
-      .then((result) => {
-        done();
+
+    it('should create a new food row when POST /api/food is received', (done) => {
+      const foodData = {
+
+      }
+      axios({
+        method: 'post',
+        url: `${baseURL}/food`
       })
-      .catch((err) => {
-        throw err;
-      });
+    });
   });
-
-  it('should get all the trades between two users when GET /api/trade/:username1/profile/:username2 is received', (done) => {
-    axios({
-      method: 'get',
-      url: `${baseURL}/trade/wanchoi211/profile/hmarx`,
-    })
-      .then((result) => {
-        done();
-      })
-      .catch((err) => {
-        throw err;
-      })
-  });
-
-  it('should create a trade column when POST /api/trade/initiate is received', (done) => {
-    const tradeData = {
-      username1: '',
-      username2: '',
-      food1: '',
-      food2: '',
-    }
-
-    axios({
-      method: 'post',
-      url: `${baseURL}/trade/initiate`,
-      data: tradeData,
-    })
-      .then((result) => {
-        done();
-      })
-      .catch((err) => {
-        throw err;
-      });
-  });
-
-  it('should change the status to 1 when POST /api/trade/accept is received', (done) => {
-    const acceptData = {
-      id: '',
-    }
-
-    axios({
-      method: 'post',
-      url: `${baseURL}/trade/accept`,
-      data: acceptData,
-    })
-      .then((result) => {
-        done();
-      })
-      .catch((err) => {
-        throw err;
-      });
-  });
-
-  it('should change the status to 0 when POST /api/trade/accept is received', (done) => {
-    const rejectData = {
-      id: '',
-    }
-
-    axios({
-      method: 'post',
-      url:
-    })
-  })
->>>>>>> 6bcf6208e75c13fe6723e392f3c680f30bbe2707
 });
