@@ -22,6 +22,7 @@ class Users {
       });
   }
 
+<<<<<<< HEAD
   static getByUsername(req, res) {
     const { username } = req.params;
     models.users.findByUsername({ username })
@@ -33,6 +34,8 @@ class Users {
       });
   }
 
+=======
+>>>>>>> 6bcf6208e75c13fe6723e392f3c680f30bbe2707
   static create(req, res) {
     const { name, username, password, email } = req.body;
     models.users.create({ name, username, password, email })
