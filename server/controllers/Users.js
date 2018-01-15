@@ -22,6 +22,17 @@ class Users {
       });
   }
 
+  static getByUsername(req, res) {
+    const { username } = req.params;
+    models.users.findByUsername({ username })
+      .then((user) => {
+        res.json(user);
+      })
+      .catch((e) => {
+        res.status(404).send({ error: e });
+      });
+  }
+
   static create(req, res) {
     const { name, username, password, email } = req.body;
     models.users.create({ name, username, password, email })

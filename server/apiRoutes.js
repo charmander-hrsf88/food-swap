@@ -3,6 +3,7 @@ const router = require('express').Router();
 
 router.get('/users', controller.users.getAll);
 router.get('/users/:id', controller.users.getById);
+router.get('/users/username/:username', controller.users.getByUsername);
 router.post('/users', controller.users.create);
 
 router.get('/trade/:userId', controller.trade.getAllTradeByUserId);
