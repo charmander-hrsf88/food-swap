@@ -31,15 +31,18 @@ class Trade extends React.Component {
       buttons: '',
       currentTime: '',
       truthy: this.props.trade.username1 === this.props.user.name,
-      firstStar: <UnRatedStar />,
-      secondStar: <UnRatedStar />,
-      thirdStar: <UnRatedStar />,
-      fourthStar: <UnRatedStar />,
-      fifthStar: <UnRatedStar />,
+      firstStar: '',
+      secondStar: '',
+      thirdStar: '',
+      fourthStar: '',
+      fifthStar: '',
       clicked: false,
+      newRating: false,
     };
     this.updateStars = this.updateStars.bind(this);
     this.hoverStars = this.hoverStars.bind(this);
+    this.submitRating = this.submitRating.bind(this);
+    this.cancelRating = this.cancelRating.bind(this);
   }
   componentWillMount() {
     if (this.props.trade.status === null) {
@@ -106,10 +109,17 @@ class Trade extends React.Component {
       this.setState({
         buttons:
   <div>
-    <button>Rate Trade</button>
+    <button onClick={() => { this.setState({ newRating: true }); }} >Rate Trade</button>
     <button>Trade Did Not Happen</button>
   </div>,
       });
+      if (this.props.trade.rating !== undefined) {
+        this.updateStars(this.props.trade.rating);
+        console.log(this.props.trade.rating);
+        this.setState({ newRating: true });
+      } else {
+        this.hoverStars('default');
+      }
     } else {
       this.setState({ liStatus: 'rejectedTrade' });
       if (this.state.truthy) {
@@ -124,77 +134,72 @@ class Trade extends React.Component {
         });
       }
     }
-    this.setState({
-      firstStar: <UnRatedStar location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-      secondStar: <UnRatedStar location={2} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-      thirdStar: <UnRatedStar location={3} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-      fourthStar: <UnRatedStar location={4} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-      fifthStar: <UnRatedStar location={5} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-    });
   }
 
   updateStars(num) {
-    switch (num) {
-      case 1:
-        this.setState({
-          firstStar: <RatedStarLike location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          secondStar: <RatedStarDislike location={2} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          thirdStar: <RatedStarDislike location={3} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          fourthStar: <RatedStarDislike location={4} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          fifthStar: <RatedStarDislike location={5} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          clicked: true,
-        });
-        break;
-      case 2:
-        this.setState({
-          firstStar: <RatedStarLike location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          secondStar: <RatedStarLike location={2} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          thirdStar: <RatedStarDislike location={3} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          fourthStar: <RatedStarDislike location={4} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          fifthStar: <RatedStarDislike location={5} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          clicked: true,
-        });
-        break;
-      case 3:
-        this.setState({
-          firstStar: <RatedStarLike location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          secondStar: <RatedStarLike location={2} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          thirdStar: <RatedStarLike location={3} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          fourthStar: <RatedStarDislike location={4} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          fifthStar: <RatedStarDislike location={5} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          clicked: true,
-        });
-        break;
-      case 4:
-        this.setState({
-          firstStar: <RatedStarLike location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          secondStar: <RatedStarLike location={2} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          thirdStar: <RatedStarLike location={3} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          fourthStar: <RatedStarLike location={4} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          fifthStar: <RatedStarDislike location={5} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          clicked: true,
-        });
-        break;
-      case 5:
-        this.setState({
-          firstStar: <RatedStarLike location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          secondStar: <RatedStarLike location={2} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          thirdStar: <RatedStarLike location={3} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          fourthStar: <RatedStarLike location={4} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          fifthStar: <RatedStarLike location={5} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          clicked: true,
-        });
-        break;
-      default:
-        this.setState({
-          firstStar: <UnRatedStar location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          secondStar: <UnRatedStar location={2} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          thirdStar: <UnRatedStar location={3} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          fourthStar: <UnRatedStar location={4} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          fifthStar: <UnRatedStar location={5} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
-          clicked: true,
-        });
-        break;
+    if (this.state.clicked !== true) {
+      switch (num) {
+        case 1:
+          this.setState({
+            firstStar: <RatedStarLike location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            secondStar: <RatedStarDislike location={2} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            thirdStar: <RatedStarDislike location={3} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            fourthStar: <RatedStarDislike location={4} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            fifthStar: <RatedStarDislike location={5} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            clicked: true,
+          });
+          break;
+        case 2:
+          this.setState({
+            firstStar: <RatedStarLike location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            secondStar: <RatedStarLike location={2} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            thirdStar: <RatedStarDislike location={3} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            fourthStar: <RatedStarDislike location={4} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            fifthStar: <RatedStarDislike location={5} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            clicked: true,
+          });
+          break;
+        case 3:
+          this.setState({
+            firstStar: <RatedStarLike location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            secondStar: <RatedStarLike location={2} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            thirdStar: <RatedStarLike location={3} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            fourthStar: <RatedStarDislike location={4} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            fifthStar: <RatedStarDislike location={5} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            clicked: true,
+          });
+          break;
+        case 4:
+          this.setState({
+            firstStar: <RatedStarLike location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            secondStar: <RatedStarLike location={2} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            thirdStar: <RatedStarLike location={3} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            fourthStar: <RatedStarLike location={4} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            fifthStar: <RatedStarDislike location={5} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            clicked: true,
+          });
+          break;
+        case 5:
+          this.setState({
+            firstStar: <RatedStarLike location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            secondStar: <RatedStarLike location={2} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            thirdStar: <RatedStarLike location={3} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            fourthStar: <RatedStarLike location={4} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            fifthStar: <RatedStarLike location={5} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            clicked: true,
+          });
+          break;
+        default:
+          this.setState({
+            firstStar: <UnRatedStar location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            secondStar: <UnRatedStar location={2} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            thirdStar: <UnRatedStar location={3} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            fourthStar: <UnRatedStar location={4} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            fifthStar: <UnRatedStar location={5} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />,
+            clicked: true,
+          });
+          break;
+      }
     }
   }
 
@@ -259,22 +264,43 @@ class Trade extends React.Component {
     }
   }
 
+  cancelRating() {
+    this.setState({ newRating: false, clicked: false });
+    this.hoverStars('default');
+  }
+
+  submitRating() {
+    console.log(this);
+  }
+  /*
+  console.log(this); this.setState({ newRating: false });
+  */
+
   render() {
     return (
-      <li className={this.state.liStatus}>
+      <li className={this.state.liStatus} >
         <hr />
         <p> { this.state.message } </p>
-        { this.state.buttons }
-        <div
-          className="ratingPanel"
-          onMouseLeave={() => { this.hoverStars('default'); }}
-        >
-          {this.state.firstStar}
-          {this.state.secondStar}
-          {this.state.thirdStar}
-          {this.state.fourthStar}
-          {this.state.fifthStar}
-        </div>
+        { this.state.newRating ?
+          <div
+            className="ratingPanel"
+            onMouseLeave={() => { this.hoverStars('default'); }}
+          >
+            {this.state.firstStar}
+            {this.state.secondStar}
+            {this.state.thirdStar}
+            {this.state.fourthStar}
+            {this.state.fifthStar}
+            {(typeof this.props.trade.rating !== 'number' && this.state.clicked === true) &&
+              <div>
+                <button onClick={this.submitRating}>Submit? </button>
+                <button onClick={this.cancelRating}>Cancel? </button>
+              </div>
+            }
+          </div>
+        :
+          this.state.buttons
+        }
       </li>
     );
   }
