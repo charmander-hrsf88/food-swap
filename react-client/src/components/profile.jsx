@@ -21,8 +21,9 @@ class Profile extends React.Component {
   }
 
   getById(id) {
-    axios.get('/user', {
-      params: { id: id }
+    axios({
+      method: 'GET',
+      url: `/api/users/:${id}`,
     }).then((data) => {
       this.setState({
         profile: data,
