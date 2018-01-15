@@ -14,7 +14,7 @@ const Switcher = () => (
     <Switch>
       <Route exact path="/" component={App} />
       <Route exact path="/login" component={LogIn} />
-      <Route path="/user/:userName" component={Profile} />
+      <Route path="/user/:profile" component={Profile} />
       <Route path="/trades" component={Trades} />
     </Switch>
   </Router>

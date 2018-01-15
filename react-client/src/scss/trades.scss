@@ -1,3 +1,5 @@
+@import 'colorScheme';
+
 #trades {
   & > h2 {
     text-align: center;
@@ -24,13 +26,13 @@
         margin: 0px auto;
         & button {
           text-align: center;
-          background: rgba(255, 0, 0, 0.521);
-          border-color: rgba(255, 0, 0, 0.521);
+          background: $failButton;
+          border-color: $failButton;
           cursor: pointer;
           &:first-child {
             margin-right: 10px;
-            background: rgba(0, 128, 0, 0.514);
-            border-color: rgba(0, 128, 0, 0.514);
+            background: $successButton;
+            border-color: $successButton;
           }
         }
       }
@@ -69,5 +71,15 @@ li {
     background: white;
     border: 1px dotted rgba(0, 0, 0, 0.589);
     width: 200px;
+    & button {
+      margin-top: 5px;
+      &:first-of-type {
+        background: $successButton !important;
+        border-color: $successButton !important;
+      }
+      &:last-of-type {
+        float: right;
+      }
+    }
   }
 }

@@ -3,7 +3,6 @@ import axios from 'axios';
 import EditPage from './EditPage.jsx';
 import dummyData from '../dummyData.js'
 
-
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -38,7 +37,9 @@ class Profile extends React.Component {
   }
 
   clickHandler(e) {
+    console.log(this.props.match.params.profile)
     console.log(this.state.showEditPage);
+    /* If user !== username passed */
     this.setState({
       showEditPage: !this.state.showEditPage,
     });
@@ -46,9 +47,11 @@ class Profile extends React.Component {
   updateProfile(e) {
     this.setState({ [e.target.id]: e.target.value });
   }
+
   render() {
     return (
       this.state.showEditPage ?
+        /* Own Profile */
         <div id="userProfile">
           <h2>Profile: </h2>
           {false && <img alt={this.state.userName} src={this.state.picture} />}
@@ -58,6 +61,7 @@ class Profile extends React.Component {
           <button type="submit" onClick={() => { this.clickHandler(); }}> Edit Profile </button>
         </div>
         :
+        /* Edit Page */
         <div id="editProfile">
           <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} />
         </div>
