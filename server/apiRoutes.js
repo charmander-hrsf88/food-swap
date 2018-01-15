@@ -3,10 +3,7 @@ const router = require('express').Router();
 
 router.get('/users', controller.users.getAll);
 router.get('/users/:id', controller.users.getById);
-<<<<<<< HEAD
 router.get('/users/username/:username', controller.users.getByUsername);
-=======
->>>>>>> 6bcf6208e75c13fe6723e392f3c680f30bbe2707
 router.post('/users', controller.users.create);
 
 router.get('/trade/:userId', controller.trade.getAllTradeByUserId);
