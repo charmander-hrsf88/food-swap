@@ -66,6 +66,18 @@ class Trade {
         res.status(500).send({ error: e });
       });
   }
+
+  static getTradesForProfilePage(req, res) {
+    const { username1, username2 } = req.params;
+
+    models.trade.getTradesForProfilePage({ username1, username2 })
+      .then((trades) => {
+        res.json(trades);
+      })
+      .catch((e) => {
+        res.status(404).send({ error: e });
+      });
+  }
 }
 
 module.exports = Trade;

@@ -3,13 +3,15 @@ const router = require('express').Router();
 
 router.get('/users', controller.users.getAll);
 router.get('/users/:id', controller.users.getById);
-router.post('/users', controller.users.post);
+router.post('/users', controller.users.create);
 
 router.get('/trade/:userId', controller.trade.getAllTradeByUserId);
 router.get('/trade/user1/:userId1/user2/:userId2', controller.trade.getById);
+router.get('/trade/:username1/profile/:username2', controller.trade.getTradesForProfilePage);
 router.post('/trade/initiate', controller.trade.initiate);
 router.post('/trade/accept', controller.trade.accept);
 router.post('/trade/reject', controller.trade.reject);
+
 
 router.get('/food', controller.food.getAll);
 router.get('/food/:id', controller.food.getById);

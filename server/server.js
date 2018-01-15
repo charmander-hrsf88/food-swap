@@ -12,7 +12,6 @@ const apiRouter = require('./apiRoutes');
 passport.use(new LocalStrategy((username, password, done) => {
   models.users.findByUsername(username)
     .then((user) => {
-      console.log('user!', user);
       if (!user) {
         return done(null, false, { message: 'Incorrect username' });
       }

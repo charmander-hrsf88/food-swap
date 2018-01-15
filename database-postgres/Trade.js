@@ -6,6 +6,11 @@ class Trade {
     return db.any(queryString, [userId]);
   }
 
+  static getAllTradesByUsername({ username }) {
+    const queryString = 'SELECT * FROM trade WHERE user_id1 = (SELECT id FROM users WHERE username = $1)';
+    return db.any(queryString, [username]);
+  }
+
   static findById({userId1, userId2 }) {
     const queryString = 'SELECT * from trade WHERE user_id1 = $1 AND user_id2 = $2';
     return db.any(queryString, [userId1, userId2]);
@@ -29,6 +34,11 @@ class Trade {
   static reject({ id }) {
     const queryString = 'UDATE trade SET status = FALSE WHERE id = $1';
     return db.any(queryString, [id]);
+  }
+
+  static getAllSuccessfulTradeBetween({ username1, username2 }) {
+    const queryString = 'SELECT * FROM trade INNER JOIN users on trade.user_id1 ';
+    return db.any(queryString, [username1, username2]);
   }
 }
 
