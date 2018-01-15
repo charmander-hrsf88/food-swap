@@ -6,9 +6,7 @@ class Users {
     const salt = utils.createRandom32String();
     const hash = utils.createHash(password, salt);
     return db.usersAuth.createUser({ password: hash, salt })
-      .then(({ id }) => db.users.create({ userAuthId: id, name, username, email }))
-      .then(() => true)
-      .catch(() => false);
+      .then(({ id }) => db.users.create({ userAuthId: id, name, username, email }));
   }
 
   static findById({ id }) {
