@@ -1,18 +1,23 @@
 import React from 'react';
 import axios from 'axios';
+import EditPage from './EditPage.jsx';
 import dummyData from '../dummyData.js'
+
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       profile: dummyData.friends[0],
-      showTextField: true,
+      showEditPage: true,
       bio: 'I love to cook',
+      email: 'dummydata@gmail.com ',
+      userName: 'Hayden',
+      picture: dummyData.friends[0].user_picture,
     };
     this.getById = this.getById.bind(this);
     this.clickHandler = this.clickHandler.bind(this);
-    this.updateBio = this.updateBio.bind(this);
+    this.updateProfile = this.updateProfile.bind(this);
   }
 
   getById(id) {
@@ -22,33 +27,39 @@ class Profile extends React.Component {
       this.setState({
         profile: data,
         bio: data.bio,
+        email: data.email,
+        userName: data.name,
+        picture: data.picture,
       });
     }).catch((error) => {
       console.log(error);
     });
   }
 
-  clickHandler() {
+  clickHandler(e) {
+    console.log(this.state.showEditPage);
     this.setState({
-      showTextField: !this.state.showTextField,
+      showEditPage: !this.state.showEditPage,
     });
   }
-  updateBio(e) {
+  updateProfile(e) {
     this.setState({ [e.target.id]: e.target.value });
   }
-
   render() {
     return (
-      <div id="userProfile">
-        <h2>Profile: </h2>
-        {false && <img alt={this.state.profile.user_name} src={this.state.profile.user_picture} />}
-        Username: {this.state.profile.user_name} <br />
-        email: {this.state.profile.user_email} <br />
-      Bio:{' '}
-        {this.state.showTextField ? this.state.bio :
-        <textarea id="bio" rows="2" value={this.state.bio} onChange={this.updateBio}>{this.state.bio}</textarea> }{' '}
-        <button type="submit" onClick={() => { this.clickHandler(); }}> edit</button>
-      </div>
+      this.state.showEditPage ?
+        <div id="userProfile">
+          <h2>Profile: </h2>
+          {false && <img alt={this.state.userName} src={this.state.picture} />}
+          Username: {this.state.userName} <br />
+          email: {this.state.email} <br />
+          Bio: {this.state.bio} <br />
+          <button type="submit" onClick={() => { this.clickHandler(); }}> Edit Profile </button>
+        </div>
+        :
+        <div id="editProfile">
+          <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} />
+        </div>
     );
   }
 }
