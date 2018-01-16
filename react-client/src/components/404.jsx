@@ -2,7 +2,7 @@ import React from 'react';
 
 const FourOhFour = () => (
   <div>
-    <a href="/login">Sorry we dont have that page.</a>
+    <a href="/" id="home">Sorry we dont have that page.</a>
   </div>
 );
 

@@ -1,12 +1,13 @@
 import React from 'react';
+import { logOut } from '../axiosCalls.jsx'
 // import { Link } from 'react-router-dom';
 
-const NavBar = ({ switchPage }) => (
+const NavBar = ({ switchPage, cb }) => (
   <div id="navBar">
     {/* <Link to="/">Home</Link>
     <Link to="/trades">Trades</Link>
     <Link to="/user/:insertDataHere">Profile</Link> */}
-    <button onClick={() => { console.log('insertLogOutHere')}}>Log Out</button>
+    <button onClick={() => { logOut(cb); }}>Log Out</button>
     <button onClick={() => { switchPage('Home'); }}>Home</button>
     <button onClick={() => { switchPage('Profile'); }}>Profile</button>
     <button onClick={() => { switchPage('Trades'); }}>Trades</button>
