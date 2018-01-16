@@ -4,7 +4,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const models = require('./models');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const expressSession = require('express-session');
+const session = require('express-session');
 const flash = require('connect-flash');
 const path = require('path');
 const apiRouter = require('./apiRoutes');
@@ -39,22 +39,42 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(expressSession({
+app.use(session({
   secret: 'some secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: true },
+  cookie: { secure: false },
 }));
 app.use(morgan('dev'));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+function isLoggedIn (req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+}
+
 app.use('/', express.static(path.join(__dirname, '../react-client/dist')));
 app.use('/trades', express.static(path.join(__dirname, '../react-client/dist')));
 app.use('/profile', express.static(path.join(__dirname, '../react-client/dist')));
 app.use('/login', express.static(path.join(__dirname, '../react-client/dist/logIn')));
-app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }));
+app.use('/*', express.static(path.join(__dirname, '../react-client/dist')));
+app.post('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/');
+  });
+});
+
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), (req, res) => {
+  req.session.regenerate(() => {
+    req.session.user = req.user;
+  });
+  res.redirect('/');
+});
 
 app.use('/api', apiRouter);
 
