@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import EditPage from './EditPage.jsx';
-import dummyData from '../dummyData.js'
+import Trades from './trades.jsx';
+import dummyData from '../dummyData.js';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class Profile extends React.Component {
   getById(id) {
     axios({
       method: 'GET',
-      url: `/api/users/:${id}`,
+      url: `/api/users/${id}`,
     }).then((data) => {
       this.setState({
         profile: data,
@@ -36,8 +37,7 @@ class Profile extends React.Component {
     });
   }
 
-  clickHandler(e) {
-    console.log(this.props.match.params.profile)
+  clickHandler() {
     console.log(this.state.showEditPage);
     /* If user !== username passed */
     this.setState({
@@ -52,13 +52,19 @@ class Profile extends React.Component {
     return (
       this.state.showEditPage ?
         /* Own Profile */
-        <div id="userProfile">
-          <h2>Profile: </h2>
-          {true && <img alt={this.state.userName} src={this.state.picture} />}
-          Username: {this.state.userName} <br />
-          email: {this.state.email} <br />
-          Bio: {this.state.bio} <br />
-          <button type="submit" onClick={() => { this.clickHandler(); }}> Edit Profile </button>
+        <div className="profile">
+          <div className="userProfile">
+            <h2 id="profileName" >{this.state.userName}</h2>
+            <img id="profilePic" alt={this.state.userName} src={this.state.picture} /> <br />
+            <p>
+              Email: {this.state.email} <br />
+              Bio: {this.state.bio} <br />
+              <button type="submit" onClick={() => { this.clickHandler(); }}> Edit Profile </button>
+            </p>
+          </div>
+          <div className="profileTrades">
+            <Trades />
+          </div>
         </div>
         :
         /* Edit Page */
