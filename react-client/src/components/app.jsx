@@ -5,6 +5,21 @@ import dummyData from '../dummyData.js'
 import Profile from './profile.jsx';
 import Trade from './trades.jsx';
 import MainPage from './mainPage.jsx';
+import {
+  addFriend,
+  getSpecificFriend,
+  getFriends,
+  getAllFood,
+  getSpecificFood,
+  addFood,
+  requestTrade,
+  acceptTrade,
+  rejectTrade,
+  getTrades,
+  getAllTradesBetweenTwoUsers,
+  getAllUsers,
+  getSpecificUser,
+} from '../axiosCalls.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,27 +35,20 @@ class App extends React.Component {
 
   componentDidMount() {
     this.switchPage();
-  }
-
-  signUp(e) {
-    e.preventDefault();
-    axios({
-      url: '/api/users',
-      method: 'post',
-      contentType: 'application/json',
-      data: {
-        name: this.state.signUpName,
-        username: this.state.signUpUserName,
-        password: this.state.signUpPassword,
-        email: this.state.signUpEmail,
-      },
-    })
-      .then(function (response) {
-      console.log(response);
-      })
-      .catch(function (error) {
-      console.log(error);
-      });
+    // addFriend();
+    // getFriends();
+    // getFriend();
+    // addFood('cheeseburger', 'bread and meat and cheese', 1);
+    // getAllFood();
+    // getSpecificFood();
+    // requestTrade();
+    // getTrades();
+    // getAllTradesBetweenTwoUsers();
+    // console.log(acceptTrade);
+    // acceptTrade();
+    // rejectTrade();
+    // getAllUsers();
+    // getSpecificUser();
   }
 
   switchPage(name) {
@@ -61,6 +69,21 @@ class App extends React.Component {
         });
         break;
     }
+  }
+
+  postTrade(localUser, localFood, selectedUser, selectedFood) {
+    axios({
+      method: 'post',
+      url: '/api/trade/initiate',
+      data: {
+        userId1: localUser,
+        foodId1: localFood,
+        userId2: selectedUser,
+        foodId2: selectedFood,
+      },
+    })
+      .then(data => console.log(data))
+      .catch(e => console.log('err', e, this));
   }
 
   render() {
