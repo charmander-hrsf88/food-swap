@@ -11,13 +11,10 @@ class LogIn extends React.Component {
       signUpConfirmPassword: 'test',
       signUpName: 'Hayden Marx',
       signUpEmail: 'haydenmarx@gmail.com',
-      logInUserName: 'Tester',
-      logInPassword: 'test',
     };
     this.switchType = this.switchType.bind(this);
     this.updateForm = this.updateForm.bind(this);
     this.signUp = this.signUp.bind(this);
-    this.logIn = this.LogIn.bind(this);
   }
 
   switchType() {
@@ -32,27 +29,8 @@ class LogIn extends React.Component {
     this.setState({ [e.target.id]: e.target.value });
   }
 
-  LogIn(e) {
-    e.preventDefault();
-    axios.get('/login', {
-      username: this.state.logInUserName,
-      password: this.state.logInPassword,
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-
   signUp(e) {
     e.preventDefault();
-    // let name = this.state.signUpName;
-    // let username = this.state.signUpUserName;
-    // let password = this.state.signUpPassword;
-    // let email = this.state.signUpEmail;
-    // console.log(name, username, password, email);
     axios({
       url: '/api/users',
       method: 'post',
@@ -77,7 +55,7 @@ class LogIn extends React.Component {
       this.state.NewUser === true ?
         <div id="logInForm">
           <button disabled>Log In</button><button onClick={this.switchType}>Sign Up</button>
-          <form action="/login" method="POST" onSubmit={(e)=>{console.log(e.target)}}>
+          <form action="/login" method="POST" >
             <h2>Log In</h2>
             <label htmlFor="logInUserName" >Username:</label>
             <br />
@@ -86,7 +64,6 @@ class LogIn extends React.Component {
               name="username"
               required
               placeholder="Enter Username"
-
             />
             <br />
             <label htmlFor="logInPassword" >Password:</label>
