@@ -1,0 +1,200 @@
+#friends, #topUsers {
+  text-align: center; }
+  #friends > h2, #topUsers > h2 {
+    margin-top: 20px;
+    margin-left: 30px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    text-align: left;
+    text-decoration: underline; }
+
+.cover {
+  position: absolute;
+  width: 100%;
+  height: 88.5%;
+  /* height: calc(100% - 24px); */
+  /* height: calc(100% - 87px); Needs to scale for dynamic content*/
+  background: rgba(28, 26, 26, 0.87); }
+
+.friendFood {
+  background: grey;
+  height: 300px;
+  width: 300px;
+  display: inline-block;
+  margin: 10px;
+  overflow-y: hidden;
+  cursor: pointer; }
+  .friendFood > img {
+    max-height: 200px;
+    max-width: 200px; }
+  .friendFood > p {
+    padding: 0px 20px;
+    text-align: left; }
+
+#navBar {
+  border-bottom: 2px solid black;
+  background: grey;
+  height: 30px; }
+  #navBar > button {
+    height: 100%;
+    border: none;
+    cursor: pointer;
+    margin: 0px 10px;
+    background: #cfc2c2; }
+    #navBar > button:hover {
+      background: #221f1f;
+      color: #cfc2c2; }
+    #navBar > button:nth-of-type(1) {
+      float: right; }
+
+.popUpInfo {
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  width: 600px;
+  height: 600px;
+  background: white;
+  overflow: hidden; }
+  .popUpInfo > i {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer; }
+  .popUpInfo > img {
+    width: 80%;
+    padding-left: 10%;
+    padding-right: 10%; }
+  .popUpInfo > hr {
+    margin-bottom: 0px; }
+  .popUpInfo > div {
+    float: left; }
+    .popUpInfo > div:nth-of-type(2) {
+      width: 40%;
+      background: rgba(128, 128, 128, 0.486); }
+      .popUpInfo > div:nth-of-type(2) > h2 {
+        margin: 0px; }
+    .popUpInfo > div:nth-of-type(1) {
+      width: 60%; }
+      .popUpInfo > div:nth-of-type(1) > p {
+        margin: 0px 20%; }
+      .popUpInfo > div:nth-of-type(1) > button {
+        margin-top: 20px; }
+    .popUpInfo > div > img {
+      max-height: 200px;
+      max-width: 200px;
+      width: 60%; }
+
+#logInForm {
+  width: 250px;
+  margin: 15% auto;
+  border: 1px solid grey;
+  text-align: center; }
+  #logInForm > button {
+    width: 50%;
+    border-top: none; }
+  #logInForm label {
+    padding-right: 36%; }
+    #logInForm label:nth-of-type(2) {
+      padding-right: 95px; }
+    #logInForm label:nth-of-type(3) {
+      padding-right: 40px; }
+    #logInForm label:nth-of-type(4) {
+      padding-right: 120px; }
+    #logInForm label:nth-of-type(5) {
+      padding-right: 120px; }
+  #logInForm input {
+    margin-bottom: 5px; }
+  #logInForm > form button, #logInForm h2 {
+    margin: 10px auto; }
+
+#trades > h2 {
+  text-align: center;
+  margin-bottom: 5px; }
+#trades > ol {
+  list-style: none;
+  margin: 0px auto;
+  padding-left: 0px;
+  width: 500px; }
+  #trades > ol li {
+    padding-bottom: 10px; }
+    #trades > ol li > div {
+      margin: 0px auto; }
+    #trades > ol li > hr {
+      margin: 0px; }
+    #trades > ol li > p {
+      margin: 0px;
+      padding: 10px 10px 5px 10px; }
+    #trades > ol li > div {
+      margin: 0px auto; }
+      #trades > ol li > div button {
+        text-align: center;
+        background: rgba(255, 0, 0, 0.521);
+        border-color: rgba(255, 0, 0, 0.521);
+        cursor: pointer; }
+        #trades > ol li > div button:first-child {
+          margin-right: 10px;
+          background: rgba(0, 128, 0, 0.514);
+          border-color: rgba(0, 128, 0, 0.514); }
+
+.pendingTrade {
+  background: rgba(255, 255, 0, 0.342); }
+  .pendingTrade > div {
+    width: 220px; }
+  .pendingTrade > .oneButton {
+    width: 108px; }
+
+.acceptedTrade {
+  background: rgba(0, 128, 0, 0.411); }
+
+.rejectedTrade {
+  color: rgba(0, 0, 0, 0.61);
+  background: rgba(107, 103, 103, 0.575); }
+
+.succssfulTrade {
+  background: rgba(7, 71, 7, 0.863); }
+  .succssfulTrade > div {
+    width: 260px; }
+
+li .ratingPanel {
+  background: white;
+  border: 1px dotted rgba(0, 0, 0, 0.589);
+  width: 200px; }
+  li .ratingPanel button {
+    margin-top: 5px; }
+    li .ratingPanel button:first-of-type {
+      background: rgba(0, 128, 0, 0.514) !important;
+      border-color: rgba(0, 128, 0, 0.514) !important; }
+    li .ratingPanel button:last-of-type {
+      float: right; }
+
+body {
+  margin: 0px; }
+
+.profile {
+  background: grey;
+  margin: 10px;
+  width: 250px;
+  height: 310px;
+}
+
+.profile > .userProfile {
+  text-align: center;
+}
+  .profile > .userProfile > h2 {
+    margin: 7px
+  }
+  .profile > .userProfile > img {
+    border: solid white;
+    max-height: 200px;
+    max-width: 200px;
+  }
+  .profile > .userProfile > p {
+    text-align: left;
+    margin: 0px;
+    padding: 2px 2px 2px 4px;
+  }
+
+.profile > .profileTrades {
+  display: inline-block;
+}
+/*# sourceMappingURL=style.css.map */
