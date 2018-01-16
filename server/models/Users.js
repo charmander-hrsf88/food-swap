@@ -18,24 +18,18 @@ class Users {
   }
 
   static comparePassword({ username, pass }) {
-    let user;
     return db.users.findByUsername({ username })
       .then((user) => {
-        user = user;
-        return user.user_auth_id;
-      })
-      .then((userAuthId) => {
-        return db.usersAuth.findByUserAuthId({ userAuthId });
-      })
-      .then((userAuth) => {
-        const { password, salt } = userAuth;
-        if (utils.compareHash(pass, password, salt)) {
-          return user;
-        } else {
-          return false;
-        }
-      })
-      
+        return db.usersAuth.findByUserAuthId({ userAuthId: user.user_auth_id })
+          .then((userAuth) => {
+            const { password, salt } = userAuth;
+            if (utils.compareHash(pass, password, salt)) {
+              return user;
+            } else {
+              return false;
+            }
+          })  
+      });
   }
 
   static updatePassword({ userAuthId, password }) {

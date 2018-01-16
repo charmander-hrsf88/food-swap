@@ -10,8 +10,10 @@ const path = require('path');
 const apiRouter = require('./apiRoutes');
 
 passport.use(new LocalStrategy((username, password, done) => {
+  console.log(username, password);
   models.users.comparePassword({ username, pass: password })
     .then((user) => {
+      console.log(user);
       if (!user) {
         return done(null, false, { message: 'Incorrect username' });
       }
