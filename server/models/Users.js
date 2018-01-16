@@ -28,10 +28,9 @@ class Users {
             const { password, salt } = userAuth;
             if (utils.compareHash(pass, password, salt)) {
               return user;
-            } else {
-              return false;
             }
-          })  
+            return false;
+          });
       });
   }
 
