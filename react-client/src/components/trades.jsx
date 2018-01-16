@@ -40,7 +40,7 @@ class Trades extends React.Component {
           food_id2: 'Cookie Crisp',
           status: true,
           rating: undefined,
-          time: '2018-01-15T22:31:16+00:00',
+          time: '2018-01-16T22:31:16+00:00',
         },
         {
           id: 4,
@@ -50,7 +50,7 @@ class Trades extends React.Component {
           food_id2: 'Cheerios',
           status: true,
           rating: undefined,
-          time: '2018-01-15T22:31:16+00:00',
+          time: '2018-01-16T22:31:16+00:00',
         },
         {
           id: 5,
@@ -123,15 +123,12 @@ class Trades extends React.Component {
 
   render() {
     return (
-      <div>
-        <NavBar />
-        <div id="trades">
-          <h2>Your Trades</h2>
-          <ol>
-            {this.state.trades.map(trade =>
-              <Trade key={trade.id} trade={trade} user={this.state.user} />)}
-          </ol>
-        </div>
+      <div id="trades">
+        <h2>Your Trades</h2>
+        <ol>
+          {this.state.trades.map(trade =>
+            <Trade key={trade.id} trade={trade} user={this.state.user} />)}
+        </ol>
       </div>
     );
   }

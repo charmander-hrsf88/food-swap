@@ -1,11 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
-const NavBar = () => (
+const NavBar = ({ switchPage }) => (
   <div id="navBar">
-    <Link to="/">Home</Link>
+    {/* <Link to="/">Home</Link>
     <Link to="/trades">Trades</Link>
-    <button>Log Out</button><button>Home</button><button>Profile</button>
+    <Link to="/user/:insertDataHere">Profile</Link> */}
+    <button onClick={() => { console.log('insertLogOutHere')}}>Log Out</button>
+    <button onClick={() => { switchPage('Home'); }}>Home</button>
+    <button onClick={() => { switchPage('Profile'); }}>Profile</button>
+    <button onClick={() => { switchPage('Trades'); }}>Trades</button>
   </div>
 );
 

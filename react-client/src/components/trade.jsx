@@ -37,6 +37,7 @@ class Trade extends React.Component {
       fourthStar: '',
       fifthStar: '',
       clicked: false,
+      setRating: false,
       newRating: false,
     };
     this.updateStars = this.updateStars.bind(this);
@@ -116,7 +117,7 @@ class Trade extends React.Component {
       if (this.props.trade.rating !== undefined) {
         this.updateStars(this.props.trade.rating);
         console.log(this.props.trade.rating);
-        this.setState({ newRating: true });
+        this.setState({ newRating: true, setRating: true });
       } else {
         this.hoverStars('default');
       }
@@ -137,7 +138,7 @@ class Trade extends React.Component {
   }
 
   updateStars(num) {
-    if (this.state.clicked !== true) {
+    if (this.state.setRating !== true) {
       switch (num) {
         case 1:
           this.setState({
@@ -270,11 +271,11 @@ class Trade extends React.Component {
   }
 
   submitRating() {
-    console.log(this);
+    console.log('a:', this.state.firstStar);
+    if (this.state.firstStar !== <UnRatedStar location={1} click={this.updateStars} hover={this.hoverStars} conditional={this.state.clicked} />) {
+      this.setState({ newRating: true, clicked: true, setRating: true });
+    }
   }
-  /*
-  console.log(this); this.setState({ newRating: false });
-  */
 
   render() {
     return (
@@ -291,7 +292,7 @@ class Trade extends React.Component {
             {this.state.thirdStar}
             {this.state.fourthStar}
             {this.state.fifthStar}
-            {(typeof this.props.trade.rating !== 'number' && this.state.clicked === true) &&
+            {this.state.setRating === false &&
               <div>
                 <button onClick={this.submitRating}>Submit? </button>
                 <button onClick={this.cancelRating}>Cancel? </button>

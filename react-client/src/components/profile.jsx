@@ -54,7 +54,7 @@ class Profile extends React.Component {
         /* Own Profile */
         <div id="userProfile">
           <h2>Profile: </h2>
-          {false && <img alt={this.state.userName} src={this.state.picture} />}
+          {true && <img alt={this.state.userName} src={this.state.picture} />}
           Username: {this.state.userName} <br />
           email: {this.state.email} <br />
           Bio: {this.state.bio} <br />

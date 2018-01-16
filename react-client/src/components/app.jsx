@@ -1,10 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import NavBar from './navBar.jsx';
-import Friends from './friends.jsx';
-import AddFriends from './addFriends.jsx';
-import TopUsers from './topUsers.jsx';
 import dummyData from '../dummyData.js'
+import Profile from './profile.jsx';
+import Trade from './trades.jsx';
+import MainPage from './mainPage.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,16 +12,18 @@ class App extends React.Component {
     this.state = {
       friends: dummyData.friends,
       topUsers: dummyData.topUsers,
+      currentUser: '',
+      currentPage: <span />,
     };
+    this.switchPage = this.switchPage.bind(this);
+  }
+
+  componentDidMount() {
+    this.switchPage();
   }
 
   signUp(e) {
     e.preventDefault();
-    // let name = this.state.signUpName;
-    // let username = this.state.signUpUserName;
-    // let password = this.state.signUpPassword;
-    // let email = this.state.signUpEmail;
-    // console.log(name, username, password, email);
     axios({
       url: '/api/users',
       method: 'post',
@@ -41,16 +43,31 @@ class App extends React.Component {
       });
   }
 
+  switchPage(name) {
+    switch (name) {
+      case ('Trades'):
+        this.setState({ currentPage: <Trade /> });
+        break;
+      case ('Profile'):
+        this.setState({ currentPage: <Profile /> });
+        break;
+      default:
+        this.setState({
+          currentPage:
+  <MainPage
+    friends={this.state.friends}
+    topUsers={this.state.topUsers}
+  />,
+        });
+        break;
+    }
+  }
+
   render() {
     return (
       <div>
-        <NavBar />
-        {this.state.friends.length > 0 ?
-          <Friends const friends={this.state.friends} />
-        :
-          <AddFriends />
-        }
-        <TopUsers const topUsers={this.state.topUsers} />
+        <NavBar switchPage={this.switchPage} />
+        {this.state.currentPage}
       </div>
     );
   }
