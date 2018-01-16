@@ -5,6 +5,7 @@ import dummyData from '../dummyData.js'
 import Profile from './profile.jsx';
 import Trade from './trades.jsx';
 import MainPage from './mainPage.jsx';
+import LogInSignUp from '../log-in-page/logIn.jsx';
 import {
   addFriend,
   getSpecificFriend,
@@ -19,6 +20,7 @@ import {
   getAllTradesBetweenTwoUsers,
   getAllUsers,
   getSpecificUser,
+  userInfo,
 } from '../axiosCalls.jsx';
 
 class App extends React.Component {
@@ -28,9 +30,11 @@ class App extends React.Component {
       friends: dummyData.friends,
       topUsers: dummyData.topUsers,
       currentUser: '',
+      loggedIn: false,
       currentPage: <span />,
     };
     this.switchPage = this.switchPage.bind(this);
+    this.updateUser = this.updateUser.bind(this);
   }
 
   componentDidMount() {
@@ -49,6 +53,7 @@ class App extends React.Component {
     // rejectTrade();
     // getAllUsers();
     // getSpecificUser();
+    userInfo(this.updateUser);
   }
 
   switchPage(name) {
@@ -86,11 +91,20 @@ class App extends React.Component {
       .catch(e => console.log('err', e, this));
   }
 
+  updateUser(obj, bool) {
+    this.setState({ currentUser: obj, loggedIn: bool });
+  }
+
   render() {
     return (
       <div>
-        <NavBar switchPage={this.switchPage} />
-        {this.state.currentPage}
+        {console.log(this.state)}
+        {this.state.loggedIn && <NavBar switchPage={this.switchPage} cb={this.updateUser} />}
+        {this.state.loggedIn ?
+          this.state.currentPage
+        :
+          <LogInSignUp />
+        }
       </div>
     );
   }

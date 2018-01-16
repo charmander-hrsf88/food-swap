@@ -58,15 +58,16 @@ app.use('/user/:user', express.static(path.join(__dirname, '../react-client/dist
 app.get('/session', (req, res) => {
   const { user } = req.session;
   if (user) {
-    models.users.findById(user)
+    models.users.findById({ id: user})
       .then((user) => {
+        console.log(user);
         res.send({ user });
       })
       .catch((e) => {
-        res.send({});
+        res.send({ e });
       });
   } else {
-    res.send({});
+    res.send({ user: null });
   }
 });
 

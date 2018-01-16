@@ -2,6 +2,44 @@ import axios from 'axios';
 
 /*
 ////////////////////////////////////
+              AUTH
+////////////////////////////////////
+*/
+export function logOut(cb) {
+  axios({
+    method: 'get',
+    url: '/logout',
+  })
+    .then((result) => {
+      console.log('friend', result.data, '. this:', this);
+      cb(null, false);
+    })
+    .catch((e) => {
+      console.log(e, this);
+    });
+}
+
+export function userInfo(cb) {
+  axios({
+    method: 'get',
+    url: '/session',
+  })
+    .then((result) => {
+      console.log('friend', result.data);
+      if (result.data.user !== null) {
+        cb(result.data, true);
+      } else {
+        cb(null, false);
+      }
+    })
+    .catch((e) => {
+      console.log(e, this);
+    });
+}
+
+
+/*
+////////////////////////////////////
               FRIENDS
 ////////////////////////////////////
 */
