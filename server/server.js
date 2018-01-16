@@ -50,30 +50,38 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-function isLoggedIn (req, res, next) {
-  if (req.user) {
-    next();
-  } else {
-    res.redirect('/login');
-  }
-}
 
 app.use('/', express.static(path.join(__dirname, '../react-client/dist')));
-app.use('/trades', express.static(path.join(__dirname, '../react-client/dist')));
-app.use('/profile', express.static(path.join(__dirname, '../react-client/dist')));
-app.use('/login', express.static(path.join(__dirname, '../react-client/dist/logIn')));
-app.use('/*', express.static(path.join(__dirname, '../react-client/dist')));
-app.post('/logout', (req, res) => {
+app.use('/login', express.static(path.join(__dirname, '../react-client/dist')));
+app.use('/user/:user', express.static(path.join(__dirname, '../react-client/dist')));
+
+app.get('/session', (req, res) => {
+  const { user } = req.session;
+  if (user) {
+    models.users.findById(user)
+      .then((user) => {
+        res.send({ user });
+      })
+      .catch((e) => {
+        res.send({});
+      });
+  } else {
+    res.send({});
+  }
+});
+
+app.get('/logout', (req, res) => {
   req.session.destroy(() => {
-    res.redirect('/');
+    res.redirect('/login');
   });
 });
 
 app.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), (req, res) => {
+  const { user } = req.session.passport;
   req.session.regenerate(() => {
-    req.session.user = req.user;
+    req.session.user = user;
+    res.redirect('/');
   });
-  res.redirect('/');
 });
 
 app.use('/api', apiRouter);
