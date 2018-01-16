@@ -20,6 +20,9 @@ class Users {
   static comparePassword({ username, pass }) {
     return db.users.findByUsername({ username })
       .then((user) => {
+        if (!user) {
+          throw user;
+        }
         return db.usersAuth.findByUserAuthId({ userAuthId: user.user_auth_id })
           .then((userAuth) => {
             const { password, salt } = userAuth;
