@@ -270,11 +270,8 @@ class Trade extends React.Component {
   }
 
   submitRating() {
-    console.log(this);
+    this.setState({ newRating: true, clicked: true });
   }
-  /*
-  console.log(this); this.setState({ newRating: false });
-  */
 
   render() {
     return (
@@ -291,7 +288,7 @@ class Trade extends React.Component {
             {this.state.thirdStar}
             {this.state.fourthStar}
             {this.state.fifthStar}
-            {(typeof this.props.trade.rating !== 'number' && this.state.clicked === true) &&
+            {this.state.clicked === false &&
               <div>
                 <button onClick={this.submitRating}>Submit? </button>
                 <button onClick={this.cancelRating}>Cancel? </button>
