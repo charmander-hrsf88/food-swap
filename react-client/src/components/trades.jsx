@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Trade from './trade.jsx';
 import NavBar from './navBar.jsx';
+import AddTrade from './addTrade.jsx';
 
 class Trades extends React.Component {
   constructor(props) {
@@ -121,14 +122,32 @@ class Trades extends React.Component {
     };
   }
 
+  getTrades(user) {
+    let urlStr = `/api/trade/${user}`;
+    axios({
+      method: 'get',
+      url: '/api/trade/1',
+    })
+      .then((result) => {
+        console.log(result.data);
+      })
+      .catch((e) => {
+        console.log('err', e);
+        console.log(this);
+      });
+  }
+
   render() {
     return (
+      <div>
       <div id="trades">
         <h2>Your Trades</h2>
         <ol>
           {this.state.trades.map(trade =>
             <Trade key={trade.id} trade={trade} user={this.state.user} />)}
         </ol>
+      </div>
+      <AddTrade />
       </div>
     );
   }
