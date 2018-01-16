@@ -17,6 +17,21 @@ class Users {
     return db.users.findByUsername({ username });
   }
 
+  static comparePassword({ username, pass }) {
+    return db.users.findByUsername({ username })
+      .then((user) => {
+        return db.usersAuth.findByUserAuthId({ userAuthId: user.user_auth_id })
+          .then((userAuth) => {
+            const { password, salt } = userAuth;
+            if (utils.compareHash(pass, password, salt)) {
+              return user;
+            } else {
+              return false;
+            }
+          })  
+      });
+  }
+
   static updatePassword({ userAuthId, password }) {
     const salt = utils.createRandom32String();
     const hash = utils.createHash(password, salt);
