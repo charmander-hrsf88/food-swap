@@ -11,7 +11,7 @@ export function logOut(cb) {
     url: '/logout',
   })
     .then((result) => {
-      console.log('friend', result.data, '. this:', this);
+      // console.log('friend', result.data, '. this:', this);
       cb(null, false);
     })
     .catch((e) => {

@@ -82,17 +82,16 @@ class LogIn extends React.Component {
         :
         <div id="logInForm">
           <button onClick={this.switchType}>Log In</button><button disabled>Sign Up</button>
-          <form onSubmit={this.signUp}>
+          <form action="/signup" method="POST">
             <h2>Sign Up</h2>
             <label htmlFor="signUpUserName" >Username:</label>
             <br />
             <input
               id="signUpUserName"
+              name="username"
               type="text"
               required
               placeholder="Pick a Username"
-              value={this.state.signUpUserName}
-              onChange={this.updateForm}
             />
             <br />
             <label htmlFor="signUpConfirmPassword">Password:</label>
@@ -100,10 +99,9 @@ class LogIn extends React.Component {
             <input
               id="signUpPassword"
               type="password"
+              name="password"
               required
               placeholder="Pick a Password"
-              value={this.state.signUpPassword}
-              onChange={this.updateForm}
             />
             <br />
             <label htmlFor="signUpConfirmPassword" >Confirm Password:</label>
@@ -113,18 +111,15 @@ class LogIn extends React.Component {
               type="password"
               required
               placeholder="Confirm Password"
-              value={this.state.signUpConfirmPassword}
-              onChange={this.updateForm}
             />
             <br />
             <label htmlFor="signUpName" >Name:</label>
             <br />
             <input
               id="signUpName"
+              name="name"
               required
               placeholder="FirstName LastName"
-              value={this.state.signUpName}
-              onChange={this.updateForm}
             />
             <br />
             <label htmlFor="signUpEmail" >Email:</label>
@@ -132,10 +127,9 @@ class LogIn extends React.Component {
             <input
               id="signUpEmail"
               type="email"
+              name="email"
               required
               placeholder="Email@email.com"
-              value={this.state.signUpEmail}
-              onChange={this.updateForm}
             />
             <br />
             <button>Submit</button>

@@ -83,6 +83,21 @@ app.post('/login', passport.authenticate('local', { failureRedirect: '/login', f
   });
 });
 
+app.post('/signup', (req, res) => {
+  const { name, username, password, email } = req.body;
+  models.users.create({ name, username, password, email })
+    .then((user) => {
+      console.log(user);
+      req.session.regenerate(() => {
+        req.session.user = user.id;
+        res.redirect('/');
+      });
+    })
+    .catch((e) => {
+      res.status(500).send({ error: e });
+    });
+});
+
 app.use('/api', apiRouter);
 
 app.use('/*', express.static(path.join(__dirname, '../react-client/dist/logIn')));
