@@ -16,17 +16,17 @@ class Friends extends React.Component {
     this.setState({ friend: selected });
   }
 
-  toggleExpand() {
+  toggleExpand(condit) {
     if (this.state.expand === true) {
       this.setState({ expand: false });
     } else {
-      this.setState({ expand: true });
+      condit === undefined && this.setState({ expand: true });
     }
   }
 
   render() {
     return (
-      <div id="friends" onClick={()=>{this.toggleExpand()}}>
+      <div id="friends" onClick={()=>{this.toggleExpand(false)}}>
         {this.state.expand === true ?
           <div className="cover" />
         :
