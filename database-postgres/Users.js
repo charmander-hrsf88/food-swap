@@ -1,8 +1,8 @@
 const db = require('./config');
 class Users {
   static create({ userAuthId, name, username, email }) {
-    const queryString = 'INSERT INTO users (user_auth_id, name, username, email) VALUES ($1, $2, $3, $4)';
-    return db.any(queryString, [userAuthId, name, username, email]);
+    const queryString = 'INSERT INTO users (user_auth_id, name, username, email) VALUES ($1, $2, $3, $4) RETURNING *';
+    return db.any(queryString, [userAuthId, name, username, email]).then( users => users[0]);
   }
 
   static findById({ id }) {
