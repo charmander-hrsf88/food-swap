@@ -71,11 +71,11 @@ app.get('/session', (req, res) => {
 
 app.get('/logout', (req, res) => {
   req.session.destroy(() => {
-    res.redirect('/login');
+    res.redirect('/');
   });
 });
 
-app.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), (req, res) => {
+app.post('/login', passport.authenticate('local', { failureRedirect: '/', failureFlash: true }), (req, res) => {
   const { user } = req.session.passport;
   req.session.regenerate(() => {
     req.session.user = user;
