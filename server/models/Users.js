@@ -6,9 +6,7 @@ class Users {
     const salt = utils.createRandom32String();
     const hash = utils.createHash(password, salt);
     return db.usersAuth.createUser({ password: hash, salt })
-      .then(({ id }) => db.users.create({ userAuthId: id, name, username, email }))
-      .then(() => true)
-      .catch(() => false);
+      .then(({ id }) => db.users.create({ userAuthId: id, name, username, email }));
   }
 
   static findById({ id }) {
@@ -17,6 +15,23 @@ class Users {
 
   static findByUsername({ username }) {
     return db.users.findByUsername({ username });
+  }
+
+  static comparePassword({ username, pass }) {
+    return db.users.findByUsername({ username })
+      .then((user) => {
+        if (!user) {
+          throw user;
+        }
+        return db.usersAuth.findByUserAuthId({ userAuthId: user.user_auth_id })
+          .then((userAuth) => {
+            const { password, salt } = userAuth;
+            if (utils.compareHash(pass, password, salt)) {
+              return user;
+            }
+            return false;
+          });
+      });
   }
 
   static updatePassword({ userAuthId, password }) {

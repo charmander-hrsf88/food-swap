@@ -1,26 +1,13 @@
 const db = require('./config');
-
 class Users {
   static create({ userAuthId, name, username, email }) {
-    const queryString = 'INSERT INTO users (user_auth_id, name, username, email) VALUES ($1, $2, $3, $4)';
-    return db.any(queryString, [userAuthId, name, username, email]);
+    const queryString = 'INSERT INTO users (user_auth_id, name, username, email) VALUES ($1, $2, $3, $4) RETURNING *';
+    return db.any(queryString, [userAuthId, name, username, email]).then( users => users[0]);
   }
 
   static findById({ id }) {
     const queryString = 'SELECT * FROM users WHERE id = $1 LIMIT 1';
     return db.any(queryString, [id])
-      .then((users) => {
-        if (users.length === 0) {
-          return null;
-        }
-
-        return users[0];
-      });
-  }
-
-  static findByUserId({ id }) {
-    const queryString = 'SELECT * FROM users WHERE id = $1 LIMIT 1';
-    return db.one(queryString, [id])
       .then((users) => {
         if (users.length === 0) {
           return null;
@@ -62,7 +49,7 @@ class Users {
           return null;
         }
 
-        return users[0];
+        return users;
       });
   }
 }

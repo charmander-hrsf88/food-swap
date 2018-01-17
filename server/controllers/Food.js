@@ -13,7 +13,7 @@ class Food {
 
   static getById(req, res) {
     const { id } = req.params;
-    models.food.getById({ id })
+    models.food.findById({ id })
       .then((food) => {
         res.json(food);
       })

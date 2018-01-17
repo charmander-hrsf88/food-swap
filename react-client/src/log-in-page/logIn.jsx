@@ -11,13 +11,10 @@ class LogIn extends React.Component {
       signUpConfirmPassword: 'test',
       signUpName: 'Hayden Marx',
       signUpEmail: 'haydenmarx@gmail.com',
-      logInUserName: 'Tester',
-      logInPassword: 'test',
     };
     this.switchType = this.switchType.bind(this);
     this.updateForm = this.updateForm.bind(this);
     this.signUp = this.signUp.bind(this);
-    this.logIn = this.LogIn.bind(this);
   }
 
   switchType() {
@@ -32,27 +29,8 @@ class LogIn extends React.Component {
     this.setState({ [e.target.id]: e.target.value });
   }
 
-  LogIn(e) {
-    e.preventDefault();
-    axios.get('/login', {
-      username: this.state.logInUserName,
-      password: this.state.logInPassword,
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-
   signUp(e) {
     e.preventDefault();
-    // let name = this.state.signUpName;
-    // let username = this.state.signUpUserName;
-    // let password = this.state.signUpPassword;
-    // let email = this.state.signUpEmail;
-    // console.log(name, username, password, email);
     axios({
       url: '/api/users',
       method: 'post',
@@ -62,14 +40,14 @@ class LogIn extends React.Component {
         username: this.state.signUpUserName,
         password: this.state.signUpPassword,
         email: this.state.signUpEmail,
-      }
+      },
     })
       .then(function (response) {
       console.log(response);
-    })
-    .catch(function (error) {
+      })
+      .catch(function (error) {
       console.log(error);
-    });
+      });
   }
 
   render() {
@@ -77,16 +55,15 @@ class LogIn extends React.Component {
       this.state.NewUser === true ?
         <div id="logInForm">
           <button disabled>Log In</button><button onClick={this.switchType}>Sign Up</button>
-          <form onSubmit={this.logIn}>
+          <form action="/login" method="POST" >
             <h2>Log In</h2>
             <label htmlFor="logInUserName" >Username:</label>
             <br />
             <input
               id="logInUserName"
+              name="username"
               required
               placeholder="Enter Username"
-              value={this.state.logInUserName}
-              onChange={this.updateForm}
             />
             <br />
             <label htmlFor="logInPassword" >Password:</label>
@@ -94,10 +71,9 @@ class LogIn extends React.Component {
             <input
               id="logInPassword"
               type="password"
+              name="password"
               required
               placeholder="Enter Password"
-              value={this.state.logInUserName}
-              onChange={this.updateForm}
             />
             <br />
             <button>Submit</button>
@@ -106,17 +82,16 @@ class LogIn extends React.Component {
         :
         <div id="logInForm">
           <button onClick={this.switchType}>Log In</button><button disabled>Sign Up</button>
-          <form onSubmit={this.signUp}>
+          <form action="/signup" method="POST">
             <h2>Sign Up</h2>
             <label htmlFor="signUpUserName" >Username:</label>
             <br />
             <input
               id="signUpUserName"
+              name="username"
               type="text"
               required
               placeholder="Pick a Username"
-              value={this.state.signUpUserName}
-              onChange={this.updateForm}
             />
             <br />
             <label htmlFor="signUpConfirmPassword">Password:</label>
@@ -124,10 +99,9 @@ class LogIn extends React.Component {
             <input
               id="signUpPassword"
               type="password"
+              name="password"
               required
               placeholder="Pick a Password"
-              value={this.state.signUpPassword}
-              onChange={this.updateForm}
             />
             <br />
             <label htmlFor="signUpConfirmPassword" >Confirm Password:</label>
@@ -137,18 +111,15 @@ class LogIn extends React.Component {
               type="password"
               required
               placeholder="Confirm Password"
-              value={this.state.signUpConfirmPassword}
-              onChange={this.updateForm}
             />
             <br />
             <label htmlFor="signUpName" >Name:</label>
             <br />
             <input
               id="signUpName"
+              name="name"
               required
               placeholder="FirstName LastName"
-              value={this.state.signUpName}
-              onChange={this.updateForm}
             />
             <br />
             <label htmlFor="signUpEmail" >Email:</label>
@@ -156,10 +127,9 @@ class LogIn extends React.Component {
             <input
               id="signUpEmail"
               type="email"
+              name="email"
               required
               placeholder="Email@email.com"
-              value={this.state.signUpEmail}
-              onChange={this.updateForm}
             />
             <br />
             <button>Submit</button>
