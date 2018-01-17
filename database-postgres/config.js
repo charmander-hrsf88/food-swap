@@ -1,11 +1,9 @@
 const pgp = require('pg-promise')();
 
 const config = {
-  host: 'localhost',
-  port: 5432,
-  database: 'food_swap',
-  user: 'charmander',
-  password: 'charmander',
+  connectionString: process.env.DATABASE_URL,
+  databse: 'food_swap',
+  ssl: true,
 };
 
 const db = pgp(config);
