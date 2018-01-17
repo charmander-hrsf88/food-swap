@@ -62,7 +62,7 @@ class App extends React.Component {
         this.setState({ currentPage: <Trade /> });
         break;
       case ('Profile'):
-        this.setState({ currentPage: <Profile /> });
+        this.setState({ currentPage: <Profile user={this.state.currentUser} /> });
         break;
       default:
         this.setState({
