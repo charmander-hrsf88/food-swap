@@ -46,7 +46,7 @@ class Trade extends React.Component {
     this.cancelRating = this.cancelRating.bind(this);
   }
   componentWillMount() {
-    if (this.props.trade.status === null) {
+    if (this.props.trade.response === false) {
       this.setState({ liStatus: 'pendingTrade' });
       if (this.state.truthy) {
         this.setState({
@@ -114,7 +114,7 @@ class Trade extends React.Component {
     <button>Trade Did Not Happen</button>
   </div>,
       });
-      if (this.props.trade.rating !== undefined) {
+      if (this.props.trade.rating !== 0) {
         this.updateStars(this.props.trade.rating);
         console.log(this.props.trade.rating);
         this.setState({ newRating: true, setRating: true });
