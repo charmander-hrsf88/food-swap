@@ -58,6 +58,11 @@ class Food {
     const queryString = 'SELECT * FROM food WHERE user_id=(SELECT id FROM users WHERE username = $1 LIMIT 1)';
     return db.any(queryString, [username]);
   }
+
+  static getByUserId({ userId }) {
+    const queryString = 'SELECT * FROM food WHERE user_id=$1';
+    return db.any(queryString, [userId]);
+  }
 }
 
 module.exports = Food;

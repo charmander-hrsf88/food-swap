@@ -20,6 +20,7 @@ router.post('/trade/remove', controller.trade.remove);
 router.get('/food', controller.food.getAll);
 router.get('/food/:id', controller.food.getById);
 router.get('/food/username/:username', controller.food.getByUsername);
+router.get('/food/userId/:userId', controller.food.getByUserId);
 router.post('/food', controller.food.post);
 
 router.get('/friends/user/:userId1', controller.friends.getAll);
