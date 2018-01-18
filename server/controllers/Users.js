@@ -43,6 +43,17 @@ class Users {
         res.status(500).send({ error: e });
       });
   }
+
+  static edit(req, res) {
+    const { userId, name, username, email, bio } = req.body;
+    models.users.edit({ userId, name, username, bio, email })
+      .then((user) => {
+        res.json(user);
+      })
+      .catch((e) => {
+        res.status(500).send({ error : e });
+      });
+  }
 }
 
 module.exports = Users;
