@@ -13,12 +13,12 @@ passport.use(new LocalStrategy((username, password, done) => {
   models.users.comparePassword({ username, pass: password })
     .then((user) => {
       if (!user) {
-        return done(null, false, { message: 'Incorrect username' });
+        return done(null, false, { message: 'Incorrect password' });
       }
 
       return done(null, user);
     })
-    .catch(err => done(err));
+    .catch(() => done(new Error(), null, { message: 'Incorrect username' }));
 }));
 
 passport.serializeUser((user, callback) => {
@@ -54,9 +54,9 @@ app.use(passport.session());
 app.use('/', express.static(path.join(__dirname, '../react-client/dist/')));
 
 app.get('/session', (req, res) => {
-  const { user } = req.session;
-  if (user) {
-    const userId = user;
+  const { user, success } = req.session;
+  if (success) {
+    const userId = user.id;
     const promises = [];
     promises.push(models.users.findById({ id: userId }));
     promises.push(models.food.getByUserId({ userId }));
@@ -65,9 +65,10 @@ app.get('/session', (req, res) => {
     Promise.all(promises)
       .then((result) => {
         const userObj = {
-          name: result[0],
-          food: result[1],
-          trade: result[2],
+          message: 'Success',
+          user: result[0],
+          foods: result[1],
+          trades: result[2],
         };
         res.json(userObj);
       })
@@ -75,25 +76,8 @@ app.get('/session', (req, res) => {
         res.status(500).send({ error: e });
       });
   } else {
-    res.status(404).send({ message: 'User is not logged in' });
+    res.send({ message: req.session.message });
   }
-  //   models.users.findById({ id : userId })
-  //     .then((user) => {
-  //       userObj.user = user;
-  //       return models.food.getByUserId({ userId });
-  //     })
-  //     .then(())
-  //   models.users.findById({ id: user})
-  //     .then((user) => {
-  //       console.log(user);
-  //       res.send({ user });
-  //     })
-  //     .catch((e) => {
-  //       res.send({ e });
-  //     });
-  // } else {
-  //   res.send({ user: null });
-  // }
 });
 
 app.get('/logout', (req, res) => {
@@ -102,22 +86,40 @@ app.get('/logout', (req, res) => {
   });
 });
 
-app.post('/login', passport.authenticate('local', { failureRedirect: '/', failureFlash: true }), (req, res) => {
-  const { user } = req.session.passport;
-  req.session.regenerate(() => {
-    req.session.user = user;
-    res.redirect('/');
-  });
+app.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user) => {
+    req.session.regenerate(() => {
+      console.log('err', err, 'user', user);
+      if (err) {
+        req.session.success = false;
+        req.session.message = 'Incorrect username';
+      } else if (!user) {
+        req.session.success = false;
+        req.session.message = 'Incorrect password';
+      } else {
+        req.session.success = true;
+        req.session.user = user;
+      }
+      res.redirect('/');
+    });
+  })(req, res, next);
 });
 
 app.post('/signup', (req, res) => {
   const { name, username, password, email } = req.body;
-  models.users.create({ name, username, password, email })
-    .then((user) => {
-      req.session.regenerate(() => {
-        req.session.user = user.id;
-        res.redirect('/');
-      });
+  models.users.findByUsername({ username })
+    .then((userExists) => {
+      if (userExists) {
+        res.send({ message: 1 });
+      }
+
+      return models.users.create({ name, username, password, email })
+        .then((user) => {
+          req.session.regenerate(() => {
+            req.session.user = user.id;
+            res.redirect('/');
+          });
+        });
     })
     .catch((e) => {
       res.status(500).send({ error: e });
