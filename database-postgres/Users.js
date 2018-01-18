@@ -52,6 +52,27 @@ class Users {
         return users;
       });
   }
+
+  static edit({ userId, name, username, bio, email }) {
+    const promises = [];
+    if (name !== undefined) {
+      promises.push(db.query('UPDATE users SET name = $1 WHERE id = $2', [name, userId]));
+    }
+
+    if (username !== undefined) {
+      promises.push(db.query('UPDATE users SET username = $1 WHERE id = $2', [username, userId]));
+    }
+
+    if (bio !== undefined) {
+      promises.push(db.query('UPDATE users SET bio = $1 WHERE id = $2', [bio, userId]));
+    }
+
+    if (email !== undefined) {
+      promises.push(db.query('UPDATE users SET email = $1 WHERE id = $2', [email, userId]));
+    }
+
+    return Promise.all(promises).then(() => db.query('SELECT * FROM users WHERE id = $1', [userId]));
+  }
 }
 
 module.exports = Users;
