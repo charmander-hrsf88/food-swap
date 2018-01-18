@@ -61,14 +61,16 @@ app.get('/session', (req, res) => {
     promises.push(models.users.findById({ id: userId }));
     promises.push(models.food.getByUserId({ userId }));
     promises.push(models.trade.getTradesByUserId({ userId }));
+    // promises.push(models.friends.getFriendsByUserId({ userId }));
 
     Promise.all(promises)
       .then((result) => {
         const userObj = {
           message: 'Success',
           user: result[0],
-          foods: result[1],
+          food: result[1],
           trades: result[2],
+          // friends: result[3],
         };
         res.json(userObj);
       })
