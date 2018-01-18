@@ -10,7 +10,7 @@ const Question = () => (
       textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)',
       color: 'rgba(131, 128, 128, 0.15)',
       padding: '0px 5px',
-      marginLeft: '100px',
+      marginLeft: '60px',
     }}
   />
 );
