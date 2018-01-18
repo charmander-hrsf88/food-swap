@@ -6,13 +6,15 @@ router.get('/users/:id', controller.users.getById);
 router.get('/users/username/:username', controller.users.getByUsername);
 router.post('/users', controller.users.create);
 
-router.get('/trade/:userId', controller.trade.getAllTradeByUserId);
-router.get('/trade/user1/:userId1/user2/:userId2', controller.trade.getById);
-router.get('/trade/:username1/profile/:username2', controller.trade.getTradesForProfilePage);
+router.get('/trade/:id', controller.trade.getTradesById);
+router.get('/trade/username/:username', controller.trade.getTradesByUsername);
+router.get('/trade/userId/:userId', controller.trade.getTradesByUserId);
+router.get('/trade/username/:username1/username/:username2', controller.trade.getTradesByTwoUsernames);
+router.get('/trade/userId/:userId1/userId/:userId2', controller.trade.getTradesByTwoUserIds);
 router.post('/trade/initiate', controller.trade.initiate);
 router.post('/trade/accept', controller.trade.accept);
 router.post('/trade/reject', controller.trade.reject);
-
+router.post('/trade/remove', controller.trade.remove);
 
 router.get('/food', controller.food.getAll);
 router.get('/food/:id', controller.food.getById);
