@@ -94,9 +94,9 @@ class App extends React.Component {
   //     .catch(e => console.log('err', e, this));
   // }
 
-  updateUser(obj, bool) {
-    console.log('here : ', obj);
-    this.setState({ currentUser: obj.name.name, loggedIn: bool, userFood: obj.food });
+  updateUser(userObj, bool) {
+    console.log('here : ', userObj);
+    this.setState({ currentUser: userObj.user.name, loggedIn: bool, userFood: userObj.foods });
   }
 
   updateFood(obj) {

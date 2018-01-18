@@ -12,7 +12,8 @@ export function logOut(cb) {
   })
     .then((result) => {
       // console.log('friend', result.data, '. this:', this);
-      cb(null, false);
+      const temp = { user: { name: null } }
+      cb(temp, false);
     })
     .catch((e) => {
       console.log(e, this);
