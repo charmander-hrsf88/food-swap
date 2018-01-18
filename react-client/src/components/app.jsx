@@ -28,7 +28,6 @@ class App extends React.Component {
     super(props);
     this.state = {
       friends: dummyData.friends,
-      topUsers: dummyData.topUsers,
       currentUser: '',
       loggedIn: false,
       currentPage: <span />,
@@ -62,14 +61,13 @@ class App extends React.Component {
         this.setState({ currentPage: <Trade /> });
         break;
       case ('Profile'):
-        this.setState({ currentPage: <Profile user={this.state.currentUser} /> });
+        this.setState({ currentPage: <Profile /> });
         break;
       default:
         this.setState({
           currentPage:
   <MainPage
     friends={this.state.friends}
-    topUsers={this.state.topUsers}
   />,
         });
         break;
@@ -98,16 +96,22 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {console.log(this.state)}
-        {this.state.loggedIn && <NavBar switchPage={this.switchPage} cb={this.updateUser} />}
-        {this.state.loggedIn ?
-          this.state.currentPage
-        :
-          <LogInSignUp />
-        }
+        <NavBar switchPage={this.switchPage} cb={this.updateUser} />
+        {this.state.currentPage}
       </div>
     );
   }
 }
 
 export default App;
+
+/*
+
+        {this.state.loggedIn && <NavBar switchPage={this.switchPage} cb={this.updateUser} />}
+        {this.state.loggedIn ?
+          this.state.currentPage
+        :
+          <LogInSignUp />
+        }
+
+*/

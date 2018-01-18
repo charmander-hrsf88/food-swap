@@ -1,16 +1,9 @@
 import React from 'react';
 import Friends from './friends.jsx';
-import AddFriends from './addFriends.jsx';
-import TopUsers from './topUsers.jsx';
 
-const MainPage = ({ topUsers, friends }) => (
+const MainPage = ({ friends }) => (
   <div>
-    {friends.length > 0 ?
-      <Friends const friends={friends} />
-    :
-      <AddFriends />
-    }
-    <TopUsers const topUsers={topUsers} />
+    <Friends const friends={friends} />
   </div>
 );
 
