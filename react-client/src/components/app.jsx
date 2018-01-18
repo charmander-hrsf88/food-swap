@@ -94,7 +94,8 @@ class App extends React.Component {
   updateUser(obj, bool) {
     this.setState({ currentUser: obj, loggedIn: bool });
     if (obj !== null) {
-      getFoodByUsername(obj.user.id);
+      console.log(obj.user.username);
+      getFoodByUsername(obj.user.username);
     }
   }
 

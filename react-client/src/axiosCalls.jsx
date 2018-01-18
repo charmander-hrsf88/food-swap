@@ -119,6 +119,7 @@ export function getSpecificFood(foodId) {
 }
 
 export function getFoodByUsername(username) {
+  console.log('url', `/api/food/username/${username}`);
   axios({
     method: 'get',
     url: `/api/food/username/${username}`,
