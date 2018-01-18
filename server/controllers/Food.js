@@ -25,8 +25,8 @@ class Food {
   static post(req, res) {
     const { dishname, description, userId } = req.body;
     models.food.create({ dishname, description, userId })
-      .then(() => {
-        res.end('OK');
+      .then((food) => {
+        res.json(food);
       })
       .catch((e) => {
         res.status(500).send({ error: e });
