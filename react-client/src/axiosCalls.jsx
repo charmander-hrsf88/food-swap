@@ -118,6 +118,19 @@ export function getSpecificFood(foodId) {
     });
 }
 
+export function getFoodByUsername(username) {
+  axios({
+    method: 'get',
+    url: `/api/food/username/${username}`,
+  })
+    .then((result) => {
+      console.log(result.data);
+    })
+    .catch((e) => {
+      console.log('err', e, this);
+    });
+}
+
 export function addFood(dish, description, userId) {
   axios({
     method: 'post',

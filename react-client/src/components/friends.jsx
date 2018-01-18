@@ -1,65 +1,121 @@
 import React from 'react';
 import Friend from './friend.jsx';
+import { RatedStarLike } from '../icons/star.jsx';
+import trades from '../dummyData.js';
 
 class Friends extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      friend: {},
+      trade: {},
       expand: false,
+      star: <RatedStarLike location="hello" click={console.log} hover={console.log} />,
+      selectedTradeItem: undefined,
+      addFoodItem: false,
     };
     this.selectFriend = this.selectFriend.bind(this);
     this.toggleExpand = this.toggleExpand.bind(this);
+    this.selectTradeItem = this.selectTradeItem.bind(this);
+    this.toggleAdd = this.toggleAdd.bind(this);
+  }
+
+  selectTradeItem(dishname) {
+    this.setState({ selectedTradeItem: dishname });
+  }
+
+  toggleAdd() {
+    const bool = !this.state.addFoodItem;
+    this.setState({ addFoodItem: bool });
   }
 
   selectFriend(selected) {
-    this.setState({ friend: selected });
+    this.setState({ trade: selected });
   }
 
-  toggleExpand() {
+  toggleExpand(condit) {
     if (this.state.expand === true) {
-      this.setState({ expand: false });
+      this.setState({ expand: false, selectedTradeItem: undefined });
     } else {
-      this.setState({ expand: true });
+      condit === undefined && this.setState({ expand: true });
     }
   }
 
   render() {
     return (
-      <div id="friends" onClick={()=>{this.toggleExpand()}}>
+      <div id="friends" onClick={()=>{this.toggleExpand(false)}}>
         {this.state.expand === true ?
           <div className="cover" />
         :
           <span />
         }
-        <h2>Your Friends' Swaps: </h2>
         {this.state.expand === true ?
           <div className="popUpInfo" onClick={(e)=>{e.stopPropagation()}}> {/* React Stop click progression */}
-            <img alt={this.state.friend.food_name} src={this.state.friend.food_picture} />
-            <hr />
+            {this.state.addFoodItem === false ?
+              <div>
+                <img alt={this.state.trade.food_name} src={this.state.trade.food_picture} />
+                <h2> {this.state.trade.food_dishname} </h2>
+                <p> {this.state.trade.food_description} </p>
+                <p> ~ {this.state.trade.username1}</p>
+                <p> 50 feet away </p>
+              </div>
+            :
+              <div id="addFoodForm">
+                <label>Dishname</label>
+                <br />
+                <input />
+                <br />
+                <label>Description</label>
+                <br />
+                <textarea />
+                <br />
+                <label>Picture</label>
+                <br />
+                <input />
+                <br />
+                <button>Submit</button>
+                <button onClick={this.toggleAdd}>Cancel</button>
+              </div>
+            }
             <div>
-              <h2> {this.state.friend.food_name} </h2>
-              <p> {this.state.friend.food_description} </p>
-              <button>
-                Send a swap request to {this.state.friend.user_name} for {this.state.friend.food_name}
-              </button>
+              <ol>
+                <li>
+                  {this.state.addFoodItem === false ?
+                    <button onClick={this.toggleAdd}>Add a food item to trade</button>
+                    :
+                    <button className="cancel" onClick={this.toggleAdd}>Switch Back</button>
+                  }
+                </li>
+                {trades.food.map(option =>
+                  (
+                    <li key={option.id}>
+                      <img src={option.picture} alt={option.dishname} />
+                      <button onClick={() => { this.selectTradeItem(option.dishname); }}>Select {option.dishname} </button>
+                    </li>
+                  ))}
+              </ol>
             </div>
-            <div>
-              <img alt={this.state.friend.user_name} src={this.state.friend.user_picture} />
-              <h2> {this.state.friend.user_name} </h2>
-              <p> {this.state.friend.user_bio} </p>
-            </div>
+            {this.state.selectedTradeItem === undefined ?
+              <button disabled>Select an item to trade</button>
+
+            :
+              <button>Offer to trade your {this.state.selectedTradeItem}</button>
+            }
             <i className="fa fa-times-circle-o fa-2x" aria-hidden="true" onClick={this.toggleExpand} />
           </div>
         :
           <span />
         }
-        {this.props.friends.map((friend, i) =>
-          <Friend key={i} friend={friend} selectFriend={this.selectFriend} toggleExpand={this.toggleExpand} />)}
+        {trades.trades.map(trade =>
+          (<Friend
+            key={trade.id}
+            trade={trade}
+            selectTrade={this.selectFriend}
+            toggleExpand={this.toggleExpand}
+            star={this.state.star}
+          />))}
       </div>
     );
   }
 }
-
 
 export default Friends;

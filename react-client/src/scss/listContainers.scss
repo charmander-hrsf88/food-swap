@@ -13,8 +13,9 @@
 .cover {
   position: absolute;
   width: 100%;
-  height: 88.5%;
+  height: calc(100vw - 32px);
   /* height: calc(100% - 24px); */
   /* height: calc(100% - 87px); Needs to scale for dynamic content*/
-  background: rgba(28, 26, 26, 0.87);;
+  background: rgba(28, 26, 26, 0.87);
+  // margin-top: 20px;
 }

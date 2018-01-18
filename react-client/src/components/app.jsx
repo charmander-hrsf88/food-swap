@@ -12,6 +12,7 @@ import {
   getFriends,
   getAllFood,
   getSpecificFood,
+  getFoodByUsername,
   addFood,
   requestTrade,
   acceptTrade,
@@ -28,10 +29,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       friends: dummyData.friends,
-      topUsers: dummyData.topUsers,
       currentUser: '',
       loggedIn: false,
       currentPage: <span />,
+      userFood : [],
     };
     this.switchPage = this.switchPage.bind(this);
     this.updateUser = this.updateUser.bind(this);
@@ -42,8 +43,8 @@ class App extends React.Component {
     // addFriend();
     // getFriends();
     // getFriend();
-    // addFood('cheeseburger', 'bread and meat and cheese', 1);
-    // getAllFood();
+    // addFood('Whiskey', 'It\'s a drink. You drink it.', 1);
+    getAllFood();
     // getSpecificFood();
     // requestTrade();
     // getTrades();
@@ -62,43 +63,48 @@ class App extends React.Component {
         this.setState({ currentPage: <Trade /> });
         break;
       case ('Profile'):
-        this.setState({ currentPage: <Profile user={this.state.currentUser} /> });
+        this.setState({ currentPage: <Profile /> });
         break;
       default:
         this.setState({
           currentPage:
   <MainPage
     friends={this.state.friends}
-    topUsers={this.state.topUsers}
   />,
         });
         break;
     }
   }
 
-  postTrade(localUser, localFood, selectedUser, selectedFood) {
-    axios({
-      method: 'post',
-      url: '/api/trade/initiate',
-      data: {
-        userId1: localUser,
-        foodId1: localFood,
-        userId2: selectedUser,
-        foodId2: selectedFood,
-      },
-    })
-      .then(data => console.log(data))
-      .catch(e => console.log('err', e, this));
-  }
+  // postTrade(localUser, localFood, selectedUser, selectedFood) {
+  //   axios({
+  //     method: 'post',
+  //     url: '/api/trade/initiate',
+  //     data: {
+  //       userId1: localUser,
+  //       foodId1: localFood,
+  //       userId2: selectedUser,
+  //       foodId2: selectedFood,
+  //     },
+  //   })
+  //     .then(data => console.log(data))
+  //     .catch(e => console.log('err', e, this));
+  // }
 
   updateUser(obj, bool) {
     this.setState({ currentUser: obj, loggedIn: bool });
+    if (obj !== null) {
+      getFoodByUsername(obj.user.id);
+    }
   }
 
   render() {
     return (
       <div>
-        {console.log(this.state)}
+        {/*   Temp disable log in/out rendering
+        <NavBar switchPage={this.switchPage} cb={this.updateUser} />
+        {this.state.currentPage}
+        */}
         {this.state.loggedIn && <NavBar switchPage={this.switchPage} cb={this.updateUser} />}
         {this.state.loggedIn ?
           this.state.currentPage
@@ -111,3 +117,14 @@ class App extends React.Component {
 }
 
 export default App;
+
+/*
+
+        {this.state.loggedIn && <NavBar switchPage={this.switchPage} cb={this.updateUser} />}
+        {this.state.loggedIn ?
+          this.state.currentPage
+        :
+          <LogInSignUp />
+        }
+
+*/
