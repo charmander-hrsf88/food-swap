@@ -43,6 +43,17 @@ class Food {
         res.status(500).send({ error: e });
       });
   }
+
+  static getByUserId(req, res) {
+    const { userId } = req.params;
+    models.food.getByUserId({ userId })
+      .then((foods) => {
+        res.json(foods);
+      })
+      .catch((e) => {
+        res.status(500).send({ error : e });
+      });
+  }
 }
 
 module.exports = Food;

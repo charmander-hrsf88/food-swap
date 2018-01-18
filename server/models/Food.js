@@ -28,6 +28,10 @@ class Food {
   static getByUsername({ username }) {
     return db.food.getByUsername({ username });
   }
+
+  static getByUserId({ userId }) {
+    return db.food.getByUserId({ userId });
+  }
 }
 
 module.exports = Food;
