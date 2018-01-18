@@ -12,11 +12,12 @@ class Profile extends React.Component {
     super(props);
     this.state = {
       profile: this.props.user,
-      noPic: 'https://heatherchristenaschmidt.files.wordpress.com/2011/09/facebook_no_profile_pic2-jpg.gif',
+      noPic: 'https://u.o0bc.com/avatars/no-user-image.gif',
       showEditPage: false,
       bio: 'I love to cook',
       email: 'dummydata@gmail.com ',
       userName: 'Hayden',
+      id: '',
       name: '',
       picture: dummyData.friends[0].user_picture,
       foodName: '',
@@ -28,11 +29,13 @@ class Profile extends React.Component {
     this.updateProfile = this.updateProfile.bind(this);
     this.update = this.update.bind(this);
     this.getTradesByUsername = this.getTradesByUsername.bind(this);
+    this.editProfile = this.editProfile.bind(this);
   }
 
   clickHandler() {
     /* If user !== username passed */
     console.log(this.state.showEditPage);
+    this.editProfile(this.state.id, this.state.name, this.state.bio, this.state.email, this.state.userName);
     this.setState({
       showEditPage: !this.state.showEditPage,
     });
@@ -49,6 +52,7 @@ class Profile extends React.Component {
       userName: this.state.profile.user.username,
       picture: this.state.profile.user.picture,
       name: this.state.profile.user.name,
+      id: this.state.profile.user.id,
       showEditPage: !this.state.showEditPage,
     });
   }
@@ -70,6 +74,26 @@ class Profile extends React.Component {
     })
     .catch((e) => {
       console.log('err', e)
+    })
+  }
+
+  editProfile(id, bio, name, email, username){
+    axios({
+      method: 'POST',
+      url: '/users/edit',
+      data: {
+        id: id,
+        name: name,
+        bio: bio,
+        email: email,
+        username: username
+      }
+    })
+    .then((results) => {
+      console.log(results);
+    })
+    .catch((e) => {
+      console.log('Error', e, this);
     })
   }
 
