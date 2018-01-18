@@ -51,7 +51,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use('/', express.static(path.join(__dirname, '../react-client/dist')));
+app.use('/', express.static(path.join(__dirname, '../react-client/dist/')));
 
 app.get('/session', (req, res) => {
   const { user } = req.session;
@@ -87,7 +87,6 @@ app.post('/signup', (req, res) => {
   const { name, username, password, email } = req.body;
   models.users.create({ name, username, password, email })
     .then((user) => {
-      console.log(user);
       req.session.regenerate(() => {
         req.session.user = user.id;
         res.redirect('/');
