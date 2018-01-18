@@ -1,7 +1,9 @@
 import React from 'react';
 import Friend from './friend.jsx';
 import { RatedStarLike } from '../icons/star.jsx';
+import Question from '../icons/question.jsx';
 import trades from '../dummyData.js';
+import { addFood } from '../axiosCalls.jsx';
 
 class Friends extends React.Component {
   constructor(props) {
@@ -12,11 +14,15 @@ class Friends extends React.Component {
       star: <RatedStarLike location="hello" click={console.log} hover={console.log} />,
       selectedTradeItem: undefined,
       addFoodItem: false,
+      dishname: '',
+      description: '',
+      picture: '',
     };
     this.selectFriend = this.selectFriend.bind(this);
     this.toggleExpand = this.toggleExpand.bind(this);
     this.selectTradeItem = this.selectTradeItem.bind(this);
     this.toggleAdd = this.toggleAdd.bind(this);
+    this.updateForm = this.updateForm.bind(this);
   }
 
   selectTradeItem(dishname) {
@@ -38,6 +44,10 @@ class Friends extends React.Component {
     } else {
       condit === undefined && this.setState({ expand: true });
     }
+  }
+
+  updateForm(e) {
+    this.setState({ [e.target.id]: e.target.value });
   }
 
   render() {
@@ -62,17 +72,28 @@ class Friends extends React.Component {
               <div id="addFoodForm">
                 <label>Dishname</label>
                 <br />
-                <input />
+                <input id="dishname" value={this.state.dishname} onChange={this.updateForm} />
                 <br />
                 <label>Description</label>
                 <br />
-                <textarea />
+                <textarea id="description" value={this.state.description} onChange={this.updateForm} />
                 <br />
                 <label>Picture</label>
                 <br />
-                <input />
+                <input disabled />
                 <br />
-                <button>Submit</button>
+                <button onClick={() => {
+                  addFood(
+                    this.state.dishname,
+                    this.state.description,
+                    this.props.currentUser.id,
+                    this.props.updateUser,
+                  );
+                  this.toggleAdd();
+                  }}
+                >
+                  Submit
+                </button>
                 <button onClick={this.toggleAdd}>Cancel</button>
               </div>
             }
@@ -85,11 +106,15 @@ class Friends extends React.Component {
                     <button className="cancel" onClick={this.toggleAdd}>Switch Back</button>
                   }
                 </li>
-                {trades.food.map(option =>
+                {this.props.userFood.map(option =>
                   (
                     <li key={option.id}>
-                      <img src={option.picture} alt={option.dishname} />
-                      <button onClick={() => { this.selectTradeItem(option.dishname); }}>Select {option.dishname} </button>
+                      {option.picture === null ?
+                        <Question />
+                      :
+                        <img src={option.picture} alt={option.dishname} />
+                      }
+                      <button onClick={() => { this.selectTradeItem(option.dishname); }}>{option.dishname}</button>
                     </li>
                   ))}
               </ol>

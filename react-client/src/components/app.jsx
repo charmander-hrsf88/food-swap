@@ -31,20 +31,20 @@ class App extends React.Component {
       friends: dummyData.friends,
       currentUser: '',
       loggedIn: false,
-      currentPage: <span />,
-      userFood : [],
+      currentPage: '',
+      userFood: [],
     };
     this.switchPage = this.switchPage.bind(this);
     this.updateUser = this.updateUser.bind(this);
+    this.updateFood = this.updateFood.bind(this);
   }
 
   componentDidMount() {
-    this.switchPage();
     // addFriend();
     // getFriends();
     // getFriend();
     // addFood('Whiskey', 'It\'s a drink. You drink it.', 1);
-    getAllFood();
+    // getAllFood();
     // getSpecificFood();
     // requestTrade();
     // getTrades();
@@ -70,6 +70,9 @@ class App extends React.Component {
           currentPage:
   <MainPage
     friends={this.state.friends}
+    userFood={this.state.userFood}
+    updateUser={this.updateUser}
+    currentUser={this.state.currentUser}
   />,
         });
         break;
@@ -91,11 +94,13 @@ class App extends React.Component {
   //     .catch(e => console.log('err', e, this));
   // }
 
-  updateUser(obj, bool) {
-    this.setState({ currentUser: obj, loggedIn: bool });
-    if (obj !== null) {
-      getFoodByUsername(obj.user.id);
-    }
+  updateUser(userObj, bool) {
+    console.log('here : ', userObj);
+    this.setState({ currentUser: userObj.user.name, loggedIn: bool, userFood: userObj.foods });
+  }
+
+  updateFood(obj) {
+    this.setState({ userFood: obj });
   }
 
   render() {
@@ -107,7 +112,15 @@ class App extends React.Component {
         */}
         {this.state.loggedIn && <NavBar switchPage={this.switchPage} cb={this.updateUser} />}
         {this.state.loggedIn ?
-          this.state.currentPage
+          this.state.currentPage === '' ? 
+            <MainPage friends={
+              this.state.friends}
+              userFood={this.state.userFood}
+              updateUser={this.updateUser}
+              currentUser={this.state.currentUser}
+              />
+          :
+            this.state.currentPage
         :
           <LogInSignUp />
         }
@@ -117,14 +130,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-/*
-
-        {this.state.loggedIn && <NavBar switchPage={this.switchPage} cb={this.updateUser} />}
-        {this.state.loggedIn ?
-          this.state.currentPage
-        :
-          <LogInSignUp />
-        }
-
-*/

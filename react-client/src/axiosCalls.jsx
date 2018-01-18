@@ -12,7 +12,8 @@ export function logOut(cb) {
   })
     .then((result) => {
       // console.log('friend', result.data, '. this:', this);
-      cb(null, false);
+      const temp = { user: { name: null } }
+      cb(temp, false);
     })
     .catch((e) => {
       console.log(e, this);
@@ -118,27 +119,28 @@ export function getSpecificFood(foodId) {
     });
 }
 
-export function getFoodByUsername(username) {
+export function getFoodByUsername(username, cb) {
+  console.log('url', `/api/food/username/${username}`);
   axios({
     method: 'get',
     url: `/api/food/username/${username}`,
   })
     .then((result) => {
-      console.log(result.data);
+      cb(result.data);
     })
     .catch((e) => {
       console.log('err', e, this);
     });
 }
 
-export function addFood(dish, description, userId) {
+export function addFood(dish, des, id, cb) {
   axios({
     method: 'post',
     url: '/api/food',
     data: {
       dishname: dish,
-      description: description,
-      userId: 1,
+      description: des,
+      userId: id,
     },
   })
     .then((result) => {
