@@ -11,10 +11,9 @@ class LogIn extends React.Component {
       signUpConfirmPassword: 'test',
       signUpName: 'Hayden Marx',
       signUpEmail: 'haydenmarx@gmail.com',
+      errorMessage: '',
     };
     this.switchType = this.switchType.bind(this);
-    this.updateForm = this.updateForm.bind(this);
-    this.signUp = this.signUp.bind(this);
   }
 
   switchType() {
@@ -25,38 +24,15 @@ class LogIn extends React.Component {
     }
   }
 
-  updateForm(e) {
-    this.setState({ [e.target.id]: e.target.value });
-  }
-
-  signUp(e) {
-    e.preventDefault();
-    axios({
-      url: '/api/users',
-      method: 'post',
-      contentType: 'application/json',
-      data: {
-        name: this.state.signUpName,
-        username: this.state.signUpUserName,
-        password: this.state.signUpPassword,
-        email: this.state.signUpEmail,
-      },
-    })
-      .then(function (response) {
-      console.log(response);
-      })
-      .catch(function (error) {
-      console.log(error);
-      });
-  }
-
   render() {
     return (
       this.state.NewUser === true ?
         <div id="logInForm">
           <button disabled>Log In</button><button onClick={this.switchType}>Sign Up</button>
           <form action="/login" method="POST" >
+            {console.log('loginpage', this.props.err)}
             <h2>Log In</h2>
+            {this.props.err === "Incorrect username" && <h4>Username/password combination did not match any active account.</h4>}
             <label htmlFor="logInUserName" >Username:</label>
             <br />
             <input
