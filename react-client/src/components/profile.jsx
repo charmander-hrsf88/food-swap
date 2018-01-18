@@ -20,8 +20,8 @@ class Profile extends React.Component {
       id: '',
       name: '',
       picture: dummyData.friends[0].user_picture,
-      foodName: '',
-      foodDescription: '',
+      foodName: 'Food Name',
+      foodDescription: 'Food Description',
       foodPic: '',
       trades: [],
     };
@@ -30,12 +30,14 @@ class Profile extends React.Component {
     this.update = this.update.bind(this);
     this.getTradesByUsername = this.getTradesByUsername.bind(this);
     this.editProfile = this.editProfile.bind(this);
+    this.submitTrade = this.submitTrade.bind(this);
+    this.addFood = this.addFood.bind(this);
   }
 
   clickHandler() {
     /* If user !== username passed */
     console.log(this.state.showEditPage);
-    this.editProfile(this.state.id, this.state.name, this.state.bio, this.state.email, this.state.userName);
+    this.editProfile(this.state.id, this.state.bio, this.state.email, this.state.userName);
     this.setState({
       showEditPage: !this.state.showEditPage,
     });
@@ -62,12 +64,36 @@ class Profile extends React.Component {
     let name = this.refs.name.value;
     let description = this.refs.description.value;
     let picture = this.refs.picture.value;
+    this.addFood(name, description, this.state.id);
+    this.setState({
+      foodName: '',
+      foodDescription: '',
+    });
+
+  }
+
+  addFood(dishname, description, id) {
+    axios({
+      method: 'POST',
+      url: 'api/food',
+      data: {
+        dishname: dishname,
+        description: description,
+        userId: id
+      }
+    })
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((e) => {
+      console.log('Error', e);
+    });
   }
 
   getTradesByUsername(username) {
     axios({
       method: 'GET',
-      url: `/trade/username/${username}`
+      url: `api/trade/username/${username}`
     })
     .then((results) => {
       console.log(results)
@@ -80,10 +106,9 @@ class Profile extends React.Component {
   editProfile(id, bio, name, email, username){
     axios({
       method: 'POST',
-      url: '/users/edit',
+      url: 'api/users/edit',
       data: {
-        id: id,
-        name: name,
+        userId: id,
         bio: bio,
         email: email,
         username: username
@@ -99,7 +124,6 @@ class Profile extends React.Component {
 
   componentDidMount() {
     this.update();
-    this.getTradesByUsername(this.state.username);
   }
 
   render() {
@@ -114,11 +138,11 @@ class Profile extends React.Component {
         </div>
         <div className="postTrades">
           <form onSubmit={this.submitTrade.bind(this)}>
-            <h2>Add Trade</h2>
-            Food Name: <input type="text" placeholder="FoodName" ref='name' /> <br />
-            Food Description: <input type="text" placeholder="Descrpiton" ref="description" /> <br />
+            <h2>Add Dish</h2>
+            Dish Name: <input type="text" placeholder={this.state.foodName} ref='name' /> <br />
+          Dish Description: <input type="text" placeholder={this.state.foodDescription} ref="description" /> <br />
             Add Picture: <input type="text" placeholder="Picture" ref="picture" /> <br />
-          <button type="submit">Trade Post</button>
+            <button type="submit">Add Food</button>
           </form>
           <div className="profileList">
             <ProfileList />
