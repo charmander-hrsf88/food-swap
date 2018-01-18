@@ -95,7 +95,8 @@ class App extends React.Component {
   // }
 
   updateUser(obj, bool) {
-    this.setState({ currentUser: obj.name, loggedIn: bool, userFood: obj.food });
+    console.log('here : ', obj);
+    this.setState({ currentUser: obj.name.name, loggedIn: bool, userFood: obj.food });
   }
 
   updateFood(obj) {
