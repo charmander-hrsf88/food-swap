@@ -39,5 +39,4 @@ const Friend = ({
   </div>
 );
 
-
 export default Friend;

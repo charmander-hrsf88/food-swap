@@ -12,6 +12,7 @@ import {
   getFriends,
   getAllFood,
   getSpecificFood,
+  getFoodByUsername,
   addFood,
   requestTrade,
   acceptTrade,
@@ -31,6 +32,7 @@ class App extends React.Component {
       currentUser: '',
       loggedIn: false,
       currentPage: <span />,
+      userFood : [],
     };
     this.switchPage = this.switchPage.bind(this);
     this.updateUser = this.updateUser.bind(this);
@@ -41,8 +43,8 @@ class App extends React.Component {
     // addFriend();
     // getFriends();
     // getFriend();
-    // addFood('cheeseburger', 'bread and meat and cheese', 1);
-    // getAllFood();
+    // addFood('Whiskey', 'It\'s a drink. You drink it.', 1);
+    getAllFood();
     // getSpecificFood();
     // requestTrade();
     // getTrades();
@@ -74,30 +76,41 @@ class App extends React.Component {
     }
   }
 
-  postTrade(localUser, localFood, selectedUser, selectedFood) {
-    axios({
-      method: 'post',
-      url: '/api/trade/initiate',
-      data: {
-        userId1: localUser,
-        foodId1: localFood,
-        userId2: selectedUser,
-        foodId2: selectedFood,
-      },
-    })
-      .then(data => console.log(data))
-      .catch(e => console.log('err', e, this));
-  }
+  // postTrade(localUser, localFood, selectedUser, selectedFood) {
+  //   axios({
+  //     method: 'post',
+  //     url: '/api/trade/initiate',
+  //     data: {
+  //       userId1: localUser,
+  //       foodId1: localFood,
+  //       userId2: selectedUser,
+  //       foodId2: selectedFood,
+  //     },
+  //   })
+  //     .then(data => console.log(data))
+  //     .catch(e => console.log('err', e, this));
+  // }
 
   updateUser(obj, bool) {
     this.setState({ currentUser: obj, loggedIn: bool });
+    if (obj !== null) {
+      getFoodByUsername(obj.user.id);
+    }
   }
 
   render() {
     return (
       <div>
+        {/*   Temp disable log in/out rendering
         <NavBar switchPage={this.switchPage} cb={this.updateUser} />
         {this.state.currentPage}
+        */}
+        {this.state.loggedIn && <NavBar switchPage={this.switchPage} cb={this.updateUser} />}
+        {this.state.loggedIn ?
+          this.state.currentPage
+        :
+          <LogInSignUp />
+        }
       </div>
     );
   }

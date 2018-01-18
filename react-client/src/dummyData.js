@@ -137,7 +137,7 @@ const trades = [
     id: 1,
     food_picture: 'http://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/28/0/FNM_040112-Insert-001_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1371605955012.jpeg',
     food_dishname: 'Grilled Cheese',
-    food_description: 'Melted Cheese between bread',
+    food_description: 'Melted Cheese between bread. Home made, hand crafted crafted from the finest ingredients. No expense spared.',
     user_id: 1,
     user_rating: 5,
     username1: 'Hacker Alex',
@@ -443,4 +443,55 @@ const trades = [
   },
 ];
 
-export default {friends: friends, topUsers : topUsers, trades: trades};
+const food = [
+  {
+    id: 1,
+    user_id: 2,
+    dishname: 'Spicy soup and Moonshine',
+    picture: 'http://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/28/0/FNM_040112-Insert-001_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1371605955012.jpeg',
+  },
+  {
+    id: 2,
+    user_id: 2,
+    dishname: 'Ghost Chili Pepper infused Moonshine',
+    picture: 'http://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/28/0/FNM_040112-Insert-001_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1371605955012.jpeg',
+  },
+  {
+    id: 3,
+    user_id: 2,
+    dishname: 'Spicy soup and Moonshine',
+    picture: 'http://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/28/0/FNM_040112-Insert-001_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1371605955012.jpeg',
+  },
+  {
+    id: 4,
+    user_id: 2,
+    dishname: 'Spicy soup and Moonshine',
+    picture: 'http://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/28/0/FNM_040112-Insert-001_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1371605955012.jpeg',
+  },
+  {
+    id: 5,
+    user_id: 2,
+    dishname: 'Spicy soup and Moonshine',
+    picture: 'http://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/28/0/FNM_040112-Insert-001_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1371605955012.jpeg',
+  },
+  {
+    id: 6,
+    user_id: 2,
+    dishname: 'Spicy soup and Moonshine',
+    picture: 'http://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/28/0/FNM_040112-Insert-001_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1371605955012.jpeg',
+  },
+  {
+    id: 7,
+    user_id: 2,
+    dishname: 'Spicy soup and Moonshine',
+    picture: 'http://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/28/0/FNM_040112-Insert-001_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1371605955012.jpeg',
+  },
+  {
+    id: 8,
+    user_id: 2,
+    dishname: 'Spicy soup and Moonshine',
+    picture: 'http://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/28/0/FNM_040112-Insert-001_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1371605955012.jpeg',
+  },
+]
+
+export default {friends: friends, topUsers : topUsers, trades: trades, food: food};

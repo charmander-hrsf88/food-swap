@@ -1,3 +1,4 @@
+@import 'colorScheme';
 
 .popUpInfo {
   position: absolute;
@@ -15,36 +16,95 @@
     right: 15px;
     cursor: pointer;
   }
-  & > img {
-    width:50%;
-    // padding-left:10%;
-    // padding-right:10%;
-  }
-  & > hr {
-    margin-bottom: 0px;
-  }
   & > div {
-    &:nth-of-type(2){
-      width: 40%;
-      background: rgba(128, 128, 128, 0.486);
+    &#addFoodForm {
+      padding-top: 60px;
+      height: 410px;
+    }
+    &:nth-of-type(1) {
+      background: rgba(128, 128, 128, 0.074);
+      width: calc(50% - 45px);
+      margin-left: 45px;
+      height: calc(100% - 130px);
+      margin-top: 45px;
+      float: left;
       & > h2 {
-        margin: 0px;
+        text-align: center;
       }
-    }
-    &:nth-of-type(1){
-      width: 60%;
       & > p {
-        margin: 0px 20%;
+        margin-left: 20px;
       }
-      & > button {
-        margin-top: 20px;
+      & label, input {
+        width: 231px;
+        margin-bottom: 30px;
+        margin-left: 20px;
+      }
+      & textarea {
+        width: 229px;
+        min-width: 229px;
+        max-width: 229px;
+        height: 160px;
+        min-height: 160px;
+        max-height: 160px;
+        margin-bottom: 30px;
+        margin-left: 20px;
+      }
+      & button {
+        background: $successButton !important;
+        border-color: $successButton !important;
+        width: calc(50% - 10px);
+        margin-left: 20px;
+        cursor: pointer;
+        &:nth-of-type(2) {
+          background: $failButton !important;
+          border-color: $failButton !important;
+          margin-left: 0px;
+        }
       }
     }
-    float:left;
+    &:nth-of-type(2) {
+      background: rgba(128, 128, 128, 0.074);
+      width: calc(50% - 45px);
+      margin-right: 45px;
+      height: calc(100% - 130px);
+      margin-top: 45px;
+      float: right;
+      overflow-y: scroll;
+      & > ol {
+        list-style: none;
+        padding-left: 0px;
+        margin: 20px;
+        & li {
+          & > img {
+            width:100%;
+            margin-bottom: -2px;
+          }
+          & > button {
+            margin-bottom: 20px;
+            width: 100%;
+            cursor: pointer;
+            background: $successButton !important;
+            border-color: $successButton !important;
+            &.cancel {
+              background: $failButton !important;
+              border-color: $failButton !important;
+            }
+          }
+        }
+      }
+    }
     & > img {
-      max-height: 200px;
-      max-width: 200px;
-      width: 60%;
+      width: calc(100%);
+    }
+  }
+  & > button {
+    height: 38px;
+    margin-left: 45px;
+    width: calc(100% - 90px);
+    &:enabled {
+      cursor: pointer;
+      background: $successButton !important;
+      border-color: $successButton !important;
     }
   }
 }
