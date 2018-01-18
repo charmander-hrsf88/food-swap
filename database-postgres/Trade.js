@@ -1,24 +1,48 @@
 const db = require('./config');
 
 class Trade {
-  static getAllTradeByUserId({ userId }) {
-    const queryString = 'SELECT * FROM trade WHERE user_id1 = $1 OR user_id2 = $1';
-    return db.any(queryString, [userId]);
+  static getTradesById({ id }) {
+    const queryString = 'SELECT trade.id, (SELECT username FROM users WHERE id = user_id1), (SELECT dishname FROM food WHERE id = food_id1), (SELECT username FROM users WHERE id = user_id2), (SELECT dishname FROM food WHERE id = food_id2), status FROM trade WHERE id = $1';
+    return db.any(queryString, [id]);
   }
 
-  static getAllTradesByUsername({ username }) {
-    const queryString = 'SELECT * FROM trade WHERE user_id1 = (SELECT id FROM users WHERE username = $1)';
+  static getTradesByUsername({ username }) {
+    const queryString = 'SELECT trade.id, (SELECT username FROM users WHERE id = user_id1), (SELECT dishname FROM food WHERE id = food_id1), (SELECT username FROM users WHERE id = user_id2), (SELECT dishname FROM food WHERE id = food_id2), status FROM trade WHERE user_id1=(SELECT id FROM users WHERE username=$1 LIMIT 1) OR user_id2=(SELECT id FROM users WHERE username=$1 LIMIT 1)';
     return db.any(queryString, [username]);
   }
 
-  static findById({userId1, userId2 }) {
-    const queryString = 'SELECT * from trade WHERE user_id1 = $1 AND user_id2 = $2';
-    return db.any(queryString, [userId1, userId2]);
+  static getTradesByUserId({ userId }) {
+    const queryString = 'SELECT trade.id, (SELECT username FROM users WHERE id = user_id1), (SELECT dishname FROM food WHERE id = food_id1), (SELECT username FROM users WHERE id = user_id2), (SELECT dishname FROM food WHERE id = food_id2), status FROM trade WHERE user_id1=$1 OR user_id2=$1)';
+    return db.any(queryString, [userId]);
   }
 
-  static getRequestsPending({ userId }) {
-    const queryString = 'SELECT * FROM trade WHERE user_id2 = $1 AND status IS NULL';
-    return db.any(queryString, [userId]);
+  static getTradesByTwoUsernames({ username1, username2 }) {
+    const queryString = `
+      SELECT 
+        trade.id, 
+        (SELECT username FROM users WHERE id = user_id1), 
+        (SELECT dishname FROM food WHERE id = food_id1), 
+        (SELECT username FROM users WHERE id = user_id2), 
+        (SELECT dishname FROM food WHERE id = food_id2), 
+        status FROM trade 
+        WHERE 
+        (user_id1=(SELECT id FROM users WHERE username=$1 LIMIT 1) AND user_id2=(SELECT id FROM users WHERE username=$2 LIMIT 1)) 
+        OR 
+        (user_id1=(SELECT id FROM users WHERE username=$2 LIMIT 1) AND user_id2=(SELECT id FROM users WHERE username=$1 LIMIT 1))`;
+    
+    return db.query(queryString, [username1, username2]);
+  }
+
+  static getTradesByTwoUserIds({ userId1, userId2 }) {
+    const queryString = `SELECT 
+                           trade.id,
+                           (SELECT username FROM users WHERE id = user_id1),
+                           (SELECT dishname FROM food WHERE id = food_id1),
+                           (SELECT username FROM users WHERE id = user_id2),
+                           (SELECT dishname FROM food WHERE id = food_id2),
+                           status FROM trade 
+                           WHERE (user_id1=$1 AND user_id2=$2) OR (user_id1=$2 AND user_id2=$1)`;
+    return db.query(queryString, [userId1, userId2]);
   }
 
   static initiate({ userId1, foodId1, userId2, foodId2 }) {
@@ -32,7 +56,7 @@ class Trade {
   }
 
   static reject({ id }) {
-    const queryString = 'UDATE trade SET status = FALSE WHERE id = $1';
+    const queryString = 'UPDATE trade SET status = FALSE WHERE id = $1';
     return db.any(queryString, [id]);
   }
 
@@ -42,4 +66,7 @@ class Trade {
   }
 }
 
+Trade.getTradesByTwoUsernames({ username1: 'wanchoi111', userId2: 'batman123' })
+  .then((results) => console.log(results))
+  .catch((e) => console.log(e));
 module.exports = Trade;
