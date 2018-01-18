@@ -14,7 +14,7 @@ router.get('/trade/userId/:userId1/userId/:userId2', controller.trade.getTradesB
 router.post('/trade/initiate', controller.trade.initiate);
 router.post('/trade/accept', controller.trade.accept);
 router.post('/trade/reject', controller.trade.reject);
-
+router.post('/trade/remove', controller.trade.remove);
 
 router.get('/food', controller.food.getAll);
 router.get('/food/:id', controller.food.getById);
