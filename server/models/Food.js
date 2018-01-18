@@ -24,6 +24,10 @@ class Food {
   static findByDishName({ dishname }) {
     return db.food.findByDishName({ dishname });
   }
+
+  static getByUsername({ username }) {
+    return db.food.getByUsername({ username });
+  }
 }
 
 module.exports = Food;

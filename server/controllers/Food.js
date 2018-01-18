@@ -32,6 +32,17 @@ class Food {
         res.status(500).send({ error: e });
       });
   }
+
+  static getByUsername(req, res) {
+    const { username } = req.params;
+    models.food.getByUsername({ username })
+      .then((foods) => {
+        res.json(foods);
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e });
+      });
+  }
 }
 
 module.exports = Food;
