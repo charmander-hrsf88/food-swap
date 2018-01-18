@@ -1,7 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import EditPage from './EditPage.jsx';
+import UserProfile from './userProfile.jsx';
 import Trades from './trades.jsx';
+import Trade from './trade.jsx';
+import AddTrade from './addTrade.jsx';
 import dummyData from '../dummyData.js';
 import userInfo from '../axiosCalls.jsx';
 
@@ -54,28 +57,13 @@ class Profile extends React.Component {
   }
   render() {
     return (
-      this.state.showEditPage ?
-        /* Own Profile */
-        <div className="profile">
-          <div className="userProfile">
-            <h2 id="profileName" >{this.state.name}</h2>
-            { this.state.picture ? <img id="profilePic" alt={this.state.userName} src={this.state.picture} /> : <img id="profilePic" alt={this.state.userName} src={this.state.noPic} /> } <br />
-            <p>
-              Username: {this.state.userName} <br />
-              Email: {this.state.email} <br />
-              Bio: {this.state.bio} <br />
-              <button type="submit" onClick={() => { this.clickHandler(); }}> Edit Profile </button>
-            </p>
-          </div>
-          <div className="profileTrades">
-            <Trades />
-          </div>
-        </div>
-        :
-        /* Edit Page */
-        <div id="editProfile">
-          <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} />
-        </div>
+      <div className="picture">
+        {this.state.showEditPage ?
+          /* Own Profile */
+          <UserProfile name={this.state.name} picture={this.state.picture} username={this.state.userName} noPic={this.state.noPic} email={this.state.email} bio={this.state.bio} submit={this.clickHandler} /> :
+          /* Edit Page */
+          <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} />}
+      </div>
     );
   }
 }
