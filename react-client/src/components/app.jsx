@@ -33,6 +33,7 @@ class App extends React.Component {
       loggedIn: false,
       currentPage: '',
       userFood: [],
+      errorMessage: 'none',
     };
     this.switchPage = this.switchPage.bind(this);
     this.updateUser = this.updateUser.bind(this);
@@ -96,7 +97,12 @@ class App extends React.Component {
 
   updateUser(userObj, bool) {
     console.log('here : ', userObj);
-    this.setState({ currentUser: userObj.user.name, loggedIn: bool, userFood: userObj.foods });
+    // userObj.foods === undefined
+    if (userObj.message === "Incorrect username" || userObj.user === undefined) {
+      this.setState({ errorMessage: userObj.message });
+    } else {
+      this.setState({ currentUser: userObj.user.name, loggedIn: bool, userFood: userObj.foods });
+    }
   }
 
   updateFood(obj) {
@@ -110,7 +116,10 @@ class App extends React.Component {
         <NavBar switchPage={this.switchPage} cb={this.updateUser} />
         {this.state.currentPage}
         */}
-        {this.state.loggedIn && <NavBar switchPage={this.switchPage} cb={this.updateUser} />}
+        {this.state.loggedIn && <NavBar
+          switchPage={this.switchPage}
+          cb={this.updateUser}
+        />}
         {this.state.loggedIn ?
           this.state.currentPage === '' ? 
             <MainPage friends={
@@ -122,7 +131,7 @@ class App extends React.Component {
           :
             this.state.currentPage
         :
-          <LogInSignUp />
+          <LogInSignUp err={this.state.errorMessage}/>
         }
       </div>
     );
