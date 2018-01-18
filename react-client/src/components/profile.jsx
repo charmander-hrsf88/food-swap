@@ -57,12 +57,17 @@ class Profile extends React.Component {
   }
   render() {
     return (
-      <div className="picture">
-        {this.state.showEditPage ?
-          /* Own Profile */
-          <UserProfile name={this.state.name} picture={this.state.picture} username={this.state.userName} noPic={this.state.noPic} email={this.state.email} bio={this.state.bio} submit={this.clickHandler} /> :
-          /* Edit Page */
-          <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} />}
+      <div>
+        <div className="Info">
+          {this.state.showEditPage ?
+            /* Own Profile */
+            <UserProfile name={this.state.name} picture={this.state.picture} username={this.state.userName} noPic={this.state.noPic} email={this.state.email} bio={this.state.bio} submit={this.clickHandler} /> :
+            /* Edit Page */
+            <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} />}
+        </div>
+        <div className="Trades">
+          <Trades />
+        </div>
       </div>
     );
   }
