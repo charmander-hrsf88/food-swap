@@ -2,9 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import EditPage from './EditPage.jsx';
 import UserProfile from './userProfile.jsx';
-import Trades from './trades.jsx';
-import Trade from './trade.jsx';
-import AddTrade from './addTrade.jsx';
 import dummyData from '../dummyData.js';
 import userInfo from '../axiosCalls.jsx';
 
@@ -52,9 +49,22 @@ class Profile extends React.Component {
     });
   }
 
+  submitTrade(event) {
+    event.preventDefault();
+    let name = this.refs.name.value;
+    let description = this.refs.description.value;
+    let picture = this.refs.picture.value;
+  }
+
   componentDidMount() {
     this.update();
   }
+
+
+
+
+
+
   render() {
     return (
       <div>
@@ -66,7 +76,13 @@ class Profile extends React.Component {
             <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} />}
         </div>
         <div className="Trades">
-          <Trades />
+          <form onSubmit={this.submitTrade.bind(this)}>
+            <h2>Add Trade</h2>
+            Food Name: <input type="text" placeholder="FoodName" ref='name' /> <br />
+            Food Description: <input type="text" placeholder="Descrpiton" ref="description" /> <br />
+            Add Picture: <input type="text" placeholder="Picture" ref="picture" /> <br />
+            <button type="submit">Submit Trade Request</button>
+          </form>
         </div>
       </div>
     );
