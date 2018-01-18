@@ -132,14 +132,14 @@ export function getFoodByUsername(username, cb) {
     });
 }
 
-export function addFood(dish, description, userId) {
+export function addFood(dish, des, id, cb) {
   axios({
     method: 'post',
     url: '/api/food',
     data: {
       dishname: dish,
-      description: description,
-      userId: 1,
+      description: des,
+      userId: id,
     },
   })
     .then((result) => {

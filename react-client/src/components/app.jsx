@@ -71,6 +71,8 @@ class App extends React.Component {
   <MainPage
     friends={this.state.friends}
     userFood={this.state.userFood}
+    updateUser={this.updateUser}
+    currentUser={this.state.currentUser}
   />,
         });
         break;
@@ -93,7 +95,6 @@ class App extends React.Component {
   // }
 
   updateUser(obj, bool) {
-    console.log('obj: ', obj);
     this.setState({ currentUser: obj.name, loggedIn: bool, userFood: obj.food });
   }
 
@@ -110,7 +111,15 @@ class App extends React.Component {
         */}
         {this.state.loggedIn && <NavBar switchPage={this.switchPage} cb={this.updateUser} />}
         {this.state.loggedIn ?
-          <MainPage friends={this.state.friends} userFood={this.state.userFood} />
+          this.state.currentPage === '' ? 
+            <MainPage friends={
+              this.state.friends}
+              userFood={this.state.userFood}
+              updateUser={this.updateUser}
+              currentUser={this.state.currentUser}
+              />
+          :
+            this.state.currentPage
         :
           <LogInSignUp />
         }
