@@ -30,7 +30,7 @@ class Profile extends React.Component {
     this.update = this.update.bind(this);
     this.getTradesByUsername = this.getTradesByUsername.bind(this);
     this.editProfile = this.editProfile.bind(this);
-    this.submitTrade = this.submitTrade.bind(this);
+    this.submitDish = this.submitDish.bind(this);
     this.addFood = this.addFood.bind(this);
   }
 
@@ -49,26 +49,24 @@ class Profile extends React.Component {
 
   update() {
     this.setState({
-      bio: this.state.profile.user.bio,
-      email: this.state.profile.user.email,
-      userName: this.state.profile.user.username,
-      picture: this.state.profile.user.picture,
-      name: this.state.profile.user.name,
-      id: this.state.profile.user.id,
+      bio: this.state.profile.name.bio,
+      email: this.state.profile.name.email,
+      userName: this.state.profile.name.username,
+      picture: this.state.profile.name.picture,
+      name: this.state.profile.name.name,
+      id: this.state.profile.name.id,
       showEditPage: !this.state.showEditPage,
     });
   }
 
-  submitTrade(event) {
+  submitDish(event) {
     event.preventDefault();
     let name = this.refs.name.value;
     let description = this.refs.description.value;
     let picture = this.refs.picture.value;
     this.addFood(name, description, this.state.id);
-    this.setState({
-      foodName: '',
-      foodDescription: '',
-    });
+    this.refs.name.value = '';
+    this.refs.description.value = '';
 
   }
 
@@ -137,10 +135,10 @@ class Profile extends React.Component {
             <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} />}
         </div>
         <div className="postTrades">
-          <form onSubmit={this.submitTrade.bind(this)}>
+          <form onSubmit={this.submitDish.bind(this)}>
             <h2>Add Dish</h2>
             Dish Name: <input type="text" placeholder={this.state.foodName} ref='name' /> <br />
-          Dish Description: <input type="text" placeholder={this.state.foodDescription} ref="description" /> <br />
+            Dish Description: <input type="text" placeholder={this.state.foodDescription} ref="description" /> <br />
             Add Picture: <input type="text" placeholder="Picture" ref="picture" /> <br />
             <button type="submit">Add Food</button>
           </form>
