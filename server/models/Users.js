@@ -43,6 +43,10 @@ class Users {
   static getAllUsers() {
     return db.users.getAllUsers();
   }
+
+  static edit({ userId, name, username, bio, email }) {
+    return db.users.edit({ userId, name, username, bio, email });
+  }
 }
 
 module.exports = Users;
