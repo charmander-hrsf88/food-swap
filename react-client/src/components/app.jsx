@@ -32,10 +32,11 @@ class App extends React.Component {
       currentUser: '',
       loggedIn: false,
       currentPage: <span />,
-      userFood : [],
+      userFood: [],
     };
     this.switchPage = this.switchPage.bind(this);
     this.updateUser = this.updateUser.bind(this);
+    this.updateFood = this.updateFood.bind(this);
   }
 
   componentDidMount() {
@@ -44,7 +45,7 @@ class App extends React.Component {
     // getFriends();
     // getFriend();
     // addFood('Whiskey', 'It\'s a drink. You drink it.', 1);
-    getAllFood();
+    // getAllFood();
     // getSpecificFood();
     // requestTrade();
     // getTrades();
@@ -70,6 +71,7 @@ class App extends React.Component {
           currentPage:
   <MainPage
     friends={this.state.friends}
+    userFood={this.state.userFood}
   />,
         });
         break;
@@ -94,9 +96,13 @@ class App extends React.Component {
   updateUser(obj, bool) {
     this.setState({ currentUser: obj, loggedIn: bool });
     if (obj !== null) {
-      console.log(obj.user.username);
-      getFoodByUsername(obj.user.username);
+      getFoodByUsername(obj.user.username, this.updateFood);
     }
+  }
+
+  updateFood(obj) {
+    console.log('heyllo', this, 'res', obj);
+    this.setState({ userFood: obj });
   }
 
   render() {
@@ -118,14 +124,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-/*
-
-        {this.state.loggedIn && <NavBar switchPage={this.switchPage} cb={this.updateUser} />}
-        {this.state.loggedIn ?
-          this.state.currentPage
-        :
-          <LogInSignUp />
-        }
-
-*/

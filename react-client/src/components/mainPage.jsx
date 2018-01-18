@@ -1,9 +1,10 @@
 import React from 'react';
 import Friends from './friends.jsx';
 
-const MainPage = ({ friends }) => (
+const MainPage = ({ friends, userFood }) => (
   <div>
-    <Friends const friends={friends} />
+    {console.log('main page', userFood)}
+    <Friends const friends={friends} userFood={userFood}  />
   </div>
 );
 

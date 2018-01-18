@@ -1,6 +1,7 @@
 import React from 'react';
 import Friend from './friend.jsx';
 import { RatedStarLike } from '../icons/star.jsx';
+import Question from '../icons/question.jsx';
 import trades from '../dummyData.js';
 
 class Friends extends React.Component {
@@ -85,10 +86,14 @@ class Friends extends React.Component {
                     <button className="cancel" onClick={this.toggleAdd}>Switch Back</button>
                   }
                 </li>
-                {trades.food.map(option =>
+                {this.props.userFood.map(option =>
                   (
                     <li key={option.id}>
-                      <img src={option.picture} alt={option.dishname} />
+                      {option.picture === null ?
+                        <Question />
+                      :
+                        <img src={option.picture} alt={option.dishname} />
+                      }
                       <button onClick={() => { this.selectTradeItem(option.dishname); }}>Select {option.dishname} </button>
                     </li>
                   ))}
