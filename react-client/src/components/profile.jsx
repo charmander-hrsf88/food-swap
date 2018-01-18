@@ -4,6 +4,8 @@ import EditPage from './EditPage.jsx';
 import UserProfile from './userProfile.jsx';
 import dummyData from '../dummyData.js';
 import userInfo from '../axiosCalls.jsx';
+import ProfileList from './ProfileList.jsx';
+import Photos from './Photos.jsx';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -20,10 +22,12 @@ class Profile extends React.Component {
       foodName: '',
       foodDescription: '',
       foodPic: '',
+      trades: [],
     };
     this.clickHandler = this.clickHandler.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
     this.update = this.update.bind(this);
+    this.getTradesByUsername = this.getTradesByUsername.bind(this);
   }
 
   clickHandler() {
@@ -56,33 +60,48 @@ class Profile extends React.Component {
     let picture = this.refs.picture.value;
   }
 
-  componentDidMount() {
-    this.update();
+  getTradesByUsername(username) {
+    axios({
+      method: 'GET',
+      url: `/trade/username/${username}`
+    })
+    .then((results) => {
+      console.log(results)
+    })
+    .catch((e) => {
+      console.log('err', e)
+    })
   }
 
-
-
-
-
+  componentDidMount() {
+    this.update();
+    this.getTradesByUsername(this.state.username);
+  }
 
   render() {
     return (
       <div>
-        <div className="Info">
+        <div className="info">
           {this.state.showEditPage ?
             /* Own Profile */
             <UserProfile name={this.state.name} picture={this.state.picture} username={this.state.userName} noPic={this.state.noPic} email={this.state.email} bio={this.state.bio} submit={this.clickHandler} /> :
             /* Edit Page */
             <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} />}
         </div>
-        <div className="Trades">
+        <div className="postTrades">
           <form onSubmit={this.submitTrade.bind(this)}>
             <h2>Add Trade</h2>
             Food Name: <input type="text" placeholder="FoodName" ref='name' /> <br />
             Food Description: <input type="text" placeholder="Descrpiton" ref="description" /> <br />
             Add Picture: <input type="text" placeholder="Picture" ref="picture" /> <br />
-            <button type="submit">Submit Trade Request</button>
+          <button type="submit">Trade Post</button>
           </form>
+          <div className="profileList">
+            <ProfileList />
+          </div>
+        </div>
+        <div className="photos">
+          <Photos />
         </div>
       </div>
     );
