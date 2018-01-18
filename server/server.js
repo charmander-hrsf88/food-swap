@@ -89,7 +89,6 @@ app.get('/logout', (req, res) => {
 app.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user) => {
     req.session.regenerate(() => {
-      console.log('err', err, 'user', user);
       if (err) {
         req.session.success = false;
         req.session.message = 'Incorrect username';
