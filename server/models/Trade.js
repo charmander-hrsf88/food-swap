@@ -10,7 +10,7 @@ class Trade {
   }
   
   static getTradesByUserId({ userId }) {
-    return db.trade.getTradesByUserID({ userId });
+    return db.trade.getTradesByUserId({ userId });
   }
 
   static getTradesByTwoUsernames({ username1, username2 }) {
@@ -31,6 +31,10 @@ class Trade {
 
   static reject({ id }) {
     return db.trade.reject({ id });
+  }
+
+  static remove({ id }) {
+    return db.trade.remove({ id });
   }
 }
 

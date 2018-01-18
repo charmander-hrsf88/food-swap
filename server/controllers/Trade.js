@@ -24,7 +24,7 @@ class Trade {
 
   static getTradesByUserId(req, res) {
     const { userId } = req.params;
-    models.trades.getTradesByUserId({ userId })
+    models.trade.getTradesByUserId({ userId })
       .then((trades) => {
         res.json(trades);
       })
@@ -82,6 +82,17 @@ class Trade {
     models.trade.reject({ id })
       .then(() => {
         res.send({ message: 'Trade rejected' });
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e });
+      });
+  }
+
+  static remove(req, res) {
+    const { id } = req.body;
+    models.trade.remove({ id })
+      .then(() => {
+        res.send({ message: 'Trade removed' });
       })
       .catch((e) => {
         res.status(500).send({ error: e });
