@@ -61,7 +61,7 @@ app.get('/session', (req, res) => {
     promises.push(models.users.findById({ id: userId }));
     promises.push(models.food.getByUserId({ userId }));
     promises.push(models.trade.getTradesByUserId({ userId }));
-    // promises.push(models.friends.getFriendsByUserId({ userId }));
+    promises.push(models.friends.getFriendsByUserId({ userId }));
 
     Promise.all(promises)
       .then((result) => {
@@ -70,11 +70,13 @@ app.get('/session', (req, res) => {
           user: result[0],
           food: result[1],
           trades: result[2],
-          // friends: result[3],
+          friends: result[3],
         };
+
         res.json(userObj);
       })
       .catch((e) => {
+        console.log(e);
         res.status(500).send({ error: e });
       });
   } else {
@@ -111,19 +113,21 @@ app.post('/signup', (req, res) => {
   models.users.findByUsername({ username })
     .then((userExists) => {
       if (userExists) {
-        res.send({ message: 1 });
+        res.send({ message: 'username already exists' });
       }
 
       return models.users.create({ name, username, password, email })
         .then((user) => {
           req.session.regenerate(() => {
-            req.session.user = user.id;
+            req.session.success = true;
+            req.session.user = user;
             res.redirect('/');
           });
         });
     })
     .catch((e) => {
-      res.status(500).send({ error: e });
+      console.log('Error on /signup', e);
+      res.status(500).end();
     });
 });
 
