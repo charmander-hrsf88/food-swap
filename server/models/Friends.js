@@ -12,6 +12,10 @@ class Friends {
   static create({ userId1, userId2 }) {
     return db.friends.create({ userId1, userId2 });
   }
+
+  static getFriendsByUserId({ userId }) {
+    return db.friends.getFriendsByUserId({ userId });
+  }
 }
 
 module.exports = Friends;

@@ -24,6 +24,7 @@ router.get('/food/userId/:userId', controller.food.getByUserId);
 router.post('/food', controller.food.post);
 
 router.get('/friends/user/:userId1', controller.friends.getAll);
+router.get('/frineds/userId/:userId', controller.friends.getFriendsByUserId);
 router.get('/friends/user/:userId1/user/:userId2', controller.friends.getById);
 router.post('/friends/create', controller.friends.create);
 
