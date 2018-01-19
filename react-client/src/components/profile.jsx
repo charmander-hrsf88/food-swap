@@ -50,13 +50,14 @@ class Profile extends React.Component {
   }
 
   update() {
+    console.log(this.state.profile);
     this.setState({
-      bio: this.state.profile.name.bio,
-      email: this.state.profile.name.email,
-      userName: this.state.profile.name.username,
-      picture: this.state.profile.name.picture,
-      name: this.state.profile.name.name,
-      id: this.state.profile.name.id,
+      bio: this.state.profile.user.bio,
+      email: this.state.profile.user.email,
+      userName: this.state.profile.user.username,
+      picture: this.state.profile.user.picture,
+      name: this.state.profile.user.name,
+      id: this.state.profile.user.id,
       showEditPage: !this.state.showEditPage,
     });
   }
@@ -121,7 +122,7 @@ class Profile extends React.Component {
     })
   }
 
-  getFoodByUserId(id){
+  getFoodByUserId(id) {
     axios({
       method: 'GET',
       url: `/food/userId/${id}`
@@ -133,7 +134,6 @@ class Profile extends React.Component {
       console.log('Error', e);
     })
   }
-
 
   componentDidMount() {
     this.update();
