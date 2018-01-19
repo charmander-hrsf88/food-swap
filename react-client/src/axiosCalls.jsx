@@ -144,7 +144,7 @@ export function addFood(dish, des, id, cb) {
     },
   })
     .then((result) => {
-      console.log(result.data);
+      cb(result.data);
     })
     .catch((e) => {
       console.log('err', e, this);

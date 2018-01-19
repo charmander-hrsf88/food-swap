@@ -101,7 +101,7 @@ class App extends React.Component {
     if (userObj.message === "Incorrect username" || userObj.user === undefined) {
       this.setState({ errorMessage: userObj.message });
     } else {
-      this.setState({ currentUser: userObj.user.name, loggedIn: bool, userFood: userObj.foods });
+      this.setState({ currentUser: userObj.user, loggedIn: bool, userFood: userObj.food });
     }
   }
 
@@ -125,7 +125,7 @@ class App extends React.Component {
             <MainPage friends={
               this.state.friends}
               userFood={this.state.userFood}
-              updateUser={this.updateUser}
+              updateFood={this.updateFood}
               currentUser={this.state.currentUser}
               />
           :

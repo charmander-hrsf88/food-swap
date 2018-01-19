@@ -48,7 +48,8 @@ class LogIn extends React.Component {
           <form action="/login" method="POST" >
             {console.log('loginpage', this.props.err)}
             <h2>Log In</h2>
-            {this.props.err === "Incorrect username" && <h4>Username/password combination did not match any active account.</h4>}
+            {(this.props.err === "Incorrect username" || this.props.err === "Incorrect password")
+            && <h4>Username/password combination did not match any active account.</h4>}
             <label htmlFor="logInUserName" >Username:</label>
             <br />
             <input

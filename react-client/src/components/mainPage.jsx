@@ -1,10 +1,10 @@
 import React from 'react';
 import Friends from './friends.jsx';
 
-const MainPage = ({ friends, userFood, updateUser, currentUser }) => (
+const MainPage = ({ friends, userFood, updateFood, currentUser }) => (
   <div>
     {console.log('main page', userFood)}
-    <Friends const friends={friends} userFood={userFood} updateUser={updateUser} currentUser={currentUser} />
+    <Friends const friends={friends} userFood={userFood} updateFood={updateFood} currentUser={currentUser} />
   </div>
 );
 
