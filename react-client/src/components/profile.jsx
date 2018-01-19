@@ -24,14 +24,16 @@ class Profile extends React.Component {
       foodDescription: 'Food Description',
       foodPic: '',
       trades: [],
+      userDishes: [],
     };
     this.clickHandler = this.clickHandler.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
     this.update = this.update.bind(this);
     this.getTradesByUsername = this.getTradesByUsername.bind(this);
     this.editProfile = this.editProfile.bind(this);
-    this.submitTrade = this.submitTrade.bind(this);
+    this.submitDish = this.submitDish.bind(this);
     this.addFood = this.addFood.bind(this);
+    this.getFoodByUserId = this.getFoodByUserId.bind(this);
   }
 
   clickHandler() {
@@ -48,6 +50,7 @@ class Profile extends React.Component {
   }
 
   update() {
+    console.log(this.state.profile);
     this.setState({
       bio: this.state.profile.user.bio,
       email: this.state.profile.user.email,
@@ -59,17 +62,14 @@ class Profile extends React.Component {
     });
   }
 
-  submitTrade(event) {
+  submitDish(event) {
     event.preventDefault();
     let name = this.refs.name.value;
     let description = this.refs.description.value;
     let picture = this.refs.picture.value;
     this.addFood(name, description, this.state.id);
-    this.setState({
-      foodName: '',
-      foodDescription: '',
-    });
-
+    this.refs.name.value = '';
+    this.refs.description.value = '';
   }
 
   addFood(dishname, description, id) {
@@ -122,8 +122,22 @@ class Profile extends React.Component {
     })
   }
 
+  getFoodByUserId(id) {
+    axios({
+      method: 'GET',
+      url: `/food/userId/${id}`
+    })
+    .then((results) => {
+      console.log(results);
+    })
+    .catch((e) => {
+      console.log('Error', e);
+    })
+  }
+
   componentDidMount() {
     this.update();
+    this.getFoodByUserId(this.state.id);
   }
 
   render() {
@@ -137,10 +151,10 @@ class Profile extends React.Component {
             <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} />}
         </div>
         <div className="postTrades">
-          <form onSubmit={this.submitTrade.bind(this)}>
+          <form onSubmit={this.submitDish.bind(this)}>
             <h2>Add Dish</h2>
             Dish Name: <input type="text" placeholder={this.state.foodName} ref='name' /> <br />
-          Dish Description: <input type="text" placeholder={this.state.foodDescription} ref="description" /> <br />
+            Dish Description: <input type="text" placeholder={this.state.foodDescription} ref="description" /> <br />
             Add Picture: <input type="text" placeholder="Picture" ref="picture" /> <br />
             <button type="submit">Add Food</button>
           </form>
