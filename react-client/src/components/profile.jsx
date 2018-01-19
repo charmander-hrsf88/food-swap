@@ -24,6 +24,7 @@ class Profile extends React.Component {
       foodDescription: 'Food Description',
       foodPic: '',
       trades: [],
+      userDishes: [],
     };
     this.clickHandler = this.clickHandler.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
@@ -32,6 +33,7 @@ class Profile extends React.Component {
     this.editProfile = this.editProfile.bind(this);
     this.submitDish = this.submitDish.bind(this);
     this.addFood = this.addFood.bind(this);
+    this.getFoodByUserId = this.getFoodByUserId.bind(this);
   }
 
   clickHandler() {
@@ -67,7 +69,6 @@ class Profile extends React.Component {
     this.addFood(name, description, this.state.id);
     this.refs.name.value = '';
     this.refs.description.value = '';
-
   }
 
   addFood(dishname, description, id) {
@@ -120,8 +121,23 @@ class Profile extends React.Component {
     })
   }
 
+  getFoodByUserId(id){
+    axios({
+      method: 'GET',
+      url: `/food/userId/${id}`
+    })
+    .then((results) => {
+      console.log(results);
+    })
+    .catch((e) => {
+      console.log('Error', e);
+    })
+  }
+
+
   componentDidMount() {
     this.update();
+    this.getFoodByUserId(this.state.id);
   }
 
   render() {
