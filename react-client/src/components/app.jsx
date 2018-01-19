@@ -34,6 +34,7 @@ class App extends React.Component {
       currentPage: '',
       userFood: [],
       errorMessage: 'none',
+      profile: '',
     };
     this.switchPage = this.switchPage.bind(this);
     this.updateUser = this.updateUser.bind(this);
@@ -64,7 +65,7 @@ class App extends React.Component {
         this.setState({ currentPage: <Trade /> });
         break;
       case ('Profile'):
-        this.setState({ currentPage: <Profile user={this.state.currentUser}/> });
+        this.setState({ currentPage: <Profile user={this.state.profile} /> });
         break;
       default:
         this.setState({
@@ -101,7 +102,7 @@ class App extends React.Component {
     if (userObj.message === "Incorrect username" || userObj.user === undefined) {
       this.setState({ errorMessage: userObj.message });
     } else {
-      this.setState({ currentUser: userObj.user.name, loggedIn: bool, userFood: userObj.foods });
+      this.setState({ currentUser: userObj.user.name, loggedIn: bool, userFood: userObj.foods, profile: userObj });
     }
   }
 
@@ -121,7 +122,7 @@ class App extends React.Component {
           cb={this.updateUser}
         />}
         {this.state.loggedIn ?
-          this.state.currentPage === '' ? 
+          this.state.currentPage === '' ?
             <MainPage friends={
               this.state.friends}
               userFood={this.state.userFood}
