@@ -18,6 +18,7 @@ class Friends extends React.Component {
       description: '',
       picture: '',
       location: { top: '80px' },
+      cover: { top: '30px' },
     };
     this.selectFriend = this.selectFriend.bind(this);
     this.toggleExpand = this.toggleExpand.bind(this);
@@ -42,7 +43,8 @@ class Friends extends React.Component {
 
   scrolling() {
     const updated = (document.documentElement.scrollTop + 80) + 'px';
-    this.setState({ location: { top: updated } });
+    const coverMove = (document.documentElement.scrollTop + 30) + 'px';
+    this.setState({ location: { top: updated }, cover: { top: coverMove } });
     console.log(this.state);
     /*
 
@@ -79,7 +81,7 @@ class Friends extends React.Component {
     return (
       <div id="friends" onClick={()=>{this.toggleExpand(false)}}>
         {this.state.expand === true ?
-          <div className="cover" />
+          <div className="cover" style={this.state.cover} />
         :
           <span />
         }
