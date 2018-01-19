@@ -7,7 +7,7 @@ class Friends {
   }
 
   static getFriendsByUserId({ userId }) {
-    const queryString = 'SELECT * FROM friends where user_id1 = $1 OR user_id2 = $2';
+    const queryString = 'SELECT * FROM friends where user_id1 = $1 OR user_id2 = $1';
     return db.any(queryString, [userId]);
   }
 
