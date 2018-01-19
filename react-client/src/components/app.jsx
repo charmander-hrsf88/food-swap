@@ -83,21 +83,6 @@ class App extends React.Component {
     }
   }
 
-  // postTrade(localUser, localFood, selectedUser, selectedFood) {
-  //   axios({
-  //     method: 'post',
-  //     url: '/api/trade/initiate',
-  //     data: {
-  //       userId1: localUser,
-  //       foodId1: localFood,
-  //       userId2: selectedUser,
-  //       foodId2: selectedFood,
-  //     },
-  //   })
-  //     .then(data => console.log(data))
-  //     .catch(e => console.log('err', e, this));
-  // }
-
   updateUser(userObj, bool) {
     console.log('here : ', userObj);
     // userObj.foods === undefined
@@ -116,7 +101,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div onScroll={this.scrolling}>
         {/*   Temp disable log in/out rendering
         <NavBar switchPage={this.switchPage} cb={this.updateUser} />
         {this.state.currentPage}

@@ -17,6 +17,7 @@ class Friends extends React.Component {
       dishname: '',
       description: '',
       picture: '',
+      location: { top: '80px' },
     };
     this.selectFriend = this.selectFriend.bind(this);
     this.toggleExpand = this.toggleExpand.bind(this);
@@ -24,10 +25,29 @@ class Friends extends React.Component {
     this.toggleAdd = this.toggleAdd.bind(this);
     this.updateForm = this.updateForm.bind(this);
     this.setSpin = this.setSpin.bind(this);
+    this.scrolling = this.scrolling.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.scrolling);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.scrolling);
   }
 
   setSpin(bool) {
     console.log(bool, ' . ', this);
+  }
+
+  scrolling() {
+    const updated = (document.documentElement.scrollTop + 80) + 'px';
+    this.setState({ location: { top: updated } });
+    console.log(this.state);
+    /*
+
+    transform: translateY(${props => props.visible ? '0px' : '60px'});
+    */
   }
 
   selectTradeItem(dishname) {
@@ -64,7 +84,11 @@ class Friends extends React.Component {
           <span />
         }
         {this.state.expand === true ?
-          <div className="popUpInfo" onClick={(e)=>{e.stopPropagation()}}> {/* React Stop click progression */}
+          <div
+            className="popUpInfo"
+            onClick={(e)=>{e.stopPropagation()}}
+            style={this.state.location}
+          > {/* React Stop click progression */}
             {this.state.addFoodItem === false ?
               <div>
                 <img alt={this.state.trade.food_name} src={this.state.trade.food_picture} />
