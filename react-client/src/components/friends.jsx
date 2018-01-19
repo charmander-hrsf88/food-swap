@@ -1,6 +1,6 @@
 import React from 'react';
 import Friend from './friend.jsx';
-import { RatedStarLike } from '../icons/star.jsx';
+import { RatedStarLike, RatedStarSpin } from '../icons/star.jsx';
 import Question from '../icons/question.jsx';
 import trades from '../dummyData.js';
 import { addFood } from '../axiosCalls.jsx';
@@ -11,7 +11,7 @@ class Friends extends React.Component {
     this.state = {
       trade: {},
       expand: false,
-      star: <RatedStarLike location="hello" click={console.log} hover={console.log} />,
+      star: <RatedStarLike />,
       selectedTradeItem: undefined,
       addFoodItem: false,
       dishname: '',
@@ -23,6 +23,11 @@ class Friends extends React.Component {
     this.selectTradeItem = this.selectTradeItem.bind(this);
     this.toggleAdd = this.toggleAdd.bind(this);
     this.updateForm = this.updateForm.bind(this);
+    this.setSpin = this.setSpin.bind(this);
+  }
+
+  setSpin(bool) {
+    console.log(bool, ' . ', this);
   }
 
   selectTradeItem(dishname) {
@@ -87,7 +92,7 @@ class Friends extends React.Component {
                     this.state.dishname,
                     this.state.description,
                     this.props.currentUser.id,
-                    this.props.updateUser,
+                    this.props.updateFood,
                   );
                   this.toggleAdd();
                   }}
@@ -137,6 +142,7 @@ class Friends extends React.Component {
             selectTrade={this.selectFriend}
             toggleExpand={this.toggleExpand}
             star={this.state.star}
+            setSpin = {this.setSpin}
           />))}
       </div>
     );

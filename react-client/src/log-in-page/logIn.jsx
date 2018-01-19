@@ -6,14 +6,13 @@ class LogIn extends React.Component {
     super(props);
     this.state = {
       NewUser: true,
-      signUpUserName: 'Tester',
-      signUpPassword: 'test',
-      signUpConfirmPassword: 'test',
-      signUpName: 'Hayden Marx',
-      signUpEmail: 'haydenmarx@gmail.com',
-      errorMessage: '',
+      passwordMatch: true,
+      signUpPassword: '',
+      signUpConfirmPassword: '',
     };
     this.switchType = this.switchType.bind(this);
+    this.updateFields = this.updateFields.bind(this);
+    this.passwordCheck = this.passwordCheck.bind(this);
   }
 
   switchType() {
@@ -21,6 +20,23 @@ class LogIn extends React.Component {
       this.setState({ NewUser: false });
     } else {
       this.setState({ NewUser: true });
+    }
+  }
+
+  updateFields(e) {
+    this.setState({ [e.target.id]: e.target.value });
+    // setTimeout(() => {
+      
+    // }, 500);
+  }
+
+  passwordCheck(e) {
+    if (this.state.signUpConfirmPassword === this.state.signUpPassword &&
+      this.state.signUpConfirmPassword.length > 0) {
+      this.setState({ passwordMatch: true });
+    } else {
+      e.preventDefault();
+      this.setState({ passwordMatch: false });
     }
   }
 
@@ -32,7 +48,8 @@ class LogIn extends React.Component {
           <form action="/login" method="POST" >
             {console.log('loginpage', this.props.err)}
             <h2>Log In</h2>
-            {this.props.err === "Incorrect username" && <h4>Username/password combination did not match any active account.</h4>}
+            {(this.props.err === "Incorrect username" || this.props.err === "Incorrect password")
+            && <h4>Username/password combination did not match any active account.</h4>}
             <label htmlFor="logInUserName" >Username:</label>
             <br />
             <input
@@ -58,7 +75,7 @@ class LogIn extends React.Component {
         :
         <div id="logInForm">
           <button onClick={this.switchType}>Log In</button><button disabled>Sign Up</button>
-          <form action="/signup" method="POST">
+          <form action="/signup" method="POST" onSubmit={this.passwordCheck}>
             <h2>Sign Up</h2>
             <label htmlFor="signUpUserName" >Username:</label>
             <br />
@@ -70,12 +87,14 @@ class LogIn extends React.Component {
               placeholder="Pick a Username"
             />
             <br />
-            <label htmlFor="signUpConfirmPassword">Password:</label>
+            <label htmlFor="signUpPassword">Password:</label>
             <br />
             <input
               id="signUpPassword"
               type="password"
               name="password"
+              value={this.state.signUpPassword}
+              onChange={this.updateFields}
               required
               placeholder="Pick a Password"
             />
@@ -86,6 +105,8 @@ class LogIn extends React.Component {
               id="signUpConfirmPassword"
               type="password"
               required
+              value={this.state.signUpConfirmPassword}
+              onChange={this.updateFields}
               placeholder="Confirm Password"
             />
             <br />
@@ -109,6 +130,9 @@ class LogIn extends React.Component {
             />
             <br />
             <button>Submit</button>
+            {this.state.passwordMatch === false &&
+              <h4>Please enter Matching Passwords</h4>
+            }
           </form>
         </div>
     );

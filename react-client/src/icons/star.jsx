@@ -3,8 +3,8 @@ import FontAwesome from 'react-fontawesome';
 
 const UnRatedStar = ({ click, hover, location }) => (
   <FontAwesome
-    onClick={() => { click(location); }}
-    onMouseEnter={() => { hover(location); }}
+    onClick={() => { if (hover !== undefined) { click(location); } }}
+    onMouseEnter={() => { if (hover !== undefined) { hover(location); } }}
     name="star"
     size="2x"
     spin
@@ -18,8 +18,8 @@ const UnRatedStar = ({ click, hover, location }) => (
 
 const RatedStarLike = ({ click, hover, location }) => (
   <FontAwesome
-    onClick={() => { click(location); }}
-    onMouseEnter={() => { hover(location); }}
+    onClick={() => { if (hover !== undefined) { click(location); } }}
+    onMouseEnter={() => { if (hover !== undefined) { hover(location); } }}
     name="star"
     size="2x"
     style={{
@@ -32,8 +32,8 @@ const RatedStarLike = ({ click, hover, location }) => (
 
 const RatedStarDislike = ({ click, hover, location }) => (
   <FontAwesome
-    onClick={() => { click(location); }}
-    onMouseEnter={() => { hover(location); }}
+    onClick={() => { if (hover !== undefined) { click(location); } }}
+    onMouseEnter={() => { if (hover !== undefined) { hover(location); } }}
     name="star"
     size="2x"
     style={{
@@ -44,4 +44,19 @@ const RatedStarDislike = ({ click, hover, location }) => (
   />
 );
 
-export { UnRatedStar, RatedStarLike, RatedStarDislike };
+const RatedStarSpin = ({ click, hover, location }) => (
+  <FontAwesome
+    onClick={() => { if (hover !== undefined) { click(location); } }}
+    onMouseEnter={() => { if (hover !== undefined) { hover(location); } }}
+    name="star"
+    size="2x"
+    spin
+    style={{
+      textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)',
+      color: 'gold',
+      padding: '0px 5px',
+    }}
+  />
+);
+
+export { UnRatedStar, RatedStarLike, RatedStarDislike, RatedStarSpin };
