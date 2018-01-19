@@ -25,9 +25,9 @@ class LogIn extends React.Component {
 
   updateFields(e) {
     this.setState({ [e.target.id]: e.target.value });
-    setTimeout(() => {
+    // setTimeout(() => {
       
-    }, 500);
+    // }, 500);
   }
 
   passwordCheck(e) {
