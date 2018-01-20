@@ -6,6 +6,10 @@ import dummyData from '../dummyData.js';
 import userInfo from '../axiosCalls.jsx';
 import ProfileList from './ProfileList.jsx';
 import Photos from './Photos.jsx';
+import Dropzone from 'react-dropzone';
+import request from 'superagent';
+import ImagePreview from './ImagePreview.jsx';
+import {CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL} from '../config/config.js';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -25,6 +29,8 @@ class Profile extends React.Component {
       foodPic: '',
       trades: [],
       userDishes: [],
+      uploadedFileCloudinaryUrl: '',
+      uploadeFile: '',
     };
     this.clickHandler = this.clickHandler.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
@@ -34,6 +40,8 @@ class Profile extends React.Component {
     this.submitDish = this.submitDish.bind(this);
     this.addFood = this.addFood.bind(this);
     this.getFoodByUserId = this.getFoodByUserId.bind(this);
+    this.onImageDrop = this.onImageDrop.bind(this);
+    this.handleImageUpload = this.handleImageUpload.bind(this);
   }
 
   clickHandler() {
@@ -52,12 +60,12 @@ class Profile extends React.Component {
   update() {
     console.log(this.state.profile);
     this.setState({
-      bio: this.state.profile.user.bio,
-      email: this.state.profile.user.email,
-      userName: this.state.profile.user.username,
-      picture: this.state.profile.user.picture,
-      name: this.state.profile.user.name,
-      id: this.state.profile.user.id,
+      bio: this.state.profile.bio,
+      email: this.state.profile.email,
+      userName: this.state.profile.username,
+      picture: this.state.profile.picture,
+      name: this.state.profile.name,
+      id: this.state.profile.id,
       showEditPage: !this.state.showEditPage,
     });
   }
@@ -135,6 +143,30 @@ class Profile extends React.Component {
     })
   }
 
+  onImageDrop(files) {
+    this.setState({
+      uploadeFile: files[0]
+    })
+    this.handleImageUpload(files[0]);
+  }
+
+  handleImageUpload(file) {
+    let upload = request.post(CLOUDINARY_UPLOAD_URL)
+                        .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+                        .field('file', file);
+    upload.end((err, response) => {
+      if (err) {
+        console.error(err);
+      }
+
+      if (response.body.secure_url !== '') {
+        this.setState({
+          uploadedFileCloudinaryUrl: response.body.secure_url
+        });
+      }
+    });
+  };
+
   componentDidMount() {
     this.update();
     this.getFoodByUserId(this.state.id);
@@ -155,7 +187,20 @@ class Profile extends React.Component {
             <h2>Add Dish</h2>
             Dish Name: <input type="text" placeholder={this.state.foodName} ref='name' /> <br />
             Dish Description: <input type="text" placeholder={this.state.foodDescription} ref="description" /> <br />
-            Add Picture: <input type="text" placeholder="Picture" ref="picture" /> <br />
+            {/*Add Picture: <input type="text" placeholder="Picture" ref="picture" /> <br />*/}
+            <div className="dropzone">
+              <div className="dp">
+                <Dropzone
+                  multiple={false}
+                  accept="image/*"
+                  onDrop={this.onImageDrop.bind(this)} >
+                  <p>Drop an image or click to select a file to upload.</p>
+                </Dropzone>
+              </div>
+              <div className="ip">
+                <ImagePreview uploadedFileCloudinaryUrl={this.state.uploadedFileCloudinaryUrl} uploadedFile={this.state.uploadedFile} />
+              </div>
+            </div>
             <button type="submit">Add Food</button>
           </form>
           <div className="profileList">

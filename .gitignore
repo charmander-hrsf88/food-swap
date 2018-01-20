@@ -32,3 +32,4 @@ react-client/dist/bundle.js
 node_modules/
 bower_components/
 ./react-client/dist/bundle.js
+config.js
