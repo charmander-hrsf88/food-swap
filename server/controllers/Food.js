@@ -23,13 +23,13 @@ class Food {
   }
 
   static post(req, res) {
-    const { dishname, description, userId } = req.body;
+    const { dishname, description, picture, userId } = req.body;
 
     if (dishname.length > 25) {
       res.send({ message: 'dishname too long' });
     }
 
-    models.food.create({ dishname, description, userId })
+    models.food.create({ dishname, description, picture, userId })
       .then((food) => {
         res.json(food);
       })

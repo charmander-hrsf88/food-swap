@@ -53,7 +53,7 @@ class Users {
       });
   }
 
-  static edit({ userId, name, username, bio, email }) {
+  static edit({ userId, name, username, bio, email, picture }) {
     const promises = [];
     if (name !== undefined) {
       promises.push(db.query('UPDATE users SET name = $1 WHERE id = $2', [name, userId]));
@@ -69,6 +69,10 @@ class Users {
 
     if (email !== undefined) {
       promises.push(db.query('UPDATE users SET email = $1 WHERE id = $2', [email, userId]));
+    }
+
+    if (picture !== undefined) {
+      promises.push(db.query('UPDATE users SET picture = $1 WHERE id = $2', [picture, userId]));
     }
 
     return Promise.all(promises).then(() => db.query('SELECT * FROM users WHERE id = $1', [userId]));

@@ -45,8 +45,8 @@ class Users {
   }
 
   static edit(req, res) {
-    const { userId, name, username, email, bio } = req.body;
-    models.users.edit({ userId, name, username, bio, email })
+    const { userId, name, username, email, bio, picture } = req.body;
+    models.users.edit({ userId, name, username, bio, email, picture })
       .then((user) => {
         res.json(user);
       })

@@ -44,8 +44,8 @@ class Users {
     return db.users.getAllUsers();
   }
 
-  static edit({ userId, name, username, bio, email }) {
-    return db.users.edit({ userId, name, username, bio, email });
+  static edit({ userId, name, username, bio, email, picture }) {
+    return db.users.edit({ userId, name, username, bio, email, picture });
   }
 }
 
