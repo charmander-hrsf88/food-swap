@@ -9,6 +9,7 @@ import Photos from './Photos.jsx';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import ImagePreview from './ImagePreview.jsx';
+import DropZone from './PictureDrop.jsx';
 import {CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL} from '../config/config.js';
 
 class Profile extends React.Component {
@@ -31,6 +32,8 @@ class Profile extends React.Component {
       userDishes: [],
       uploadedFileCloudinaryUrl: '',
       uploadeFile: '',
+      uploadeProfileFile: '',
+      uploadedProFileCloudinaryUrl: '',
     };
     this.clickHandler = this.clickHandler.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
@@ -42,6 +45,8 @@ class Profile extends React.Component {
     this.getFoodByUserId = this.getFoodByUserId.bind(this);
     this.onImageDrop = this.onImageDrop.bind(this);
     this.handleImageUpload = this.handleImageUpload.bind(this);
+    this.onProfileDrop = this.onProfileDrop.bind(this);
+    this.handleProfileUpload = this.handleProfileUpload.bind(this);
   }
 
   clickHandler() {
@@ -49,12 +54,14 @@ class Profile extends React.Component {
     console.log(this.state.showEditPage);
     this.editProfile(this.state.id, this.state.bio, this.state.email, this.state.userName);
     this.setState({
-      showEditPage: !this.state.showEditPage,
+      showEditPage: !this.state.showEditPage
     });
   }
 
   updateProfile(e) {
-    this.setState({ [e.target.id]: e.target.value });
+    this.setState({
+      [e.target.id]: e.target.value
+    });
   }
 
   update() {
@@ -66,7 +73,7 @@ class Profile extends React.Component {
       picture: this.state.profile.picture,
       name: this.state.profile.name,
       id: this.state.profile.id,
-      showEditPage: !this.state.showEditPage,
+      showEditPage: !this.state.showEditPage
     });
   }
 
@@ -74,10 +81,12 @@ class Profile extends React.Component {
     event.preventDefault();
     let name = this.refs.name.value;
     let description = this.refs.description.value;
-    let picture = this.refs.picture.value;
     this.addFood(name, description, this.state.id);
     this.refs.name.value = '';
     this.refs.description.value = '';
+    this.setState({
+      uploadedFileCloudinaryUrl: ''
+    })
   }
 
   addFood(dishname, description, id) {
@@ -89,29 +98,22 @@ class Profile extends React.Component {
         description: description,
         userId: id
       }
-    })
-    .then((result) => {
+    }).then((result) => {
       console.log(result);
-    })
-    .catch((e) => {
+    }).catch((e) => {
       console.log('Error', e);
     });
   }
 
   getTradesByUsername(username) {
-    axios({
-      method: 'GET',
-      url: `api/trade/username/${username}`
-    })
-    .then((results) => {
+    axios({method: 'GET', url: `api/trade/username/${username}`}).then((results) => {
       console.log(results)
-    })
-    .catch((e) => {
+    }).catch((e) => {
       console.log('err', e)
     })
   }
 
-  editProfile(id, bio, name, email, username){
+  editProfile(id, bio, name, email, username) {
     axios({
       method: 'POST',
       url: 'api/users/edit',
@@ -121,48 +123,54 @@ class Profile extends React.Component {
         email: email,
         username: username
       }
-    })
-    .then((results) => {
+    }).then((results) => {
       console.log(results);
-    })
-    .catch((e) => {
+    }).catch((e) => {
       console.log('Error', e, this);
     })
   }
 
   getFoodByUserId(id) {
-    axios({
-      method: 'GET',
-      url: `/food/userId/${id}`
-    })
-    .then((results) => {
+    axios({method: 'GET', url: `/food/userId/${id}`}).then((results) => {
       console.log(results);
-    })
-    .catch((e) => {
+    }).catch((e) => {
       console.log('Error', e);
     })
   }
 
   onImageDrop(files) {
-    this.setState({
-      uploadeFile: files[0]
-    })
+    this.setState({uploadeFile: files[0]})
     this.handleImageUpload(files[0]);
   }
 
-  handleImageUpload(file) {
-    let upload = request.post(CLOUDINARY_UPLOAD_URL)
-                        .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
-                        .field('file', file);
+  onProfileDrop(files) {
+    this.setState({uploadeProfileFile: files[0]})
+    this.handleProfileUpload(files[0]);
+  }
+
+  handleProfileUpload(file) {
+    const upload = request.post(CLOUDINARY_UPLOAD_URL).field('upload_preset', CLOUDINARY_UPLOAD_PRESET).field('file', file);
     upload.end((err, response) => {
       if (err) {
         console.error(err);
       }
 
       if (response.body.secure_url !== '') {
-        this.setState({
-          uploadedFileCloudinaryUrl: response.body.secure_url
-        });
+        this.setState({uploadedProFileCloudinaryUrl: response.body.secure_url});
+      }
+    });
+
+  }
+
+  handleImageUpload(file) {
+    const upload = request.post(CLOUDINARY_UPLOAD_URL).field('upload_preset', CLOUDINARY_UPLOAD_PRESET).field('file', file);
+    upload.end((err, response) => {
+      if (err) {
+        console.error(err);
+      }
+
+      if (response.body.secure_url !== '') {
+        this.setState({uploadedFileCloudinaryUrl: response.body.secure_url});
       }
     });
   };
@@ -173,45 +181,42 @@ class Profile extends React.Component {
   }
 
   render() {
-    return (
-      <div>
+    return (<div>
+
+      <div className="profile">
         <div className="info">
-          {this.state.showEditPage ?
-            /* Own Profile */
-            <UserProfile name={this.state.name} picture={this.state.picture} username={this.state.userName} noPic={this.state.noPic} email={this.state.email} bio={this.state.bio} submit={this.clickHandler} /> :
-            /* Edit Page */
-            <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} />}
+          {
+            this.state.showEditPage
+              ?
+              /* Own Profile */
+              <UserProfile name={this.state.name} picture={this.state.picture} username={this.state.userName} noPic={this.state.noPic} email={this.state.email} bio={this.state.bio} submit={this.clickHandler}/>
+              :
+              /* Edit Page */
+              <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} imageDrop={this.onProfileDrop} uploadedFileCloudinaryUrl={this.state.uploadedProFileCloudinaryUrl} />
+          }
         </div>
         <div className="postTrades">
-          <form onSubmit={this.submitDish.bind(this)}>
+          <form onSubmit={this.submitDish}>
             <h2>Add Dish</h2>
-            Dish Name: <input type="text" placeholder={this.state.foodName} ref='name' /> <br />
-            Dish Description: <input type="text" placeholder={this.state.foodDescription} ref="description" /> <br />
-            {/*Add Picture: <input type="text" placeholder="Picture" ref="picture" /> <br />*/}
-            <div className="dropzone">
-              <div className="dp">
-                <Dropzone
-                  multiple={false}
-                  accept="image/*"
-                  onDrop={this.onImageDrop.bind(this)} >
-                  <p>Drop an image or click to select a file to upload.</p>
-                </Dropzone>
-              </div>
-              <div className="ip">
-                <ImagePreview uploadedFileCloudinaryUrl={this.state.uploadedFileCloudinaryUrl} uploadedFile={this.state.uploadedFile} />
-              </div>
-            </div>
+            Dish Name:
+            <input type="text" placeholder={this.state.foodName} ref='name'/>
+            <br/>
+            Dish Description:
+            <input type="text" placeholder={this.state.foodDescription} ref="description"/>
+            <br/>
+            <DropZone imageDrop={this.onImageDrop} />
             <button type="submit">Add Food</button>
           </form>
-          <div className="profileList">
-            <ProfileList />
-          </div>
-        </div>
-        <div className="photos">
-          <Photos />
+
+          <ImagePreview uploadedFileCloudinaryUrl={this.state.uploadedFileCloudinaryUrl} uploadedFile={this.state.uploadedFile} />
+
         </div>
       </div>
-    );
+      <div className="feed">
+        <Photos />
+        <ProfileList />
+      </div>
+    </div>);
   }
 }
 

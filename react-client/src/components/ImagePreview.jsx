@@ -4,7 +4,8 @@ const ImagePreview = ({uploadedFileCloudinaryUrl, uploadedFile}) => {
   return (
     <div>
       {uploadedFileCloudinaryUrl === '' ? null :
-      <div>
+      <div className="preview">
+        <h2>Preview</h2>
         {console.log(uploadedFile)}
         {console.log(uploadedFileCloudinaryUrl)}
         <p>{uploadedFile}</p>
