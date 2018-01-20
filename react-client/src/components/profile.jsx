@@ -52,7 +52,7 @@ class Profile extends React.Component {
   clickHandler() {
     /* If user !== username passed */
     console.log(this.state.showEditPage);
-    this.editProfile(this.state.id, this.state.bio, this.state.email, this.state.userName);
+    this.editProfile(this.state.id, this.state.bio, this.state.email, this.state.userName, this.state.uploadedProFileCloudinaryUrl);
     this.setState({
       showEditPage: !this.state.showEditPage
     });
@@ -81,7 +81,8 @@ class Profile extends React.Component {
     event.preventDefault();
     let name = this.refs.name.value;
     let description = this.refs.description.value;
-    this.addFood(name, description, this.state.id);
+    let picture = this.state.uploadedFileCloudinaryUrl;
+    this.addFood(name, description, picture, this.state.id);
     this.refs.name.value = '';
     this.refs.description.value = '';
     this.setState({
@@ -89,14 +90,15 @@ class Profile extends React.Component {
     })
   }
 
-  addFood(dishname, description, id) {
+  addFood(dishname, description, picture, id) {
     axios({
       method: 'POST',
       url: 'api/food',
       data: {
         dishname: dishname,
         description: description,
-        userId: id
+        userId: id,
+        picture: picture,
       }
     }).then((result) => {
       console.log(result);
@@ -113,7 +115,7 @@ class Profile extends React.Component {
     })
   }
 
-  editProfile(id, bio, name, email, username) {
+  editProfile(id, bio, name, email, username, picture) {
     axios({
       method: 'POST',
       url: 'api/users/edit',
@@ -121,7 +123,8 @@ class Profile extends React.Component {
         userId: id,
         bio: bio,
         email: email,
-        username: username
+        username: username,
+        picture: picture,
       }
     }).then((results) => {
       console.log(results);
@@ -137,6 +140,7 @@ class Profile extends React.Component {
       console.log('Error', e);
     })
   }
+
 
   onImageDrop(files) {
     this.setState({uploadeFile: files[0]})
@@ -173,7 +177,10 @@ class Profile extends React.Component {
         this.setState({uploadedFileCloudinaryUrl: response.body.secure_url});
       }
     });
-  };
+  }
+
+
+
 
   componentDidMount() {
     this.update();
@@ -182,7 +189,6 @@ class Profile extends React.Component {
 
   render() {
     return (<div>
-
       <div className="profile">
         <div className="info">
           {
@@ -207,9 +213,7 @@ class Profile extends React.Component {
             <DropZone imageDrop={this.onImageDrop} />
             <button type="submit">Add Food</button>
           </form>
-
           <ImagePreview uploadedFileCloudinaryUrl={this.state.uploadedFileCloudinaryUrl} uploadedFile={this.state.uploadedFile} />
-
         </div>
       </div>
       <div className="feed">
