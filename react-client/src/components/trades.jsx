@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import Trade from './trade.jsx';
-import NavBar from './navBar.jsx';
 import AddTrade from './addTrade.jsx';
 
 class Trades extends React.Component {
@@ -150,14 +149,14 @@ class Trades extends React.Component {
   render() {
     return (
       <div>
-      <div id="trades">
-        <h2>Your Trades</h2>
-        <ol>
-          {this.state.trades.map(trade =>
-            <Trade key={trade.id} trade={trade} user={this.state.user} />)}
-        </ol>
-      </div>
-      <AddTrade />
+        <div id="trades">
+          <h2>Your Trades</h2>
+          <ol>
+            {this.state.trades.map(trade =>
+              <Trade key={trade.id} trade={trade} user={this.state.user} />)}
+          </ol>
+        </div>
+        <AddTrade />
       </div>
     );
   }
