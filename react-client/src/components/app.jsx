@@ -33,6 +33,8 @@ class App extends React.Component {
       loggedIn: false,
       currentPage: '',
       userFood: [],
+      userTrades: [],
+      tradeNumber: 0,
       errorMessage: 'none',
       profile: '',
     };
@@ -65,9 +67,9 @@ class App extends React.Component {
         this.setState({ currentPage: <Trade /> });
         break;
       case ('Profile'):
-
-        this.setState({ currentPage: <Profile user={this.state.currentUser} updateFood={this.updateFood} /> });
-
+        this.setState({
+          currentPage: <Profile user={this.state.currentUser} updateFood={this.updateFood} />,
+        });
         break;
       default:
         this.setState({
@@ -84,14 +86,17 @@ class App extends React.Component {
   }
 
   updateUser(userObj, bool) {
-    console.log('here : ', userObj);
-    // userObj.foods === undefined
-    if (userObj.message === "Incorrect username" || userObj.user === undefined) {
+    if (userObj.message === 'Incorrect username' || userObj.user === undefined) {
       this.setState({ errorMessage: userObj.message });
     } else {
-
-      this.setState({ currentUser: userObj.user, loggedIn: bool, userFood: userObj.food });
-
+      const numberOfTrades = userObj.trades.length;
+      this.setState({
+        currentUser: userObj.user,
+        loggedIn: bool,
+        userFood: userObj.food,
+        userTrades: userObj.trades,
+        tradeNumber: numberOfTrades,
+      });
     }
   }
 
@@ -112,11 +117,13 @@ class App extends React.Component {
         />}
         {this.state.loggedIn ?
           this.state.currentPage === '' ?
-            <MainPage friends={
-              this.state.friends}
+            <MainPage
+              friends={this.state.friends}
               userFood={this.state.userFood}
               updateFood={this.updateFood}
               currentUser={this.state.currentUser}
+              trades={this.state.userTrades}
+              tradeNumber={this.state.tradeNumber}
               />
           :
             this.state.currentPage

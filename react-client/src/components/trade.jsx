@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import { UnRatedStar, RatedStarLike, RatedStarDislike } from '../icons/star.jsx';
 
-
 moment.updateLocale('en', {
   relativeTime: {
     future: '%s',

@@ -19,6 +19,10 @@ class Friends extends React.Component {
       picture: '',
       location: { top: '80px' },
       cover: { top: '30px' },
+      selectedTrades: this.props.trades.slice(0, 4),
+      selectedTradesNum: 8,
+      fullTrades: this.props.trades,
+      fullTradesNum: this.props.tradeNumber,
     };
     this.selectFriend = this.selectFriend.bind(this);
     this.toggleExpand = this.toggleExpand.bind(this);
@@ -27,6 +31,7 @@ class Friends extends React.Component {
     this.updateForm = this.updateForm.bind(this);
     this.setSpin = this.setSpin.bind(this);
     this.scrolling = this.scrolling.bind(this);
+    this.viewMoreTrades = this.viewMoreTrades.bind(this);
   }
 
   componentDidMount() {
@@ -45,11 +50,21 @@ class Friends extends React.Component {
     const updated = (document.documentElement.scrollTop + 80) + 'px';
     const coverMove = (document.documentElement.scrollTop + 30) + 'px';
     this.setState({ location: { top: updated }, cover: { top: coverMove } });
-    console.log(this.state);
-    /*
+    if (document.documentElement.scrollTop + window.innerHeight + 100 >=
+      document.documentElement.scrollHeight) {
+      this.viewMoreTrades();
+    }
+  }
 
-    transform: translateY(${props => props.visible ? '0px' : '60px'});
-    */
+  viewMoreTrades() {
+    if (this.state.selectedTradesNum < this.state.fullTradesNum) {
+      const newTotal = this.state.selectedTradesNum + 4;
+      const newTrades = this.state.fullTrades.slice(0, newTotal);
+      this.setState({
+        selectedTradesNum: newTotal,
+        selectedTrades: newTrades,
+      });
+    }
   }
 
   selectTradeItem(dishname) {
@@ -161,15 +176,25 @@ class Friends extends React.Component {
         :
           <span />
         }
-        {trades.trades.map(trade =>
+        {this.state.selectedTrades.map(trade =>
           (<Friend
             key={trade.id}
             trade={trade}
             selectTrade={this.selectFriend}
             toggleExpand={this.toggleExpand}
             star={this.state.star}
-            setSpin = {this.setSpin}
+            setSpin={this.setSpin}
           />))}
+        <br />
+        {this.state.selectedTradesNum < this.state.fullTradesNum ?
+          <button className="loadTrades" onClick={this.viewMoreTrades}>
+            View more trades
+          </button>
+        :
+          <button className="loadTrades end" disabled onClick={this.viewMoreTrades}>
+            End of offered trades made since last reload
+          </button>
+        }
       </div>
     );
   }
