@@ -70,7 +70,7 @@ class Trade {
   }
 
   static reject({ id }) {
-    const queryString = 'UPDATE trade SET user_id2 = 0 WHERE id = $1';
+    const queryString = 'UPDATE trade SET failed = TRUE WHERE id = $1';
     return db.any(queryString, [id]);
   }
 
