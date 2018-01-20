@@ -11,7 +11,7 @@ const EditPage = ({ picture, username, submit, updateProfile, email, bio, noPic,
       Bio: <br />
       <textarea id="bio" rows="3" value={bio} onChange={updateProfile} placeholder="Tell us about yourself"/>  <br />
       <button type="submit" onClick={() => { submit(); }} > submit changes </button>
-      {/*<button onClick={() => { reset(); }} > reset </button>*/}
+      <button onClick={() => { reset(); }} > reset </button>
     </div>
   );
 };
