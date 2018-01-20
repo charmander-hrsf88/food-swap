@@ -33,16 +33,14 @@ class Profile extends React.Component {
       uploadedFileCloudinaryUrl: '',
       uploadeFile: '',
       uploadeProfileFile: '',
-      uploadedProFileCloudinaryUrl: '',
+      uploadedProFileCloudinaryUrl: ''
     };
     this.clickHandler = this.clickHandler.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
     this.update = this.update.bind(this);
-    this.getTradesByUsername = this.getTradesByUsername.bind(this);
     this.editProfile = this.editProfile.bind(this);
     this.submitDish = this.submitDish.bind(this);
     this.addFood = this.addFood.bind(this);
-    this.getFoodByUserId = this.getFoodByUserId.bind(this);
     this.onImageDrop = this.onImageDrop.bind(this);
     this.handleImageUpload = this.handleImageUpload.bind(this);
     this.onProfileDrop = this.onProfileDrop.bind(this);
@@ -54,13 +52,13 @@ class Profile extends React.Component {
     console.log(this.state.showEditPage);
     this.editProfile(this.state.id, this.state.bio, this.state.email, this.state.userName, this.state.uploadedProFileCloudinaryUrl);
     this.setState({
-      showEditPage: !this.state.showEditPage
+      showEditPage: !this.state.showEditPage,
     });
   }
 
   updateProfile(e) {
     this.setState({
-      [e.target.id]: e.target.value
+      [e.target.id]: e.target.value,
     });
   }
 
@@ -73,7 +71,7 @@ class Profile extends React.Component {
       picture: this.state.profile.picture,
       name: this.state.profile.name,
       id: this.state.profile.id,
-      showEditPage: !this.state.showEditPage
+      showEditPage: !this.state.showEditPage,
     });
   }
 
@@ -85,9 +83,7 @@ class Profile extends React.Component {
     this.addFood(name, description, picture, this.state.id);
     this.refs.name.value = '';
     this.refs.description.value = '';
-    this.setState({
-      uploadedFileCloudinaryUrl: ''
-    })
+    this.setState({uploadedFileCloudinaryUrl: ''})
   }
 
   addFood(dishname, description, picture, id) {
@@ -98,21 +94,13 @@ class Profile extends React.Component {
         dishname: dishname,
         description: description,
         userId: id,
-        picture: picture,
+        picture: picture
       }
     }).then((result) => {
       console.log(result);
     }).catch((e) => {
       console.log('Error', e);
     });
-  }
-
-  getTradesByUsername(username) {
-    axios({method: 'GET', url: `api/trade/username/${username}`}).then((results) => {
-      console.log(results)
-    }).catch((e) => {
-      console.log('err', e)
-    })
   }
 
   editProfile(id, bio, name, email, username, picture) {
@@ -125,30 +113,21 @@ class Profile extends React.Component {
         email: email,
         username: username,
         picture: picture,
-      }
+      },
     }).then((results) => {
       console.log(results);
     }).catch((e) => {
       console.log('Error', e, this);
-    })
+    });
   }
-
-  getFoodByUserId(id) {
-    axios({method: 'GET', url: `/food/userId/${id}`}).then((results) => {
-      console.log(results);
-    }).catch((e) => {
-      console.log('Error', e);
-    })
-  }
-
 
   onImageDrop(files) {
-    this.setState({uploadeFile: files[0]})
+    this.setState({ uploadeFile: files[0] })
     this.handleImageUpload(files[0]);
   }
 
   onProfileDrop(files) {
-    this.setState({uploadeProfileFile: files[0]})
+    this.setState({ uploadeProfileFile: files[0] })
     this.handleProfileUpload(files[0]);
   }
 
@@ -160,7 +139,7 @@ class Profile extends React.Component {
       }
 
       if (response.body.secure_url !== '') {
-        this.setState({uploadedProFileCloudinaryUrl: response.body.secure_url});
+        this.setState({ uploadedProFileCloudinaryUrl: response.body.secure_url });
       }
     });
 
@@ -174,17 +153,13 @@ class Profile extends React.Component {
       }
 
       if (response.body.secure_url !== '') {
-        this.setState({uploadedFileCloudinaryUrl: response.body.secure_url});
+        this.setState({ uploadedFileCloudinaryUrl: response.body.secure_url });
       }
     });
   }
 
-
-
-
   componentDidMount() {
     this.update();
-    this.getFoodByUserId(this.state.id);
   }
 
   render() {
@@ -195,21 +170,21 @@ class Profile extends React.Component {
             this.state.showEditPage
               ?
               /* Own Profile */
-              <UserProfile name={this.state.name} picture={this.state.picture} username={this.state.userName} noPic={this.state.noPic} email={this.state.email} bio={this.state.bio} submit={this.clickHandler}/>
+              <UserProfile name={this.state.name} picture={this.state.picture} username={this.state.userName} noPic={this.state.noPic} email={this.state.email} bio={this.state.bio} submit={this.clickHandler} />
               :
               /* Edit Page */
-              <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} imageDrop={this.onProfileDrop} uploadedFileCloudinaryUrl={this.state.uploadedProFileCloudinaryUrl} />
+              <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} imageDrop={this.onProfileDrop} uploadedFileCloudinaryUrl={this.state.uploadedProFileCloudinaryUrl}/>
           }
         </div>
         <div className="postTrades">
           <form onSubmit={this.submitDish}>
             <h2>Add Dish</h2>
             Dish Name:
-            <input type="text" placeholder={this.state.foodName} ref='name'/>
-            <br/>
+            <input type="text" placeholder={this.state.foodName} ref='name' />
+            <br />
             Dish Description:
-            <input type="text" placeholder={this.state.foodDescription} ref="description"/>
-            <br/>
+            <input type="text" placeholder={this.state.foodDescription} ref="description" />
+            <br />
             <DropZone imageDrop={this.onImageDrop} />
             <button type="submit">Add Food</button>
           </form>
