@@ -1,9 +1,9 @@
 const db = require('./config');
 
 class Food {
-  static create({ dishname, description, userId }) {
-    const queryString = 'INSERT INTO food (dishname, description, user_id) VALUES ($1, $2, $3)';
-    return db.any(queryString, [dishname, description, userId]).then(() => Food.getByUserId({ userId }));
+  static create({ dishname, description, picture, userId }) {
+    const queryString = 'INSERT INTO food (dishname, description, picture, user_id) VALUES ($1, $2, $3, $4)';
+    return db.any(queryString, [dishname, description, picture, userId]).then(() => Food.getByUserId({ userId }));
   }
 
   static getAll() {
