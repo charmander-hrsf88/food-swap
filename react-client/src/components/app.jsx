@@ -79,6 +79,8 @@ class App extends React.Component {
     userFood={this.state.userFood}
     updateUser={this.updateUser}
     currentUser={this.state.currentUser}
+    trades={this.state.userTrades}
+    tradeNumber={this.state.tradeNumber}
   />,
         });
         break;
@@ -89,7 +91,7 @@ class App extends React.Component {
     if (userObj.message === 'Incorrect username' || userObj.user === undefined) {
       this.setState({ errorMessage: userObj.message });
     } else {
-      const numberOfTrades = userObj.trades.length;
+      const numberOfTrades = userObj.trades === undefined ? null : userObj.trades.length;
       this.setState({
         currentUser: userObj.user,
         loggedIn: bool,

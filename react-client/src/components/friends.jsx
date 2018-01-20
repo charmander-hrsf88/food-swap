@@ -19,8 +19,8 @@ class Friends extends React.Component {
       picture: '',
       location: { top: '80px' },
       cover: { top: '30px' },
-      selectedTrades: this.props.trades.slice(0, 4),
-      selectedTradesNum: 8,
+      selectedTrades: this.props.trades[0],
+      selectedTradesNum: 4,
       fullTrades: this.props.trades,
       fullTradesNum: this.props.tradeNumber,
     };
@@ -176,15 +176,8 @@ class Friends extends React.Component {
         :
           <span />
         }
-        {this.state.selectedTrades.map(trade =>
-          (<Friend
-            key={trade.id}
-            trade={trade}
-            selectTrade={this.selectFriend}
-            toggleExpand={this.toggleExpand}
-            star={this.state.star}
-            setSpin={this.setSpin}
-          />))}
+        {console.log('error friends: ', this.state.selectedTrades)}
+
         <br />
         {this.state.selectedTradesNum < this.state.fullTradesNum ?
           <button className="loadTrades" onClick={this.viewMoreTrades}>

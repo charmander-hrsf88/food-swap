@@ -26,6 +26,7 @@ export function userInfo(cb) {
     url: '/session',
   })
     .then((result) => {
+      console.log('logout result: ', result);
       console.log('friend', result.data);
       if (result.data.user !== null) {
         cb(result.data, true);
