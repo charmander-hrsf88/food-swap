@@ -13,5 +13,4 @@ const UserProfile = ({ name, picture, username, noPic, email, bio, submit }) => 
   </div>
 );
 
-
 export default UserProfile;
