@@ -43,6 +43,10 @@ class Trade {
   static getPossibleTradeByUserId({ userId2 }) {
     return db.trade.getPossibleTradeByUserId({ userId2 });
   }
+
+  static getPossibleTradeExceptUser({ userId }) {
+    return db.trade.getPossibleTradeExceptUser({ userId });
+  }
 }
 
 module.exports = Trade;

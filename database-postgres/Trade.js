@@ -88,6 +88,11 @@ class Trade {
     const queryString = 'SELECT * FROM trade WHERE user_id2 = $1';
     return db.any(queryString, [userId2]);
   }
+
+  static getPossibleTradeExceptUser({ userId }) {
+    const queryString = 'SELECT * FROM trade where user_id2 = 1 AND user_id1 != $1';
+    return db.any(queryString, [userId]);
+  }
 }
 
 module.exports = Trade;

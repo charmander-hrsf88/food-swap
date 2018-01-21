@@ -62,6 +62,7 @@ app.get('/session', (req, res) => {
     promises.push(models.food.getByUserId({ userId }));
     promises.push(models.trade.getTradesByUserId({ userId }));
     promises.push(models.friends.getFriendsByUserId({ userId }));
+    promises.push(models.trade.getPossibleTradeExceptUser({ userId }));
 
     Promise.all(promises)
       .then((result) => {
@@ -71,6 +72,7 @@ app.get('/session', (req, res) => {
           food: result[1],
           trades: result[2],
           friends: result[3],
+          possibleTradesExceptUser: result[4],
         };
 
         res.json(userObj);
