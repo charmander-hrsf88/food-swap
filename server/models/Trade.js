@@ -25,6 +25,9 @@ class Trade {
     return db.trade.initiate({ userId1, foodId1, userId2, foodId2 });
   }
 
+  static update({ id, userId2, foodId2 }) {
+    return db.trade.update({ id, userId2, foodId2 });
+  }
   static accept({ id }) {
     return db.trade.accept({ id });
   }

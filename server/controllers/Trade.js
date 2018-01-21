@@ -66,6 +66,17 @@ class Trade {
       });
   }
 
+  static update(req, res) {
+    const { id, userId2, foodId2 } = req.body;
+    models.trade.update({ id, userId2, foodId2 })
+      .then((trade) => {
+        res.json(trade);
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e });
+      });
+  }
+
   static accept(req, res) {
     const { id } = req.body;
     models.trade.accept({ id })
