@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import Question from '../icons/question.jsx';
 
 var colorname;
 
@@ -25,7 +26,12 @@ const Friend = ({
     { setClass(trade) }
     <div className={colorname}>
       <h2> {trade.food_dishname} </h2>
+      {console.log('the trade picture= ', trade)}
+      {trade.food_dishname === null ?
+        <Question />
+      :
       <img alt={trade.food_dishname} src={trade.food_picture} />
+      }
       <h4> {trade.username1} </h4>
       <div className="ratingPanel">
         {trade.user_rating > 2 && star}

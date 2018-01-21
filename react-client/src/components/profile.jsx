@@ -10,7 +10,7 @@ import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import ImagePreview from './ImagePreview.jsx';
 import DropZone from './PictureDrop.jsx';
-// import {CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL} from '../config/config.js';
+import {CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL} from '../config/config.js';
 
 class Profile extends React.Component {
   constructor(props) {
