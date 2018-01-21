@@ -68,7 +68,7 @@ class App extends React.Component {
         break;
       case ('Profile'):
         this.setState({
-          currentPage: <Profile user={this.state.currentUser} updateFood={this.updateFood} />,
+          currentPage: <Profile user={this.state.currentUser} updateFood={this.updateFood} trades={this.userTrades} />,
         });
         break;
       default:
