@@ -83,6 +83,11 @@ class Trade {
     const queryString = 'DELETE FROM trade WHERE id = $1';
     return db.any(queryString, [id]).catch(e => console.log(e));
   }
+
+  static getPossibleTradeByUserId({ userId2 }) {
+    const queryString = 'SELECT * FROM trade WHERE user_id2 = $1';
+    return db.any(queryString, [userId2]);
+  }
 }
 
 module.exports = Trade;

@@ -12,6 +12,7 @@ router.get('/trade/username/:username', controller.trade.getTradesByUsername);
 router.get('/trade/userId/:userId', controller.trade.getTradesByUserId);
 router.get('/trade/username/:username1/username/:username2', controller.trade.getTradesByTwoUsernames);
 router.get('/trade/userId/:userId1/userId/:userId2', controller.trade.getTradesByTwoUserIds);
+router.get('/trade/possibleTrade/:userId2', controller.trade.getPossibleTradeByUserId);
 router.post('/trade/initiate', controller.trade.initiate);
 router.post('/trade/accept', controller.trade.accept);
 router.post('/trade/reject', controller.trade.reject);

@@ -39,6 +39,10 @@ class Trade {
   static remove({ id }) {
     return db.trade.remove({ id });
   }
+
+  static getPossibleTradeByUserId({ userId2 }) {
+    return db.trade.getPossibleTradeByUserId({ userId2 });
+  }
 }
 
 module.exports = Trade;

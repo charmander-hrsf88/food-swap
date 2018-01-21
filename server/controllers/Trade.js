@@ -109,6 +109,17 @@ class Trade {
         res.status(500).send({ error: e });
       });
   }
+
+  static getPossibleTradeByUserId(req, res) {
+    const { userId2 } = req.params;
+    models.trade.getPossibleTradeByUserId({ userId2 })
+      .then((trades) => {
+        res.json(trades);
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e });
+      });
+  }
 }
 
 module.exports = Trade;
