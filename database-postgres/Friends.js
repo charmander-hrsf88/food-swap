@@ -6,6 +6,11 @@ class Friends {
     return db.any(queryString, [userId1]);
   }
 
+  static getFriendsByUserId({ userId }) {
+    const queryString = 'SELECT * FROM friends where user_id1 = $1 OR user_id2 = $1';
+    return db.any(queryString, [userId]);
+  }
+
   static findByUserId({ userId1, userId2 }) {
     const queryString = 'SELECT * FROM friends WHERE (user_id1 = $1 AND user_id2 = $2) OR (user_id2 = $1 AND user_id1 = $2)';
     return db.any(queryString, [userId1, userId2])

@@ -1,8 +1,8 @@
 const db = require('../../database-postgres');
 
 class Food {
-  static create({ dishname, description, userId }) {
-    return db.food.create({ dishname, description, userId });
+  static create({ dishname, description, picture, userId }) {
+    return db.food.create({ dishname, description, picture, userId });
   }
 
   static getAll() {
@@ -23,6 +23,14 @@ class Food {
 
   static findByDishName({ dishname }) {
     return db.food.findByDishName({ dishname });
+  }
+
+  static getByUsername({ username }) {
+    return db.food.getByUsername({ username });
+  }
+
+  static getByUserId({ userId }) {
+    return db.food.getByUserId({ userId });
   }
 }
 

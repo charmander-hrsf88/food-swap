@@ -1,16 +1,24 @@
 import React from 'react';
 import Friends from './friends.jsx';
-import AddFriends from './addFriends.jsx';
-import TopUsers from './topUsers.jsx';
 
-const MainPage = ({ topUsers, friends }) => (
+const MainPage = ({
+  friends,
+  userFood,
+  updateFood,
+  currentUser,
+  trades,
+  tradeNumber,
+}) => (
   <div>
-    {friends.length > 0 ?
-      <Friends const friends={friends} />
-    :
-      <AddFriends />
-    }
-    <TopUsers const topUsers={topUsers} />
+    {console.log('main page', trades)}
+    <Friends
+      trades={trades}
+      tradeNumber={tradeNumber}
+      friends={friends}
+      userFood={userFood}
+      updateFood={updateFood}
+      currentUser={currentUser}
+    />
   </div>
 );
 

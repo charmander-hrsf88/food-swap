@@ -1,36 +1,57 @@
 const models = require('../models');
 
 class Trade {
-  static getById(req, res) {
+  static getTradesById(req, res) {
+    const { id } = req.params;
+    models.trade.getTradesById({ id })
+      .then((trades) => {
+        res.json(trades);
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e });
+      });
+  }
+  static getTradesByUsername(req, res) {
+    const { username } = req.params;
+    models.trade.getTradesByUsername({ username })
+      .then((trades) => {
+        res.json(trades);
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e });
+      });
+  }
+
+  static getTradesByUserId(req, res) {
+    const { userId } = req.params;
+    models.trade.getTradesByUserId({ userId })
+      .then((trades) => {
+        res.json(trades);
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e });
+      });
+  }
+
+  static getTradesByTwoUsernames(req, res) {
+    const { username1, username2 } = req.params;
+    models.trade.getTradesByTwoUsernames({ username1, username2 })
+      .then((trades) => {
+        res.json(trades);
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e });
+      });
+  }
+
+  static getTradesByTwoUserIds(req, res) {
     const { userId1, userId2 } = req.params;
-    models.trade.findById({ userId1, userId2 })
+    models.trade.getTradesByTwoUserIds({ userId1, userId2 })
       .then((trades) => {
         res.json(trades);
       })
       .catch((e) => {
-        res.status(404).send({ error: e });
-      });
-  }
-
-  static getAllTradeByUserId(req, res) {
-    const { userId } = req.params;
-    models.trade.getAllTradeByUserId({ userId })
-      .then((trades) => {
-        res.json(trades);
-      })
-      .catch((e) => {
-        res.status(404).send({ error: e });
-      });
-  }
-
-  static getRequestsPending(req, res) {
-    const { userId } = req.params;
-    models.trade.getRequestsPending({ userId })
-      .then((requests) => {
-        res.json(requests);
-      })
-      .catch((e) => {
-        res.status(404).send({ error: e });
+        res.status(500).send({ error: e });
       });
   }
 
@@ -39,6 +60,17 @@ class Trade {
     models.trade.initiate({ userId1, userId2, foodId1, foodId2 })
       .then(() => {
         res.end('OK');
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e });
+      });
+  }
+
+  static update(req, res) {
+    const { id, userId2, foodId2 } = req.body;
+    models.trade.update({ id, userId2, foodId2 })
+      .then((trade) => {
+        res.json(trade);
       })
       .catch((e) => {
         res.status(500).send({ error: e });
@@ -67,15 +99,25 @@ class Trade {
       });
   }
 
-  static getTradesForProfilePage(req, res) {
-    const { username1, username2 } = req.params;
+  static remove(req, res) {
+    const { id } = req.body;
+    models.trade.remove({ id })
+      .then(() => {
+        res.send({ message: 'Trade removed' });
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e });
+      });
+  }
 
-    models.trade.getTradesForProfilePage({ username1, username2 })
+  static getPossibleTradeByUserId(req, res) {
+    const { userId2 } = req.params;
+    models.trade.getPossibleTradeByUserId({ userId2 })
       .then((trades) => {
         res.json(trades);
       })
       .catch((e) => {
-        res.status(404).send({ error: e });
+        res.status(500).send({ error: e });
       });
   }
 }

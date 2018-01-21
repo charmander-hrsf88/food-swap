@@ -1,19 +1,50 @@
 .friendFood {
-  background: grey;
-  height: 300px;
-  width: 300px;
+  height: 370px; //370px
+  width: 350px; //350px
   display: inline-block;
-  margin: 10px;
+  margin: 10px 10px 0px 10px;
   overflow-y: hidden;
-  cursor: pointer;
-  & > img {
-    max-height: 200px;
-    max-width: 200px;
+  & > div {
+    background: rgba(128, 128, 128, 0.074);
+    border: 30px solid rgba(255, 217, 0, 0.70);
+    cursor: pointer;
+    &.star5 {
+      border: 30px solid gold;
+    }
+    &.star4 {
+      border: 30px solid rgba(255, 217, 0, 0.90);
+    }
+    &.star3 {
+      border: 30px solid rgba(255, 217, 0, 0.80);
+    }
+    & > div {
+      height: 150px;
+      & > img {
+        margin-left: auto;
+        margin-right: auto;
+        max-height: 150px;
+        max-width: 200px;
+        border:1px dashed rgba(128, 128, 128, 0.274);
+      }
+    }
+    & > h2 {
+      font-size: 1.5em;
+      margin: 10px auto;    
+    }
+    & > h4 {
+      font-size: 1.5em;
+      margin: 2px auto;
+    }
+    & .ratingPanel {
+      height: 32px;
+      padding-bottom: 10px;
+    }
   }
-  & > p {
-    padding: 0px 20px;
-    text-align: left;
-  }
+}
+
+.time {
+  margin: 0px auto;
+  font-size: 1.5em;
 }
 
 $red : red;

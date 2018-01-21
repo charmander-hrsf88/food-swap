@@ -13,12 +13,12 @@ passport.use(new LocalStrategy((username, password, done) => {
   models.users.comparePassword({ username, pass: password })
     .then((user) => {
       if (!user) {
-        return done(null, false, { message: 'Incorrect username' });
+        return done(null, false, { message: 'Incorrect password' });
       }
 
       return done(null, user);
     })
-    .catch(err => done(err));
+    .catch(() => done(new Error(), null, { message: 'Incorrect username' }));
 }));
 
 passport.serializeUser((user, callback) => {
@@ -51,21 +51,38 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use('/', express.static(path.join(__dirname, '../react-client/dist')));
+app.use('/', express.static(path.join(__dirname, '../react-client/dist/')));
 
 app.get('/session', (req, res) => {
-  const { user } = req.session;
-  if (user) {
-    models.users.findById({ id: user})
-      .then((user) => {
-        console.log(user);
-        res.send({ user });
+  const { user, success } = req.session;
+  if (success) {
+    const userId = user.id;
+    const promises = [];
+    promises.push(models.users.findById({ id: userId }));
+    promises.push(models.food.getByUserId({ userId }));
+    promises.push(models.trade.getTradesByUserId({ userId }));
+    promises.push(models.friends.getFriendsByUserId({ userId }));
+    promises.push(models.trade.getPossibleTradeExceptUser({ userId }));
+
+    Promise.all(promises)
+      .then((result) => {
+        const userObj = {
+          message: 'Success',
+          user: result[0],
+          food: result[1],
+          trades: result[2],
+          friends: result[3],
+          possibleTradesExceptUser: result[4],
+        };
+
+        res.json(userObj);
       })
       .catch((e) => {
-        res.send({ e });
+        console.log(e);
+        res.status(500).send({ error: e });
       });
   } else {
-    res.send({ user: null });
+    res.send({ message: req.session.message });
   }
 });
 
@@ -75,26 +92,44 @@ app.get('/logout', (req, res) => {
   });
 });
 
-app.post('/login', passport.authenticate('local', { failureRedirect: '/', failureFlash: true }), (req, res) => {
-  const { user } = req.session.passport;
-  req.session.regenerate(() => {
-    req.session.user = user;
-    res.redirect('/');
-  });
+app.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user) => {
+    req.session.regenerate(() => {
+      if (err) {
+        req.session.success = false;
+        req.session.message = 'Incorrect username';
+      } else if (!user) {
+        req.session.success = false;
+        req.session.message = 'Incorrect password';
+      } else {
+        req.session.success = true;
+        req.session.user = user;
+      }
+      res.redirect('/');
+    });
+  })(req, res, next);
 });
 
 app.post('/signup', (req, res) => {
   const { name, username, password, email } = req.body;
-  models.users.create({ name, username, password, email })
-    .then((user) => {
-      console.log(user);
-      req.session.regenerate(() => {
-        req.session.user = user.id;
-        res.redirect('/');
-      });
+  models.users.findByUsername({ username })
+    .then((userExists) => {
+      if (userExists) {
+        res.send({ message: 'username already exists' });
+      }
+
+      return models.users.create({ name, username, password, email })
+        .then((user) => {
+          req.session.regenerate(() => {
+            req.session.success = true;
+            req.session.user = user;
+            res.redirect('/');
+          });
+        });
     })
     .catch((e) => {
-      res.status(500).send({ error: e });
+      console.log('Error on /signup', e);
+      res.status(500).end();
     });
 });
 

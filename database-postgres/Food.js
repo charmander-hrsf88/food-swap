@@ -1,11 +1,9 @@
 const db = require('./config');
 
 class Food {
-  static create({ dishname, description, userId }) {
-    const queryString = 'INSERT INTO food (dishname, description, user_id) VALUES ($1, $2, $3)';
-    return db.any(queryString, [dishname, description, userId])
-      .then(() => true)
-      .catch(() => false);
+  static create({ dishname, description, picture, userId }) {
+    const queryString = 'INSERT INTO food (dishname, description, picture, user_id) VALUES ($1, $2, $3, $4)';
+    return db.any(queryString, [dishname, description, picture, userId]).then(() => Food.getByUserId({ userId }));
   }
 
   static getAll() {
@@ -52,6 +50,16 @@ class Food {
   static findByDishName({ dishname }) {
     const queryString = 'SELECT * FROM food WHERE dishname = $1';
     return db.any(queryString, [dishname]);
+  }
+
+  static getByUsername({ username }) {
+    const queryString = 'SELECT * FROM food WHERE user_id=(SELECT id FROM users WHERE username = $1 LIMIT 1)';
+    return db.any(queryString, [username]);
+  }
+
+  static getByUserId({ userId }) {
+    const queryString = 'SELECT * FROM food WHERE user_id=$1';
+    return db.any(queryString, [userId]);
   }
 }
 

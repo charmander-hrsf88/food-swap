@@ -12,6 +12,17 @@ class Friend {
       });
   }
 
+  static getFriendsByUserId(req, res) {
+    const { userId } = req.params;
+    models.friends.getFriendsByUserId({ userId })
+      .then((friends) => {
+        res.json(friends);
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e });
+      });
+  }
+
   static getById(req, res) {
     const { userId1, userId2 } = req.params;
     models.friends.findByUserId({ userId1, userId2 })

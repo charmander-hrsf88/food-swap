@@ -12,6 +12,7 @@ import {
   getFriends,
   getAllFood,
   getSpecificFood,
+  getFoodByUsername,
   addFood,
   requestTrade,
   acceptTrade,
@@ -28,21 +29,26 @@ class App extends React.Component {
     super(props);
     this.state = {
       friends: dummyData.friends,
-      topUsers: dummyData.topUsers,
       currentUser: '',
       loggedIn: false,
-      currentPage: <span />,
+      currentPage: '',
+      userFood: [],
+      userTrades: [],
+      errorMessage: 'none',
+      profile: '',
+      activeTrades: [],
+      activeTradesNumber: 0,
     };
     this.switchPage = this.switchPage.bind(this);
     this.updateUser = this.updateUser.bind(this);
+    this.updateFood = this.updateFood.bind(this);
   }
 
   componentDidMount() {
-    this.switchPage();
     // addFriend();
     // getFriends();
     // getFriend();
-    // addFood('cheeseburger', 'bread and meat and cheese', 1);
+    // addFood('Whiskey', 'It\'s a drink. You drink it.', 1);
     // getAllFood();
     // getSpecificFood();
     // requestTrade();
@@ -62,48 +68,79 @@ class App extends React.Component {
         this.setState({ currentPage: <Trade /> });
         break;
       case ('Profile'):
-        this.setState({ currentPage: <Profile /> });
+        this.setState({
+          currentPage:
+  <Profile
+    user={this.state.currentUser}
+    updateFood={this.updateFood}
+    trades={this.userTrades}
+  />,
+        });
         break;
       default:
         this.setState({
           currentPage:
   <MainPage
     friends={this.state.friends}
-    topUsers={this.state.topUsers}
+    userFood={this.state.userFood}
+    updateUser={this.updateUser}
+    currentUser={this.state.currentUser}
+    trades={this.state.userTrades}
+    tradeNumber={this.state.tradeNumber}
   />,
         });
         break;
     }
   }
 
-  postTrade(localUser, localFood, selectedUser, selectedFood) {
-    axios({
-      method: 'post',
-      url: '/api/trade/initiate',
-      data: {
-        userId1: localUser,
-        foodId1: localFood,
-        userId2: selectedUser,
-        foodId2: selectedFood,
-      },
-    })
-      .then(data => console.log(data))
-      .catch(e => console.log('err', e, this));
+  updateUser(userObj, bool) {
+    if (userObj.message === 'Incorrect username' || userObj.user === undefined) {
+      this.setState({ errorMessage: userObj.message });
+    } else {
+      const numberOfTrades = userObj.possibleTradesExceptUser === undefined ?
+        null
+        :
+        userObj.possibleTradesExceptUser.length;
+      this.setState({
+        currentUser: userObj.user,
+        loggedIn: bool,
+        userFood: userObj.food,
+        userTrades: userObj.trades,
+        activeTradesNumber: numberOfTrades,
+        activeTrades: userObj.possibleTradesExceptUser,
+      });
+    }
   }
 
-  updateUser(obj, bool) {
-    this.setState({ currentUser: obj, loggedIn: bool });
+  updateFood(obj) {
+    this.setState({ userFood: obj });
   }
 
   render() {
     return (
-      <div>
-        {console.log(this.state)}
-        {this.state.loggedIn && <NavBar switchPage={this.switchPage} cb={this.updateUser} />}
+      <div onScroll={this.scrolling}>
+        {/*   Temp disable log in/out rendering
+        <NavBar switchPage={this.switchPage} cb={this.updateUser} />
+        {this.state.currentPage}
+        */}
+        {this.state.loggedIn && <NavBar
+          switchPage={this.switchPage}
+          cb={this.updateUser}
+        />}
         {this.state.loggedIn ?
-          this.state.currentPage
+          this.state.currentPage === '' ?
+            <MainPage
+              friends={this.state.friends}
+              userFood={this.state.userFood}
+              updateFood={this.updateFood}
+              currentUser={this.state.currentUser}
+              trades={this.state.activeTrades}
+              tradeNumber={this.state.activeTradesNumber}
+              />
+          :
+            this.state.currentPage
         :
-          <LogInSignUp />
+          <LogInSignUp err={this.state.errorMessage}/>
         }
       </div>
     );

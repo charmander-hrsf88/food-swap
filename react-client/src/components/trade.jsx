@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import { UnRatedStar, RatedStarLike, RatedStarDislike } from '../icons/star.jsx';
 
-
 moment.updateLocale('en', {
   relativeTime: {
     future: '%s',
@@ -46,7 +45,25 @@ class Trade extends React.Component {
     this.cancelRating = this.cancelRating.bind(this);
   }
   componentWillMount() {
-    if (this.props.trade.response === false) {
+
+  /*
+    response:
+      False: yellow.
+      True: light green.
+    expired:
+      False: no change.
+      True: dark green unless failed.
+    accepted:
+      False: no change.
+      True: light green unless expired.
+    failed:
+      False: no change.
+      True: greyedout.
+    this.state.truthy
+      False: Only display trades other people should see
+      True: Show all Trades
+  */
+    if (this.props.trade.response === false && moment(this.props.trade.time).fromNow() !== 'EXPIRED') {
       this.setState({ liStatus: 'pendingTrade' });
       if (this.state.truthy) {
         this.setState({
@@ -64,6 +81,7 @@ class Trade extends React.Component {
     <button>Reject Trade?</button>
   </div>,
         });
+
       } else {
         this.setState({
           message: `${this.props.trade.username1} wants to trade ${this.props.trade.food_id1} 
