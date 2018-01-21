@@ -21,7 +21,7 @@ class Profile extends React.Component {
       showEditPage: false,
       bio: 'I love to cook',
       email: 'dummydata@gmail.com ',
-      userName: 'Hayden',
+      username: 'Hayden',
       id: '',
       name: '',
       picture: dummyData.friends[0].user_picture,
@@ -50,7 +50,7 @@ class Profile extends React.Component {
   clickHandler() {
     /* If user !== username passed */
     console.log(this.state.showEditPage);
-    this.editProfile(this.state.id, this.state.bio, this.state.email, this.state.userName, this.state.uploadedProFileCloudinaryUrl);
+    this.editProfile(this.state.id, this.state.bio, this.state.name, this.state.email, this.state.username, this.state.uploadedProFileCloudinaryUrl);
     this.setState({
       showEditPage: !this.state.showEditPage,
     });
@@ -67,7 +67,7 @@ class Profile extends React.Component {
     this.setState({
       bio: this.state.profile.bio,
       email: this.state.profile.email,
-      userName: this.state.profile.username,
+      username: this.state.profile.username,
       picture: this.state.profile.picture,
       name: this.state.profile.name,
       id: this.state.profile.id,
@@ -110,6 +110,7 @@ class Profile extends React.Component {
       data: {
         userId: id,
         bio: bio,
+        name: name,
         email: email,
         username: username,
         picture: picture,
@@ -142,7 +143,6 @@ class Profile extends React.Component {
         this.setState({ uploadedProFileCloudinaryUrl: response.body.secure_url });
       }
     });
-
   }
 
   handleImageUpload(file) {
@@ -151,7 +151,6 @@ class Profile extends React.Component {
       if (err) {
         console.error(err);
       }
-
       if (response.body.secure_url !== '') {
         this.setState({ uploadedFileCloudinaryUrl: response.body.secure_url });
       }
@@ -170,10 +169,10 @@ class Profile extends React.Component {
             this.state.showEditPage
               ?
               /* Own Profile */
-              <UserProfile name={this.state.name} picture={this.state.picture} username={this.state.userName} noPic={this.state.noPic} email={this.state.email} bio={this.state.bio} submit={this.clickHandler} />
+              <UserProfile name={this.state.name} picture={this.state.picture} username={this.state.username} noPic={this.state.noPic} email={this.state.email} bio={this.state.bio} submit={this.clickHandler} />
               :
               /* Edit Page */
-              <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} imageDrop={this.onProfileDrop} uploadedFileCloudinaryUrl={this.state.uploadedProFileCloudinaryUrl}/>
+              <EditPage picture={this.state.picture} username={this.state.username} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} imageDrop={this.onProfileDrop} uploadedFileCloudinaryUrl={this.state.uploadedProFileCloudinaryUrl}/>
           }
         </div>
         <div className="postTrades">

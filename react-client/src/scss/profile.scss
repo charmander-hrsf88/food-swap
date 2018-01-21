@@ -1,39 +1,100 @@
-.info {
-  display: inline-block;
-  width: 30%;
+.profile {
+  display: flex;
   border: solid white;
-  background: grey;
+  background: rgba(131, 128, 128, 0.15);
 }
 
-.info > .profile {
+.info {
+  flex-basis: 30%;
   text-align: center;
+  background: rgba(131, 128, 128, 0.15);
+  border: solid white;
 }
 
-.info > .profile > img {
-  border: solid black;
+.bio > img {
+  border: solid white;
+}
+
+.bio > h2 {
+  background: rgba(0, 128, 0, 0.514);
+  border: solid black 1px;
 }
 
 .postTrades {
-  width: 69%;
-  float: right;
+  flex-basis: 70%;
   text-align: center;
-  border: solit white;
+  display: flex;
+  padding-left: 50px;
+  border: solid white;
+  -webkit-justify-content: center;
+  justify-content: center;
+  background: rgba(131, 128, 128, 0.15);
+  margin: 0px auto;
+  border: solid white;
 }
 
-.postTrades > form {
+.postTrades > form > h2 {
+  background: rgba(0, 128, 0, 0.514);
+  border: solid black 1px;
+}
+
+.preview {
+  padding-left: 30px;
+}
+.preview > h2 {
+  padding-left: 30px;
+  border: solid black 1px;
+}
+
+.preview > img {
+  padding-top: 50px;
+  padding-left: 10px;
+  border: solid white;
+}
+
+.preview > h2 {
+  background: rgba(0, 128, 0, 0.514);
+}
+
+.feed {
+  display: flex;
+  border: solid white;
+  background: rgba(131, 128, 128, 0.15);
+}
+
+.images {
+  flex-basis: 30%;
+  text-align: center;
+  background: rgba(131, 128, 128, 0.15);
+  border: solid white;
+}
+
+.images > h2 {
+  background: rgba(0, 128, 0, 0.514);
+  border: solid black 1px;
+}
+
+.images > img {
+  width: 100px;
 }
 
 .profileList {
-  border: solit white;
-
-}
-
-.photos {
-  width: 30%;
-  display: inline-flex;
+  flex-basis: 70%;
   text-align: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  border: solid white;
+  background: rgba(131, 128, 128, 0.15);
 }
 
-.photos > .images > img {
-  width: 33%;
+.profileList > h2 {
+  background: rgba(0, 128, 0, 0.514);
+  border: solid black 1px;
+  width: 200px;
+  margin-left: 40%;
+}
+
+
+.dropzone {
+  display: inline;
 }
