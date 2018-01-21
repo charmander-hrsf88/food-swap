@@ -64,6 +64,11 @@ class Trade {
     return db.any(queryString, [userId1, foodId1, userId2, foodId2]);
   }
 
+  static update({ id, userId2, foodId2 }) {
+    const queryString = 'UPDATE trade SET user_id2 = $1, food_id2 = $2 WHERE id = $3 RETURNING *';
+    return db.any(queryString, [userId2, foodId2, id]);
+  }
+
   static accept({ id }) {
     const queryString = 'UPDATE trade SET accepted = TRUE WHERE id = $1';
     return db.any(queryString, [id]);
@@ -76,7 +81,7 @@ class Trade {
 
   static remove({ id }) {
     const queryString = 'DELETE FROM trade WHERE id = $1';
-    return db.any(queryString, [id]);
+    return db.any(queryString, [id]).catch(e => console.log(e));
   }
 }
 
