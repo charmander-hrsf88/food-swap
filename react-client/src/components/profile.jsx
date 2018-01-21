@@ -6,6 +6,11 @@ import dummyData from '../dummyData.js';
 import userInfo from '../axiosCalls.jsx';
 import ProfileList from './ProfileList.jsx';
 import Photos from './Photos.jsx';
+import Dropzone from 'react-dropzone';
+import request from 'superagent';
+import ImagePreview from './ImagePreview.jsx';
+import DropZone from './PictureDrop.jsx';
+import {CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL} from '../config/config.js';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -16,7 +21,7 @@ class Profile extends React.Component {
       showEditPage: false,
       bio: 'I love to cook',
       email: 'dummydata@gmail.com ',
-      userName: 'Hayden',
+      username: 'Hayden',
       id: '',
       name: '',
       picture: dummyData.friends[0].user_picture,
@@ -25,39 +30,47 @@ class Profile extends React.Component {
       foodPic: '',
       trades: [],
       userDishes: [],
+      uploadedFileCloudinaryUrl: '',
+      uploadeFile: '',
+      uploadeProfileFile: '',
+      uploadedProFileCloudinaryUrl: ''
     };
     this.clickHandler = this.clickHandler.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
     this.update = this.update.bind(this);
-    this.getTradesByUsername = this.getTradesByUsername.bind(this);
     this.editProfile = this.editProfile.bind(this);
     this.submitDish = this.submitDish.bind(this);
     this.addFood = this.addFood.bind(this);
-    this.getFoodByUserId = this.getFoodByUserId.bind(this);
+    this.onImageDrop = this.onImageDrop.bind(this);
+    this.handleImageUpload = this.handleImageUpload.bind(this);
+    this.onProfileDrop = this.onProfileDrop.bind(this);
+    this.handleProfileUpload = this.handleProfileUpload.bind(this);
   }
 
   clickHandler() {
     /* If user !== username passed */
     console.log(this.state.showEditPage);
-    this.editProfile(this.state.id, this.state.bio, this.state.email, this.state.userName);
+    this.editProfile(this.state.id, this.state.bio, this.state.name, this.state.email, this.state.username, this.state.uploadedProFileCloudinaryUrl);
     this.setState({
       showEditPage: !this.state.showEditPage,
     });
   }
 
   updateProfile(e) {
-    this.setState({ [e.target.id]: e.target.value });
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
   }
 
   update() {
     console.log(this.state.profile);
     this.setState({
-      bio: this.state.profile.user.bio,
-      email: this.state.profile.user.email,
-      userName: this.state.profile.user.username,
-      picture: this.state.profile.user.picture,
-      name: this.state.profile.user.name,
-      id: this.state.profile.user.id,
+      bio: this.state.profile.bio,
+      email: this.state.profile.email,
+      username: this.state.profile.username,
+      picture: this.state.profile.picture,
+      name: this.state.profile.name,
+      id: this.state.profile.id,
       showEditPage: !this.state.showEditPage,
     });
   }
@@ -66,107 +79,122 @@ class Profile extends React.Component {
     event.preventDefault();
     let name = this.refs.name.value;
     let description = this.refs.description.value;
-    let picture = this.refs.picture.value;
-    this.addFood(name, description, this.state.id);
+    let picture = this.state.uploadedFileCloudinaryUrl;
+    this.addFood(name, description, picture, this.state.id);
     this.refs.name.value = '';
     this.refs.description.value = '';
+    this.setState({uploadedFileCloudinaryUrl: ''})
   }
 
-  addFood(dishname, description, id) {
+  addFood(dishname, description, picture, id) {
     axios({
       method: 'POST',
       url: 'api/food',
       data: {
         dishname: dishname,
         description: description,
-        userId: id
+        userId: id,
+        picture: picture
       }
-    })
-    .then((result) => {
+    }).then((result) => {
       console.log(result);
-    })
-    .catch((e) => {
+    }).catch((e) => {
       console.log('Error', e);
     });
   }
 
-  getTradesByUsername(username) {
-    axios({
-      method: 'GET',
-      url: `api/trade/username/${username}`
-    })
-    .then((results) => {
-      console.log(results)
-    })
-    .catch((e) => {
-      console.log('err', e)
-    })
-  }
-
-  editProfile(id, bio, name, email, username){
+  editProfile(id, bio, name, email, username, picture) {
     axios({
       method: 'POST',
       url: 'api/users/edit',
       data: {
         userId: id,
         bio: bio,
+        name: name,
         email: email,
-        username: username
-      }
-    })
-    .then((results) => {
+        username: username,
+        picture: picture,
+      },
+    }).then((results) => {
       console.log(results);
-    })
-    .catch((e) => {
+    }).catch((e) => {
       console.log('Error', e, this);
-    })
+    });
   }
 
-  getFoodByUserId(id) {
-    axios({
-      method: 'GET',
-      url: `/food/userId/${id}`
-    })
-    .then((results) => {
-      console.log(results);
-    })
-    .catch((e) => {
-      console.log('Error', e);
-    })
+  onImageDrop(files) {
+    this.setState({ uploadeFile: files[0] })
+    this.handleImageUpload(files[0]);
+  }
+
+  onProfileDrop(files) {
+    this.setState({ uploadeProfileFile: files[0] })
+    this.handleProfileUpload(files[0]);
+  }
+
+  handleProfileUpload(file) {
+    const upload = request.post(CLOUDINARY_UPLOAD_URL).field('upload_preset', CLOUDINARY_UPLOAD_PRESET).field('file', file);
+    upload.end((err, response) => {
+      if (err) {
+        console.error(err);
+      }
+
+      if (response.body.secure_url !== '') {
+        this.setState({ uploadedProFileCloudinaryUrl: response.body.secure_url });
+      }
+    });
+  }
+
+  handleImageUpload(file) {
+    const upload = request.post(CLOUDINARY_UPLOAD_URL).field('upload_preset', CLOUDINARY_UPLOAD_PRESET).field('file', file);
+    upload.end((err, response) => {
+      if (err) {
+        console.error(err);
+      }
+      if (response.body.secure_url !== '') {
+        this.setState({ uploadedFileCloudinaryUrl: response.body.secure_url });
+      }
+    });
   }
 
   componentDidMount() {
     this.update();
-    this.getFoodByUserId(this.state.id);
   }
 
   render() {
-    return (
-      <div>
+    return (<div>
+      <div className="profile">
         <div className="info">
-          {this.state.showEditPage ?
-            /* Own Profile */
-            <UserProfile name={this.state.name} picture={this.state.picture} username={this.state.userName} noPic={this.state.noPic} email={this.state.email} bio={this.state.bio} submit={this.clickHandler} /> :
-            /* Edit Page */
-            <EditPage picture={this.state.picture} username={this.state.userName} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} />}
+          {
+            this.state.showEditPage
+              ?
+              /* Own Profile */
+              <UserProfile name={this.state.name} picture={this.state.picture} username={this.state.username} noPic={this.state.noPic} email={this.state.email} bio={this.state.bio} submit={this.clickHandler} />
+              :
+              /* Edit Page */
+              <EditPage picture={this.state.picture} username={this.state.username} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} imageDrop={this.onProfileDrop} uploadedFileCloudinaryUrl={this.state.uploadedProFileCloudinaryUrl}/>
+          }
         </div>
         <div className="postTrades">
-          <form onSubmit={this.submitDish.bind(this)}>
+          <form onSubmit={this.submitDish}>
             <h2>Add Dish</h2>
-            Dish Name: <input type="text" placeholder={this.state.foodName} ref='name' /> <br />
-            Dish Description: <input type="text" placeholder={this.state.foodDescription} ref="description" /> <br />
-            Add Picture: <input type="text" placeholder="Picture" ref="picture" /> <br />
+            Dish Name:
+            <input type="text" placeholder={this.state.foodName} ref='name' />
+            <br />
+            Dish Description:
+            <input type="text" placeholder={this.state.foodDescription} ref="description" />
+            <br />
+            <DropZone imageDrop={this.onImageDrop} />
             <button type="submit">Add Food</button>
           </form>
-          <div className="profileList">
-            <ProfileList />
-          </div>
-        </div>
-        <div className="photos">
-          <Photos />
+          <ImagePreview uploadedFileCloudinaryUrl={this.state.uploadedFileCloudinaryUrl} uploadedFile={this.state.uploadedFile} />
         </div>
       </div>
-    );
+      <div className="feed">
+        <Photos />
+        <ProfileList />
+      </div>
+    </div>);
   }
 }
 

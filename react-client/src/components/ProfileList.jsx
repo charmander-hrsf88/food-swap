@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ProfileList = () => (
-  <div>
+  <div className="profileList">
     <h2>News Feed</h2>
     <li>activity</li>
     <li>activity</li>
