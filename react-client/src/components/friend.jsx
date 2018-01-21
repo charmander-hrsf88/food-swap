@@ -26,12 +26,13 @@ const Friend = ({
     { setClass(trade) }
     <div className={colorname}>
       <h2> {trade.food_dishname} </h2>
-      {console.log('the trade picture= ', trade)}
-      {trade.food_dishname === null ?
-        <Question />
-      :
-      <img alt={trade.food_dishname} src={trade.food_picture} />
-      }
+      <div>
+        {trade.food_dishname === null ?
+          <Question />
+        :
+        <img alt={trade.food_dishname} src={trade.food_picture} />
+        }
+      </div>
       <h4> {trade.username1} </h4>
       <div className="ratingPanel">
         {trade.user_rating > 2 && star}
