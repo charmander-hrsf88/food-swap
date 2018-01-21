@@ -8,6 +8,7 @@
     "node": ">=6.4.0"
   },
   "scripts": {
+    "start": "node server/index.js",
     "scss": "sass --watch react-client/src/scss:react-client/dist/style/",
     "webpack": "webpack -d --watch",
     "server": "nodemon server/index.js"
@@ -16,6 +17,7 @@
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "connect-flash": "^0.1.1",
+    "express": "^4.16.2",
     "express-session": "^1.15.6",
     "font-awesome": "^4.7.0",
     "moment": "^2.20.1",

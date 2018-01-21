@@ -45,6 +45,7 @@ class Trade extends React.Component {
     this.cancelRating = this.cancelRating.bind(this);
   }
   componentWillMount() {
+
   /*
     response:
       False: yellow.
