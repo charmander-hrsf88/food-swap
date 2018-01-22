@@ -46,7 +46,7 @@ class LogIn extends React.Component {
         <div id="logInForm">
           <button disabled>Log In</button><button onClick={this.switchType}>Sign Up</button>
           <form action="/login" method="POST" >
-            {console.log('loginpage', this.props.err)}
+            {/* {console.log('loginpage', this.props.err)} */}
             <h2>Log In</h2>
             {(this.props.err === "Incorrect username" || this.props.err === "Incorrect password")
             && <h4>Username/password combination did not match any active account.</h4>}

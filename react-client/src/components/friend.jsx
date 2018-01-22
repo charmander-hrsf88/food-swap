@@ -3,6 +3,7 @@ import moment from 'moment';
 import Question from '../icons/question.jsx';
 
 var colorname;
+var display = true;
 
 function setClass(trade) {
   if (trade.user_rating === 5) {
@@ -22,6 +23,7 @@ const Friend = ({
   star,
   trade,
 }) => (
+  trade.expired === false ?
   <div className="friendFood" onClick={(e)=>{selectTrade(trade); toggleExpand(); console.log(trade) }}>
     { setClass(trade) }
     <div className={colorname}>
@@ -44,6 +46,8 @@ const Friend = ({
     </div>
     <h4 className="time">{ moment(trade.time).fromNow() } left</h4>
   </div>
+    :
+  <span />
 );
 
 export default Friend;
