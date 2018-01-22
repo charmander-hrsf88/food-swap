@@ -10,13 +10,12 @@ const Feed = ({ feed }) => {
         </div>
         : feed.accepted ?
         <div>
-          {`${feed.username1} traded ${feed.food1} to ${feed.username2} for ${feed.food2} on ${feed.trade_date}.`}
+          {`${feed.username1} traded ${feed.food1} to ${feed.username2} for ${feed.food2} ACCEPTED`}
         </div> :
         <div>
           {`${feed.username1} trade of ${feed.food1} to ${feed.username2} for ${feed.food2} failed!`}
         </div>
       }
-
     </div>
   );
 };
