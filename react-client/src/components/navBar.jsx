@@ -13,7 +13,7 @@ const NavBar = ({ switchPage, cb }) => (
     </form> */}
     <button onClick={() => { switchPage('Home'); }}>Home</button>
     <button onClick={() => { switchPage('Profile'); }}>Profile</button>
-    <button onClick={() => { switchPage('Trades'); }}>Trades</button>
+    {/* <button onClick={() => { switchPage('Trades'); }}>Trades</button> */}
   </div>
 );
 

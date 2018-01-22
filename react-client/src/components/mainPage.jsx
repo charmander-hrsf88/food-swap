@@ -10,7 +10,7 @@ const MainPage = ({
   tradeNumber,
 }) => (
   <div>
-    {console.log('main page', trades)}
+    {/* {console.log('main page', trades)} */}
     <Friends
       trades={trades}
       tradeNumber={tradeNumber}

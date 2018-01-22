@@ -2,8 +2,7 @@ import React from 'react';
 import Friend from './friend.jsx';
 import { RatedStarLike, RatedStarSpin } from '../icons/star.jsx';
 import Question from '../icons/question.jsx';
-import trades from '../dummyData.js';
-import { addFood } from '../axiosCalls.jsx';
+import { addFood, updateTrade } from '../axiosCalls.jsx';
 
 class Friends extends React.Component {
   constructor(props) {
@@ -13,14 +12,15 @@ class Friends extends React.Component {
       expand: false,
       star: <RatedStarLike />,
       selectedTradeItem: undefined,
+      selectedTradeItemNumber: undefined,
       addFoodItem: false,
       dishname: '',
       description: '',
       picture: '',
       location: { top: '80px' },
       cover: { top: '30px' },
-      selectedTrades: this.props.trades.slice(0, 4),
-      selectedTradesNum: 4,
+      selectedTrades: [],
+      selectedTradesNum: 0,
       fullTrades: this.props.trades,
       fullTradesNum: this.props.tradeNumber,
     };
@@ -36,8 +36,8 @@ class Friends extends React.Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.scrolling);
+    this.viewMoreTrades();
   }
-
   componentWillUnmount() {
     window.removeEventListener('scroll', this.scrolling);
   }
@@ -67,8 +67,8 @@ class Friends extends React.Component {
     }
   }
 
-  selectTradeItem(dishname) {
-    this.setState({ selectedTradeItem: dishname });
+  selectTradeItem(dishname, id) {
+    this.setState({ selectedTradeItem: dishname, selectedTradeItemNumber: id });
   }
 
   toggleAdd() {
@@ -83,7 +83,7 @@ class Friends extends React.Component {
   toggleExpand(condit) {
     if (this.state.expand === true) {
       this.setState({ expand: false, selectedTradeItem: undefined });
-    } else {
+    } else {0
       condit === undefined && this.setState({ expand: true });
     }
   }
@@ -108,11 +108,13 @@ class Friends extends React.Component {
           > {/* React Stop click progression */}
             {this.state.addFoodItem === false ?
               <div>
-                <img alt={this.state.trade.food_name} src={this.state.trade.food_picture} />
+                <div>
+                  <img alt={this.state.trade.food_name} src={this.state.trade.food_picture} />
+                </div>
                 <h2> {this.state.trade.food_dishname} </h2>
                 <p> {this.state.trade.food_description} </p>
                 <p> ~ {this.state.trade.username1}</p>
-                <p> 50 feet away </p>
+                {/* <p> 50 feet away </p> */}
               </div>
             :
               <div id="addFoodForm">
@@ -160,7 +162,7 @@ class Friends extends React.Component {
                       :
                         <img src={option.picture} alt={option.dishname} />
                       }
-                      <button onClick={() => { this.selectTradeItem(option.dishname); }}>{option.dishname}</button>
+                      <button onClick={() => { this.selectTradeItem(option.dishname, option.id); }}>{option.dishname}</button>
                     </li>
                   ))}
               </ol>
@@ -169,14 +171,23 @@ class Friends extends React.Component {
               <button disabled>Select an item to trade</button>
 
             :
-              <button>Offer to trade your {this.state.selectedTradeItem}</button>
+              <button
+                onClick={
+                  () => {
+                    updateTrade(this.state.trade.id, this.props.currentUser.id, this.state.selectedTradeItemNumber, console.log);
+                    this.toggleExpand();
+                    // this.setState({trade[expired] = true })
+                    // console.log('userid: ', this.props.currentUser.id, '. ', this.state.trade.id, this.state.trade, 'tradeid, myuserid, myselectedfoodid');                    
+                  }
+                }
+              >Offer to trade your {this.state.selectedTradeItem}
+              </button>
             }
             <i className="fa fa-times-circle-o fa-2x" aria-hidden="true" onClick={this.toggleExpand} />
           </div>
         :
           <span />
         }
-        {console.log('error friends: ', this.state.selectedTrades)}
         {this.state.selectedTrades.map(trade =>
         (<Friend
           key={trade.id}

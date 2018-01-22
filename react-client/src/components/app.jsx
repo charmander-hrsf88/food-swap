@@ -45,20 +45,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // addFriend();
-    // getFriends();
-    // getFriend();
-    // addFood('Whiskey', 'It\'s a drink. You drink it.', 1);
-    // getAllFood();
-    // getSpecificFood();
-    // requestTrade();
-    // getTrades();
-    // getAllTradesBetweenTwoUsers();
-    // console.log(acceptTrade);
-    // acceptTrade();
-    // rejectTrade();
-    // getAllUsers();
-    // getSpecificUser();
     userInfo(this.updateUser);
   }
 
@@ -83,10 +69,10 @@ class App extends React.Component {
   <MainPage
     friends={this.state.friends}
     userFood={this.state.userFood}
-    updateUser={this.updateUser}
+    updateFood={this.updateFood}
     currentUser={this.state.currentUser}
-    trades={this.state.userTrades}
-    tradeNumber={this.state.tradeNumber}
+    trades={this.state.activeTrades}
+    tradeNumber={this.state.activeTradesNumber}
   />,
         });
         break;
