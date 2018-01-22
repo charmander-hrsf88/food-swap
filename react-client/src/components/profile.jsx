@@ -24,7 +24,7 @@ class Profile extends React.Component {
       username: 'Hayden',
       id: '',
       name: '',
-      picture: dummyData.friends[0].user_picture,
+      picture: '',
       foodName: 'Food Name',
       foodDescription: 'Food Description',
       foodPic: '',
@@ -45,6 +45,8 @@ class Profile extends React.Component {
     this.handleImageUpload = this.handleImageUpload.bind(this);
     this.onProfileDrop = this.onProfileDrop.bind(this);
     this.handleProfileUpload = this.handleProfileUpload.bind(this);
+    this.getFoodbyUserId = this.getFoodbyUserId.bind(this);
+    this.getTrades = this.getTrades.bind(this);
   }
 
   clickHandler() {
@@ -62,17 +64,27 @@ class Profile extends React.Component {
     });
   }
 
-  update() {
-    console.log(this.state.profile);
-    this.setState({
-      bio: this.state.profile.bio,
-      email: this.state.profile.email,
-      username: this.state.profile.username,
-      picture: this.state.profile.picture,
-      name: this.state.profile.name,
-      id: this.state.profile.id,
-      showEditPage: !this.state.showEditPage,
-    });
+  update(id) {
+    console.log(this);
+    axios({
+      method: 'GET',
+      url: `/api/users/${id}`
+    })
+    .then((results) => {
+      console.log(results);
+      this.setState({
+        bio: results.data.bio,
+        email: results.data.email,
+        name: results.data.name,
+        username: results.data.username,
+        id: results.data.id,
+        picture: results.data.picture,
+        showEditPage: !this.state.showEditPage
+      })
+    })
+    .catch((e) => {
+      console.log('Error', e);
+    })
   }
 
   submitDish(event) {
@@ -152,17 +164,52 @@ class Profile extends React.Component {
         console.error(err);
       }
       if (response.body.secure_url !== '') {
-        this.setState({ uploadedFileCloudinaryUrl: response.body.secure_url });
+        this.setState({
+          uploadedFileCloudinaryUrl: response.body.secure_url,
+          picture: response.body.secure_url,
+        });
       }
     });
   }
 
-  componentDidMount() {
-    this.update();
+  getFoodbyUserId(id) {
+    axios({
+      method: 'GET',
+      url: `api/food/userID/${id}`,
+    }).then((results) => {
+      console.log(results)
+      this.setState({
+        userDishes: results.data
+      })
+    }).catch((e) => {
+      console.log(e);
+    });
   }
+
+  getTrades(id) {
+    axios({
+      method: 'GET',
+      url: `api/trade/userId/${id}`,
+    }).then((results) => {
+      console.log('*****', results);
+      this.setState({
+        trades: results.data,
+      });
+    }).catch((e) => {
+      console.log('ERROR', e);
+    });
+  }
+
+  componentDidMount() {
+    this.update(this.props.user.id);
+    this.getFoodbyUserId(this.props.user.id);
+    this.getTrades(this.props.user.id);
+  }
+
 
   render() {
     return (<div>
+      {console.log(this.state.trades)}
       <div className="profile">
         <div className="info">
           {
@@ -172,7 +219,7 @@ class Profile extends React.Component {
               <UserProfile name={this.state.name} picture={this.state.picture} username={this.state.username} noPic={this.state.noPic} email={this.state.email} bio={this.state.bio} submit={this.clickHandler} />
               :
               /* Edit Page */
-              <EditPage picture={this.state.picture} username={this.state.username} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} imageDrop={this.onProfileDrop} uploadedFileCloudinaryUrl={this.state.uploadedProFileCloudinaryUrl}/>
+              <EditPage picture={this.state.picture} username={this.state.username} submit={this.clickHandler} updateProfile={this.updateProfile} email={this.state.email} bio={this.state.bio} noPic={this.state.noPic} reset={this.update} imageDrop={this.onProfileDrop} uploadedFileCloudinaryUrl={this.state.uploadedProFileCloudinaryUrl} />
           }
         </div>
         <div className="postTrades">
@@ -191,8 +238,8 @@ class Profile extends React.Component {
         </div>
       </div>
       <div className="feed">
-        <Photos />
-        <ProfileList />
+        <Photos updateFood={this.state.userDishes} />
+        <ProfileList trades={this.state.trades} />
       </div>
     </div>);
   }
