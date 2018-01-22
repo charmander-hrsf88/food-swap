@@ -175,7 +175,7 @@ class Friends extends React.Component {
                 onClick={
                   () => {
                     updateTrade(this.state.trade.id, this.props.currentUser.id, this.state.selectedTradeItemNumber, console.log);
-                    console.log(this.state);
+                    this.toggleExpand();
                     // this.setState({trade[expired] = true })
                     // console.log('userid: ', this.props.currentUser.id, '. ', this.state.trade.id, this.state.trade, 'tradeid, myuserid, myselectedfoodid');                    
                   }
