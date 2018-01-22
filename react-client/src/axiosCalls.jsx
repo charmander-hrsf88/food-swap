@@ -26,7 +26,7 @@ export function userInfo(cb) {
     url: '/session',
   })
     .then((result) => {
-      console.log('friend', result.data);
+      // console.log('friend', result.data);
       if (result.data.user !== null) {
         cb(result.data, true);
       } else {
@@ -157,6 +157,25 @@ export function addFood(dish, des, id, cb) {
               TRADES
 ////////////////////////////////////
 */
+
+export function updateTrade(tradeId, userId, foodId, cb) {
+  axios({
+    method: 'post',
+    url: 'api/trade/update',
+    data: {
+      id: tradeId,
+      userId2: userId,
+      foodId2: foodId,
+    },
+  })
+    .then((results) => {
+      cb(results);
+    })
+    .catch((err) => {
+      console.log('Trade Update error: ', err);
+    });
+}
+
 export function getTrades(userId) {
   axios({
     method: 'get',

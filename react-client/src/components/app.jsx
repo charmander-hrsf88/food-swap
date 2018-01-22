@@ -34,9 +34,10 @@ class App extends React.Component {
       currentPage: '',
       userFood: [],
       userTrades: [],
-      tradeNumber: 0,
       errorMessage: 'none',
       profile: '',
+      activeTrades: [],
+      activeTradesNumber: 0,
     };
     this.switchPage = this.switchPage.bind(this);
     this.updateUser = this.updateUser.bind(this);
@@ -44,20 +45,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // addFriend();
-    // getFriends();
-    // getFriend();
-    // addFood('Whiskey', 'It\'s a drink. You drink it.', 1);
-    // getAllFood();
-    // getSpecificFood();
-    // requestTrade();
-    // getTrades();
-    // getAllTradesBetweenTwoUsers();
-    // console.log(acceptTrade);
-    // acceptTrade();
-    // rejectTrade();
-    // getAllUsers();
-    // getSpecificUser();
     userInfo(this.updateUser);
   }
 
@@ -68,7 +55,12 @@ class App extends React.Component {
         break;
       case ('Profile'):
         this.setState({
-          currentPage: <Profile user={this.state.currentUser} updateFood={this.updateFood} trades={this.userTrades} />,
+          currentPage:
+  <Profile
+    user={this.state.currentUser}
+    updateFood={this.updateFood}
+    trades={this.userTrades}
+  />,
         });
         break;
       default:
@@ -77,10 +69,10 @@ class App extends React.Component {
   <MainPage
     friends={this.state.friends}
     userFood={this.state.userFood}
-    updateUser={this.updateUser}
+    updateFood={this.updateFood}
     currentUser={this.state.currentUser}
-    trades={this.state.userTrades}
-    tradeNumber={this.state.tradeNumber}
+    trades={this.state.activeTrades}
+    tradeNumber={this.state.activeTradesNumber}
   />,
         });
         break;
@@ -91,13 +83,17 @@ class App extends React.Component {
     if (userObj.message === 'Incorrect username' || userObj.user === undefined) {
       this.setState({ errorMessage: userObj.message });
     } else {
-      const numberOfTrades = userObj.trades === undefined ? null : userObj.trades.length;
+      const numberOfTrades = userObj.possibleTradesExceptUser === undefined ?
+        null
+        :
+        userObj.possibleTradesExceptUser.length;
       this.setState({
         currentUser: userObj.user,
         loggedIn: bool,
         userFood: userObj.food,
         userTrades: userObj.trades,
-        tradeNumber: numberOfTrades,
+        activeTradesNumber: numberOfTrades,
+        activeTrades: userObj.possibleTradesExceptUser,
       });
     }
   }
@@ -124,8 +120,8 @@ class App extends React.Component {
               userFood={this.state.userFood}
               updateFood={this.updateFood}
               currentUser={this.state.currentUser}
-              trades={this.state.userTrades}
-              tradeNumber={this.state.tradeNumber}
+              trades={this.state.activeTrades}
+              tradeNumber={this.state.activeTradesNumber}
               />
           :
             this.state.currentPage

@@ -90,7 +90,25 @@ class Trade {
   }
 
   static getPossibleTradeExceptUser({ userId }) {
-    const queryString = 'SELECT * FROM trade where user_id2 = 1 AND user_id1 != $1';
+    const queryString = `
+  SELECT
+    trade.id AS id,
+    user_id1, users.username as username1,
+    users.rating as user_rating,
+    food_id1, food.picture as food_picture, food.dishname as food_dishname,
+    user_id2, food_id2,
+    trade_date AS time, expired
+  FROM trade
+  INNER JOIN food
+    ON food_id1 = food.id
+  INNER JOIN users
+    ON trade.user_id1 = users.id
+  WHERE user_id2 = 1
+    AND user_id1 != 1
+    AND expired = false
+    AND failed = false
+  ORDER BY users.rating DESC;  
+    `;
     return db.any(queryString, [userId]);
   }
 }

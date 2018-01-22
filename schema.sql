@@ -22,6 +22,9 @@ CREATE TABLE users (
   bio VARCHAR(255) NULL DEFAULT NULL,
   latitude Float NULL DEFAULT NULL,
   longitude Float NULL DEFAULT NULL,
+
+  rating INTEGER,
+
   PRIMARY KEY (id)
 );
 
@@ -47,7 +50,7 @@ CREATE TABLE trade (
   food_id1 INTEGER NOT NULL REFERENCES food(id),
   user_id2 INTEGER NOT NULL REFERENCES users(id),
   food_id2 INTEGER NOT NULL REFERENCES food(id),
-  trade_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  trade_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP + (floor(random() * 180 + 1)::int * INTERVAL '1 minute'),
   expired BOOLEAN DEFAULT FALSE,
   accepted BOOLEAN DEFAULT FALSE,
   failed BOOLEAN DEFAULT FALSE,

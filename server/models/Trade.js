@@ -22,6 +22,7 @@ class Trade {
   }
   
   static initiate({ userId1, foodId1, userId2, foodId2 }) {
+    console.log('TRADE: user1:', userId1, '. food1:', foodId1, '. user2:', userId2, '. food2:', foodId2)
     return db.trade.initiate({ userId1, foodId1, userId2, foodId2 });
   }
 
