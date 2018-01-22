@@ -3,7 +3,7 @@ import React from 'react';
 const UserProfile = ({ name, picture, username, noPic, email, bio, submit }) => (
   <div className="bio">
     <h2 id="profileName" > {name} </h2>
-    { picture ? <img id="profilePic" alt={username} src={picture} /> : <img id="profilePic" alt={username} src={noPic} /> } <br />
+    { picture ? <img id="picture" alt={username} src={picture} /> : <img id="picture" alt={username} src={noPic} /> } <br />
     <p>
       Username: {username} <br />
       Email: {email} <br />
@@ -12,6 +12,5 @@ const UserProfile = ({ name, picture, username, noPic, email, bio, submit }) => 
     </p>
   </div>
 );
-
 
 export default UserProfile;
